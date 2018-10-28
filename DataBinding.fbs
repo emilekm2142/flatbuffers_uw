@@ -1,0 +1,11 @@
+namespace AllWatchSerialize;
+//union Any {short,float,string}
+table PropertyBinding{
+    propertyName:string;
+    value:string;
+}
+
+table DataBinding{
+    id:string;
+    bindings:[PropertyBinding];
+}

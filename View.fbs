@@ -1,0 +1,25 @@
+include "Identifier.fbs";
+include "templates/TemplateRoot.fbs";
+include "templates/DefaultDatatypes.fbs";
+//include "Action.fbs";
+include "DefaultViews/TextData.fbs";
+include "DefaultViews/ListData.fbs";
+namespace AllWatchSerialize;
+union ViewData{TextData, ListData}
+enum DefaultStyle:short{
+    Notification,
+            TextWall,
+            ToBottom,
+            ToTop,
+            Center,
+}
+table View{
+    id:Identifier;
+    name:string;
+    datatype:DefaultDatatypes;
+    usesTemplate:bool;
+    template:TemplateRoot;
+    data:ViewData;
+   // actions:[Action];
+    defaultStyle:DefaultStyle;
+}

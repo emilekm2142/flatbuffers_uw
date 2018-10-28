@@ -1,0 +1,5 @@
+namespace AllWatchSerialize;
+table Background{
+    backgroundColor:int;
+    backgroundImage:[byte];
+}

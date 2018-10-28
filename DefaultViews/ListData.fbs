@@ -1,0 +1,8 @@
+include "DefaultViews/SimpleListEntry.fbs";
+include "templates/TemplateRoot.fbs";
+namespace AllWatchSerialize;
+table ListData{
+    useCustomTemplate:bool;
+    customContent:[Template];
+    simpleEntries:[SimpleListEntry];
+}

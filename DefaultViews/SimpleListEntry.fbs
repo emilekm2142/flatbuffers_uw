@@ -1,0 +1,10 @@
+//include "Action.fbs";
+namespace AllWatchSerialize;
+enum Layout:short {Text, MultilineText, WithIcon, Menu}
+table SimpleListEntry{
+    layout:Layout;
+  //  mainAction:Action;
+   // sideActions:[Action];
+    lines:[string];
+    icon:[byte];
+}

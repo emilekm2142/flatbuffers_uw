@@ -1,0 +1,11 @@
+include "Requirements.fbs";
+namespace AllWatchSerialize;
+table Handshake{
+    manufacturer:string;
+    modelName:string;
+    extraModelInfo:string;
+    firmwareVersion:string;
+    bufferKbSize:ushort;
+    usesEncryption:bool;
+    requirements:[Requirements];
+}

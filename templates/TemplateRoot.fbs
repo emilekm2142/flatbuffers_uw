@@ -1,0 +1,9 @@
+include "templates/Template.fbs";
+//include "Extras.fbs";
+//include "DataBinding.fbs";
+namespace AllWatchSerialize;
+table TemplateRoot{
+    name:string;
+    layout:Template;
+   // dataBindings:[DataBinding];
+}

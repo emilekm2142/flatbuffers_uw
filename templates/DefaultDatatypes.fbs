@@ -1,0 +1,4 @@
+namespace AllWatchSerialize;
+enum DefaultDatatypes:short{
+    Text,Media,List,Map, Custom
+}

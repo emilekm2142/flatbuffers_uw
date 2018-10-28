@@ -1,0 +1,21 @@
+include "templates/Background.fbs";
+namespace AllWatchSerialize;
+table Style{
+    absoluteWidth:short;
+    absoluteHeight:short;
+    backgroundColor:long;
+    borderColor:long;
+    background:Background;
+    x:short;
+    y:short;
+    marginTop:short;
+    marginBottom:short;
+    marginLeft:short;
+    marginRight:short;
+
+    width:double;
+    height:double;
+
+    offsetX:double;
+    offsetY:double;
+}

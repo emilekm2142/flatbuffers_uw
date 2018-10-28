@@ -1,0 +1,7 @@
+include "DefaultViews/Components.fbs";
+namespace AllWatchSerialize;
+table TextData{
+    major:string;
+    minor:string;
+    additionalComponents:[Component];
+}

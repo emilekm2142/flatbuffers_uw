@@ -1,0 +1,8 @@
+include "Identifier.fbs";
+include "templates/TemplateRoot.fbs";
+namespace AllWatchSerialize;
+table Widget{
+    refresh:long;
+    template:TemplateRoot;
+    id:Identifier;
+}

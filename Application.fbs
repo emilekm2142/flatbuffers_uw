@@ -1,0 +1,13 @@
+include "Identifier.fbs";
+include "Requirements.fbs";
+include "Widget.fbs";
+namespace AllWatchSerialize;
+table Application{
+    reinstall:bool;
+    identifier:Identifier;
+    icon:[byte];
+    requirements:[Requirements];
+    voicePhrases:[string];
+    widget:Widget;
+
+}

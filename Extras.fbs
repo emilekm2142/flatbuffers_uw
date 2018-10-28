@@ -1,0 +1,5 @@
+namespace AllWatchSerialize;
+table Extras{
+    key:string;
+    value:string;
+}

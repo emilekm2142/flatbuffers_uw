@@ -1,0 +1,13 @@
+namespace AllWatchSerialize;
+//These components are to be used with default views only!!!
+table ProgressBar{
+    progress:float;
+
+}
+table ImageBackground{
+    image:[byte];
+}
+union Components {ProgressBar, ImageBackground}
+table Component{
+    cmp:Components;
+}

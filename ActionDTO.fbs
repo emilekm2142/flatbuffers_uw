@@ -1,0 +1,8 @@
+include "Identifier.fbs"
+//include "Extras.fbs"
+//include "Action.fbs"
+namespace AllWatchSerialize;
+table ActionDTO{
+    id:Identifier;
+  //  action:Action
+}

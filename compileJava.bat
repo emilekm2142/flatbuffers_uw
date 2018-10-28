@@ -1,0 +1,1 @@
+flatc --java -o buildJava Command.fbs --reflect-types --reflect-names --gen-all

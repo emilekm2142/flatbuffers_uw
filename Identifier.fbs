@@ -1,0 +1,5 @@
+namespace AllWatchSerialize;
+table Identifier{
+    packageName:string (key);
+    friendlyName:string;
+}

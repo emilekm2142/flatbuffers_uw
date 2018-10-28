@@ -1,0 +1,9 @@
+//include "Extras.fbs";
+namespace AllWatchSerialize;
+table Action{
+   temp:short;
+   //a:short;
+   // actionName:string;
+    //callback:string;
+   // extras:[Extras];
+}

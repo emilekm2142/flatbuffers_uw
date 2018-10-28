@@ -1,0 +1,10 @@
+include "templates/Template.fbs";
+//include "Action.fbs";
+namespace AllWatchSerialize;
+table CardAttributes{
+    title:string;
+    image:[byte];
+    avatar:[byte];
+ //   actions:[Action];
+
+}

@@ -1,0 +1,9 @@
+namespace AllWatchSerialize;
+enum Shape:short{
+    Ellipse, Rectangle
+}
+table ShapeAttributes{
+    type:Shape;
+    fill:bool;
+
+}

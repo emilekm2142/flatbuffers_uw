@@ -1,0 +1,4 @@
+namespace AllWatchSerialize;
+table LayoutAttributes{
+    spacing:short;
+}

@@ -1,0 +1,1 @@
+flatcc -o build Command.fbs -I . -cr --reader

@@ -1,0 +1,7 @@
+namespace AllWatchSerialize;
+table TextAttributes{
+    fontSize:short;
+    fontFamily:string;
+    text:string;
+    color:int;
+}

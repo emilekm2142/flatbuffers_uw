@@ -1,0 +1,4 @@
+namespace AllWatchSerialize;
+enum Requirements:short{
+     color, images, templates, unicode, icons, png, touchscreen
+}
