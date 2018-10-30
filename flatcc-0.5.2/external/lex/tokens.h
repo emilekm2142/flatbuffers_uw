@@ -60,18 +60,18 @@ enum {
      * stream is covered by tokens. If utf-8 identifies have not been
      * flagged, utf-8 leading characters may also end up here, and so
      * my utf-8 characters in general, that are not viewed as valid
-     * identifiers (depending on configuration).
+     * Ids (depending on configuration).
      */
     LEX_TOK_SYMBOL,
 
     /*
-     * Variable length identifier starting with (_A-Za-z) by default and
+     * Variable length Id starting with (_A-Za-z) by default and
      * followed by zero or more (_A-Za-z0-9) characters. (_) can be
      * flagged out. utf-8 can be flagged in. Be default any non-ASCII
-     * character (0x80 and above), is treated as part of an identifier
+     * character (0x80 and above), is treated as part of an Id
      * for simplicity and speed, but this may be redefined. Any broken
-     * utf-8 is not sanitized, thus 0x80 would be a valid identifier
-     * token with utf-8 identifiers enabled, and otherwise it would be a
+     * utf-8 is not sanitized, thus 0x80 would be a valid Id
+     * token with utf-8 Ids enabled, and otherwise it would be a
      * symbol token.
      *
      * The ID does a magic trick: It maps the lexeme to a very simple
@@ -84,7 +84,7 @@ enum {
      * where length is ASCII '0' .. '9' where any length overflow is an
      * arbitrary value, but such that the length is never longer than
      * the lexeme. The last char is the last char regardless of length.
-     * For short identifiers, the second char may be the first char
+     * For short Ids, the second char may be the first char
      * duplicated, and the last char may be first char.
      *
      * This code is very simple to write by hand: "5whe" means while,
@@ -472,7 +472,7 @@ static const char *lex_describe_token(long token)
     case LEX_TOK_STRING_CTRL: return "string control";
     case LEX_TOK_COMMENT_CTRL: return "comment control";
     case LEX_TOK_SYMBOL: return "symbol";
-    case LEX_TOK_ID: return "identifier";
+    case LEX_TOK_ID: return "Id";
     case LEX_TOK_INT: return "integer";
     case LEX_TOK_FLOAT: return "float";
     case LEX_TOK_BINARY: return "binary";

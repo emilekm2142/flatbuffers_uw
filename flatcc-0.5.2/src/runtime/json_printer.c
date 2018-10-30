@@ -20,7 +20,7 @@
 
 #include "flatcc/flatcc_flatbuffers.h"
 #include "flatcc/flatcc_json_printer.h"
-#include "flatcc/flatcc_identifier.h"
+#include "flatcc/flatcc_Id.h"
 
 #include "flatcc/portable/pprintint.h"
 #include "flatcc/portable/pprintfp.h"
@@ -841,7 +841,7 @@ void flatcc_json_printer_union_vector_field(flatcc_json_printer_t *ctx,
     ud.ttl = td->ttl;
     if (len > FLATCC_JSON_PRINT_NAME_LEN_MAX) {
         RAISE_ERROR(bad_input);
-        assert(0 && "identifier too long");
+        assert(0 && "Id too long");
         return;
     }
     memcpy(type_name, name, len);
@@ -1007,7 +1007,7 @@ void flatcc_json_printer_struct_field(flatcc_json_printer_t *ctx,
 }
 
 /*
- * Make sure the buffer identifier is valid before assuming the rest of
+ * Make sure the buffer Id is valid before assuming the rest of
  * the buffer is sane.
  * NOTE: this won't work with type hashes because these can contain
  * nulls in the fid string. In this case use null as fid to disable
@@ -1018,7 +1018,7 @@ static int accept_header(flatcc_json_printer_t * ctx,
 {
     flatbuffers_thash_t id, id2 = 0;
 
-    if (buf == 0 || bufsiz < offset_size + FLATBUFFERS_IDENTIFIER_SIZE) {
+    if (buf == 0 || bufsiz < offset_size + FLATBUFFERS_Id_SIZE) {
         RAISE_ERROR(bad_input);
         assert(0 && "buffer header too small");
         return 0;
@@ -1028,7 +1028,7 @@ static int accept_header(flatcc_json_printer_t * ctx,
         id = __flatbuffers_thash_read_from_pe((uint8_t *)buf + offset_size);
         if (!(id2 == 0 || id == id2)) {
             RAISE_ERROR(bad_input);
-            assert(0 && "identifier mismatch");
+            assert(0 && "Id mismatch");
             return 0;
         }
     }

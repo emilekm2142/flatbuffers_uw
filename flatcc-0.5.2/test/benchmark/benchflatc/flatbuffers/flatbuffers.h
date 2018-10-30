@@ -820,20 +820,20 @@ class FlatBufferBuilder FLATBUFFERS_FINAL_CLASS {
                                      reinterpret_cast<uint8_t **>(buf));
   }
 
-  static const size_t kFileIdentifierLength = 4;
+  static const size_t kFileIdLength = 4;
 
   // Finish serializing a buffer by writing the root offset.
-  // If a file_identifier is given, the buffer will be prefix with a standard
+  // If a file_Id is given, the buffer will be prefix with a standard
   // FlatBuffers file header.
   template<typename T> void Finish(Offset<T> root,
-                                   const char *file_identifier = nullptr) {
+                                   const char *file_Id = nullptr) {
     // This will cause the whole buffer to be aligned.
-    PreAlign(sizeof(uoffset_t) + (file_identifier ? kFileIdentifierLength : 0),
+    PreAlign(sizeof(uoffset_t) + (file_Id ? kFileIdLength : 0),
              minalign_);
-    if (file_identifier) {
-      assert(strlen(file_identifier) == kFileIdentifierLength);
-      buf_.push(reinterpret_cast<const uint8_t *>(file_identifier),
-                kFileIdentifierLength);
+    if (file_Id) {
+      assert(strlen(file_Id) == kFileIdLength);
+      buf_.push(reinterpret_cast<const uint8_t *>(file_Id),
+                kFileIdLength);
     }
     PushElement(ReferTo(root.o));  // Location of root.
   }
@@ -873,10 +873,10 @@ template<typename T> const T *GetRoot(const void *buf) {
   return GetMutableRoot<T>(const_cast<void *>(buf));
 }
 
-// Helper to see if the identifier in a buffer has the expected value.
-inline bool BufferHasIdentifier(const void *buf, const char *identifier) {
+// Helper to see if the Id in a buffer has the expected value.
+inline bool BufferHasId(const void *buf, const char *Id) {
   return strncmp(reinterpret_cast<const char *>(buf) + sizeof(uoffset_t),
-                 identifier, FlatBufferBuilder::kFileIdentifierLength) == 0;
+                 Id, FlatBufferBuilder::kFileIdLength) == 0;
 }
 
 // Helper class to verify the integrity of a FlatBuffer

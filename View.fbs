@@ -1,7 +1,7 @@
-include "Identifier.fbs";
+include "Id.fbs";
 include "templates/TemplateRoot.fbs";
 include "templates/DefaultDatatypes.fbs";
-//include "Action.fbs";
+include "Action.fbs";
 include "DefaultViews/TextData.fbs";
 include "DefaultViews/ListData.fbs";
 namespace AllWatchSerialize;
@@ -14,12 +14,12 @@ enum DefaultStyle:short{
             Center,
 }
 table View{
-    id:Identifier;
+    id:Id;
     name:string;
     datatype:DefaultDatatypes;
     usesTemplate:bool;
     template:TemplateRoot;
     data:ViewData;
-   // actions:[Action];
+    actions:[Action];
     defaultStyle:DefaultStyle;
 }

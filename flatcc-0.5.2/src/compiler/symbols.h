@@ -69,7 +69,7 @@ enum {
     tok_kw_root_type,
     tok_kw_rpc_service,
     tok_kw_file_extension,
-    tok_kw_file_identifier,
+    tok_kw_file_Id,
     /* Pseudo keywords. */
     tok_kw_doc_comment
 };
@@ -331,7 +331,7 @@ struct fb_root_type {
 struct fb_schema {
     fb_include_t *includes;
     fb_name_t *attributes;
-    fb_value_t file_identifier;
+    fb_value_t file_Id;
     fb_value_t file_extension;
     fb_symbol_t *symbols;
     /* Topologically sorted structs. */

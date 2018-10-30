@@ -6,6 +6,9 @@
 #ifndef FLATBUFFERS_COMMON_READER_H
 #include "flatbuffers_common_reader.h"
 #endif
+#ifndef ACTION_READER_H
+#include "Action_reader.h"
+#endif
 #include "flatcc/flatcc_flatbuffers.h"
 #ifndef __alignas_is_defined
 #include <stdalign.h>
@@ -68,8 +71,10 @@ __flatbuffers_offset_vec_at(AllWatchSerialize_SimpleListEntry_table_t, vec, i, 0
 __flatbuffers_table_as_root(AllWatchSerialize_SimpleListEntry)
 
 __flatbuffers_define_scalar_field(0, AllWatchSerialize_SimpleListEntry, layout, AllWatchSerialize_Layout, AllWatchSerialize_Layout_enum_t, INT16_C(0))
-__flatbuffers_define_vector_field(1, AllWatchSerialize_SimpleListEntry, lines, flatbuffers_string_vec_t, 0)
-__flatbuffers_define_vector_field(2, AllWatchSerialize_SimpleListEntry, icon, flatbuffers_int8_vec_t, 0)
+__flatbuffers_define_table_field(1, AllWatchSerialize_SimpleListEntry, mainAction, AllWatchSerialize_Action_table_t, 0)
+__flatbuffers_define_vector_field(2, AllWatchSerialize_SimpleListEntry, sideActions, AllWatchSerialize_Action_vec_t, 0)
+__flatbuffers_define_vector_field(3, AllWatchSerialize_SimpleListEntry, lines, flatbuffers_string_vec_t, 0)
+__flatbuffers_define_vector_field(4, AllWatchSerialize_SimpleListEntry, icon, flatbuffers_int8_vec_t, 0)
 
 #include "flatcc/flatcc_epilogue.h"
 #endif /* SIMPLELISTENTRY_READER_H */

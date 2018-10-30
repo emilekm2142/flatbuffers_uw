@@ -369,7 +369,7 @@ const char *flatcc_json_parser_match_constant(flatcc_json_parser_t *ctx, const c
             char c = *buf;
             /*
              * Space was seen - and thus we have a valid match.
-             * If the next char is an identifier start symbol
+             * If the next char is an Id start symbol
              * we raise the more flag to support syntax like:
              *
              *     `flags: Hungry Sleepy Awake, ...`

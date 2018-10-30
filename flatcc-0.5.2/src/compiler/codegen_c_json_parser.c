@@ -781,7 +781,7 @@ static void gen_scope_unmatched(fb_output_t *out)
  * triggered.
  *
  * A non-match action may be to silently consume the rest of the
- * search identifier and then the json value, or to report and
+ * search Id and then the json value, or to report and
  * error.
  *
  * A match action triggers a json value parse of a known type
@@ -1614,9 +1614,9 @@ static int gen_root_table_parser(fb_output_t *out, fb_compound_type_t *ct)
     println(out, "");
     println(out, "ctx = ctx ? ctx : &parser;");
     println(out, "flatcc_json_parser_init(ctx, B, buf, buf + bufsiz, flags);");
-    if (out->S->file_identifier.type == vt_string) {
+    if (out->S->file_Id.type == vt_string) {
         println(out, "if (flatcc_builder_start_buffer(B, \"%.*s\", 0, 0)) return -1;",
-        out->S->file_identifier.s.len, out->S->file_identifier.s.s);
+        out->S->file_Id.s.len, out->S->file_Id.s.s);
     } else {
         println(out, "if (flatcc_builder_start_buffer(B, 0, 0, 0)) return -1;");
     }
@@ -1649,9 +1649,9 @@ static int gen_root_struct_parser(fb_output_t *out, fb_compound_type_t *ct)
     println(out, "");
     println(out, "ctx = ctx ? ctx : &ctx_;");
     println(out, "flatcc_json_parser_init(ctx, B, buf, buf + bufsiz, flags);");
-    if (out->S->file_identifier.type == vt_string) {
+    if (out->S->file_Id.type == vt_string) {
         println(out, "if (flatcc_builder_start_buffer(B, \"%.*s\", 0, 0)) return -1;",
-        out->S->file_identifier.s.len, out->S->file_identifier.s.s);
+        out->S->file_Id.s.len, out->S->file_Id.s.s);
     } else {
         println(out, "if (flatcc_builder_start_buffer(B, 0, 0, 0)) return -1;");
     }

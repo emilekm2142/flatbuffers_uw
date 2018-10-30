@@ -84,9 +84,9 @@ typedef flatbuffers_utype_t flatbuffers_union_type_t;
 static const flatbuffers_bool_t flatbuffers_true = FLATBUFFERS_TRUE;
 static const flatbuffers_bool_t flatbuffers_false = FLATBUFFERS_FALSE;
 
-#define FLATBUFFERS_IDENTIFIER_SIZE (FLATBUFFERS_THASH_WIDTH / 8)
+#define FLATBUFFERS_Id_SIZE (FLATBUFFERS_THASH_WIDTH / 8)
 
-typedef char flatbuffers_fid_t[FLATBUFFERS_IDENTIFIER_SIZE];
+typedef char flatbuffers_fid_t[FLATBUFFERS_Id_SIZE];
 
 #endif /* flatbuffers_types_defined */
 

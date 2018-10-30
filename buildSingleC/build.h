@@ -462,7 +462,7 @@ __flatbuffers_define_scan_by_scalar_field(N, NK, T)
 static inline T N ## _ ## NK ## _get(N ## _struct_t t__tmp) { return t__tmp ? &(t__tmp->NK) : 0; }\
 static inline T N ## _ ## NK (N ## _struct_t t__tmp) { return t__tmp ? &(t__tmp->NK) : 0; }
 /* If fid is null, the function returns true without testing as buffer is not expected to have any id. */
-static inline int flatbuffers_has_identifier(const void *buffer, const char *fid)
+static inline int flatbuffers_has_Id(const void *buffer, const char *fid)
 { flatbuffers_thash_t id, id2 = 0; if (fid == 0) { return 1; };
   id2 = flatbuffers_type_hash_from_string(fid);
   id = __flatbuffers_thash_read_from_pe(((flatbuffers_uoffset_t *)buffer) + 1);
@@ -473,13 +473,13 @@ static inline int flatbuffers_has_type_hash(const void *buffer, flatbuffers_thas
 static inline flatbuffers_thash_t flatbuffers_get_type_hash(const void *buffer)
 { return __flatbuffers_thash_read_from_pe((flatbuffers_uoffset_t *)buffer + 1); }
 
-#define flatbuffers_verify_endian() flatbuffers_has_identifier("\x00\x00\x00\x00" "1234", "1234")
+#define flatbuffers_verify_endian() flatbuffers_has_Id("\x00\x00\x00\x00" "1234", "1234")
 static inline void *flatbuffers_read_size_prefix(void *b, size_t *size_out)
 { if (size_out) { *size_out = (size_t)__flatbuffers_uoffset_read_from_pe(b); }
   return (uint8_t *)b + sizeof(flatbuffers_uoffset_t); }
-/* Null file identifier accepts anything, otherwise fid should be 4 characters. */
+/* Null file Id accepts anything, otherwise fid should be 4 characters. */
 #define __flatbuffers_read_root(T, K, buffer, fid)\
-  ((!buffer || !flatbuffers_has_identifier(buffer, fid)) ? 0 :\
+  ((!buffer || !flatbuffers_has_Id(buffer, fid)) ? 0 :\
   ((T ## _ ## K ## t)(((uint8_t *)buffer) +\
     __flatbuffers_uoffset_read_from_pe(buffer))))
 #define __flatbuffers_read_typed_root(T, K, buffer, thash)\
@@ -487,20 +487,20 @@ static inline void *flatbuffers_read_size_prefix(void *b, size_t *size_out)
   ((T ## _ ## K ## t)(((uint8_t *)buffer) +\
     __flatbuffers_uoffset_read_from_pe(buffer))))
 #define __flatbuffers_nested_buffer_as_root(C, N, T, K)\
-static inline T ## _ ## K ## t C ## _ ## N ## _as_root_with_identifier(C ## _ ## table_t t__tmp, const char *fid__tmp)\
+static inline T ## _ ## K ## t C ## _ ## N ## _as_root_with_Id(C ## _ ## table_t t__tmp, const char *fid__tmp)\
 { const uint8_t *buffer__tmp = C ## _ ## N(t__tmp); return __flatbuffers_read_root(T, K, buffer__tmp, fid__tmp); }\
 static inline T ## _ ## K ## t C ## _ ## N ## _as_typed_root(C ## _ ## table_t t__tmp)\
-{ const uint8_t *buffer__tmp = C ## _ ## N(t__tmp); return __flatbuffers_read_root(T, K, buffer__tmp, C ## _ ## type_identifier); }\
+{ const uint8_t *buffer__tmp = C ## _ ## N(t__tmp); return __flatbuffers_read_root(T, K, buffer__tmp, C ## _ ## type_Id); }\
 static inline T ## _ ## K ## t C ## _ ## N ## _as_root(C ## _ ## table_t t__tmp)\
-{ const char *fid__tmp = T ## _identifier;\
+{ const char *fid__tmp = T ## _Id;\
   const uint8_t *buffer__tmp = C ## _ ## N(t__tmp); return __flatbuffers_read_root(T, K, buffer__tmp, fid__tmp); }
 #define __flatbuffers_buffer_as_root(N, K)\
-static inline N ## _ ## K ## t N ## _as_root_with_identifier(const void *buffer__tmp, const char *fid__tmp)\
+static inline N ## _ ## K ## t N ## _as_root_with_Id(const void *buffer__tmp, const char *fid__tmp)\
 { return __flatbuffers_read_root(N, K, buffer__tmp, fid__tmp); }\
 static inline N ## _ ## K ## t N ## _as_root_with_type_hash(const void *buffer__tmp, flatbuffers_thash_t thash__tmp)\
 { return __flatbuffers_read_typed_root(N, K, buffer__tmp, thash__tmp); }\
 static inline N ## _ ## K ## t N ## _as_root(const void *buffer__tmp)\
-{ const char *fid__tmp = N ## _identifier;\
+{ const char *fid__tmp = N ## _Id;\
   return __flatbuffers_read_root(N, K, buffer__tmp, fid__tmp); }\
 static inline N ## _ ## K ## t N ## _as_typed_root(const void *buffer__tmp)\
 { return __flatbuffers_read_typed_root(N, K, buffer__tmp, N ## _type_hash); }
@@ -1180,8 +1180,8 @@ __flatbuffers_build_buffer(flatbuffers_)
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -1191,11 +1191,11 @@ __flatbuffers_build_buffer(flatbuffers_)
 typedef const struct AllWatchSerialize_Extras_table *AllWatchSerialize_Extras_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_Extras_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_Extras_mutable_vec_t;
-#ifndef AllWatchSerialize_Extras_identifier
-#define AllWatchSerialize_Extras_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_Extras_Id
+#define AllWatchSerialize_Extras_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_Extras_type_hash ((flatbuffers_thash_t)0x5b1b5da8)
-#define AllWatchSerialize_Extras_type_identifier "\xa8\x5d\x1b\x5b"
+#define AllWatchSerialize_Extras_type_Id "\xa8\x5d\x1b\x5b"
 
 
 
@@ -1224,8 +1224,8 @@ __flatbuffers_define_string_field(1, AllWatchSerialize_Extras, value, 0)
 #include "flatbuffers_common_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -1239,7 +1239,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Extras, 2)
 #define __AllWatchSerialize_Extras_formal_args , flatbuffers_string_ref_t v0, flatbuffers_string_ref_t v1
 #define __AllWatchSerialize_Extras_call_args , v0, v1
 static inline AllWatchSerialize_Extras_ref_t AllWatchSerialize_Extras_create(flatbuffers_builder_t *B __AllWatchSerialize_Extras_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Extras, AllWatchSerialize_Extras_identifier, AllWatchSerialize_Extras_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Extras, AllWatchSerialize_Extras_Id, AllWatchSerialize_Extras_type_Id)
 
 __flatbuffers_build_string_field(0, flatbuffers_, AllWatchSerialize_Extras_key, AllWatchSerialize_Extras)
 __flatbuffers_build_string_field(1, flatbuffers_, AllWatchSerialize_Extras_value, AllWatchSerialize_Extras)
@@ -1290,15 +1290,15 @@ static int AllWatchSerialize_Extras_verify_table(flatcc_table_verifier_descripto
 
 static inline int AllWatchSerialize_Extras_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Extras_identifier, &AllWatchSerialize_Extras_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Extras_Id, &AllWatchSerialize_Extras_verify_table);
 }
 
 static inline int AllWatchSerialize_Extras_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Extras_type_identifier, &AllWatchSerialize_Extras_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Extras_type_Id, &AllWatchSerialize_Extras_verify_table);
 }
 
-static inline int AllWatchSerialize_Extras_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_Extras_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Extras_verify_table);
 }
@@ -1326,8 +1326,8 @@ static inline int AllWatchSerialize_Extras_verify_as_root_with_type_hash(const v
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -1337,11 +1337,11 @@ static inline int AllWatchSerialize_Extras_verify_as_root_with_type_hash(const v
 typedef const struct AllWatchSerialize_Action_table *AllWatchSerialize_Action_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_Action_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_Action_mutable_vec_t;
-#ifndef AllWatchSerialize_Action_identifier
-#define AllWatchSerialize_Action_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_Action_Id
+#define AllWatchSerialize_Action_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_Action_type_hash ((flatbuffers_thash_t)0x899c121d)
-#define AllWatchSerialize_Action_type_identifier "\x1d\x12\x9c\x89"
+#define AllWatchSerialize_Action_type_Id "\x1d\x12\x9c\x89"
 
 
 
@@ -1374,8 +1374,8 @@ __flatbuffers_define_vector_field(2, AllWatchSerialize_Action, extras, AllWatchS
 #include "Extras_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -1389,7 +1389,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Action, 3)
 #define __AllWatchSerialize_Action_formal_args , flatbuffers_string_ref_t v0, flatbuffers_string_ref_t v1, AllWatchSerialize_Extras_vec_ref_t v2
 #define __AllWatchSerialize_Action_call_args , v0, v1, v2
 static inline AllWatchSerialize_Action_ref_t AllWatchSerialize_Action_create(flatbuffers_builder_t *B __AllWatchSerialize_Action_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Action, AllWatchSerialize_Action_identifier, AllWatchSerialize_Action_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Action, AllWatchSerialize_Action_Id, AllWatchSerialize_Action_type_Id)
 
 __flatbuffers_build_string_field(0, flatbuffers_, AllWatchSerialize_Action_actionName, AllWatchSerialize_Action)
 __flatbuffers_build_string_field(1, flatbuffers_, AllWatchSerialize_Action_callback, AllWatchSerialize_Action)
@@ -1447,15 +1447,15 @@ static int AllWatchSerialize_Action_verify_table(flatcc_table_verifier_descripto
 
 static inline int AllWatchSerialize_Action_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Action_identifier, &AllWatchSerialize_Action_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Action_Id, &AllWatchSerialize_Action_verify_table);
 }
 
 static inline int AllWatchSerialize_Action_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Action_type_identifier, &AllWatchSerialize_Action_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Action_type_Id, &AllWatchSerialize_Action_verify_table);
 }
 
-static inline int AllWatchSerialize_Action_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_Action_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Action_verify_table);
 }
@@ -1480,8 +1480,8 @@ static inline int AllWatchSerialize_Action_verify_as_root_with_type_hash(const v
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -1494,16 +1494,16 @@ typedef flatbuffers_uoffset_t *AllWatchSerialize_PropertyBinding_mutable_vec_t;
 typedef const struct AllWatchSerialize_DataBinding_table *AllWatchSerialize_DataBinding_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_DataBinding_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_DataBinding_mutable_vec_t;
-#ifndef AllWatchSerialize_PropertyBinding_identifier
-#define AllWatchSerialize_PropertyBinding_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_PropertyBinding_Id
+#define AllWatchSerialize_PropertyBinding_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_PropertyBinding_type_hash ((flatbuffers_thash_t)0x3d7ca86b)
-#define AllWatchSerialize_PropertyBinding_type_identifier "\x6b\xa8\x7c\x3d"
-#ifndef AllWatchSerialize_DataBinding_identifier
-#define AllWatchSerialize_DataBinding_identifier flatbuffers_identifier
+#define AllWatchSerialize_PropertyBinding_type_Id "\x6b\xa8\x7c\x3d"
+#ifndef AllWatchSerialize_DataBinding_Id
+#define AllWatchSerialize_DataBinding_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_DataBinding_type_hash ((flatbuffers_thash_t)0xb903b9e0)
-#define AllWatchSerialize_DataBinding_type_identifier "\xe0\xb9\x03\xb9"
+#define AllWatchSerialize_DataBinding_type_Id "\xe0\xb9\x03\xb9"
 
 
 
@@ -1543,8 +1543,8 @@ __flatbuffers_define_vector_field(1, AllWatchSerialize_DataBinding, bindings, Al
 #include "flatbuffers_common_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -1563,12 +1563,12 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_DataBinding, 2)
 #define __AllWatchSerialize_PropertyBinding_formal_args , flatbuffers_string_ref_t v0, flatbuffers_string_ref_t v1
 #define __AllWatchSerialize_PropertyBinding_call_args , v0, v1
 static inline AllWatchSerialize_PropertyBinding_ref_t AllWatchSerialize_PropertyBinding_create(flatbuffers_builder_t *B __AllWatchSerialize_PropertyBinding_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_PropertyBinding, AllWatchSerialize_PropertyBinding_identifier, AllWatchSerialize_PropertyBinding_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_PropertyBinding, AllWatchSerialize_PropertyBinding_Id, AllWatchSerialize_PropertyBinding_type_Id)
 
 #define __AllWatchSerialize_DataBinding_formal_args , flatbuffers_string_ref_t v0, AllWatchSerialize_PropertyBinding_vec_ref_t v1
 #define __AllWatchSerialize_DataBinding_call_args , v0, v1
 static inline AllWatchSerialize_DataBinding_ref_t AllWatchSerialize_DataBinding_create(flatbuffers_builder_t *B __AllWatchSerialize_DataBinding_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_DataBinding, AllWatchSerialize_DataBinding_identifier, AllWatchSerialize_DataBinding_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_DataBinding, AllWatchSerialize_DataBinding_Id, AllWatchSerialize_DataBinding_type_Id)
 
 __flatbuffers_build_string_field(0, flatbuffers_, AllWatchSerialize_PropertyBinding_propertyName, AllWatchSerialize_PropertyBinding)
 __flatbuffers_build_string_field(1, flatbuffers_, AllWatchSerialize_PropertyBinding_value, AllWatchSerialize_PropertyBinding)
@@ -1644,15 +1644,15 @@ static int AllWatchSerialize_PropertyBinding_verify_table(flatcc_table_verifier_
 
 static inline int AllWatchSerialize_PropertyBinding_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_PropertyBinding_identifier, &AllWatchSerialize_PropertyBinding_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_PropertyBinding_Id, &AllWatchSerialize_PropertyBinding_verify_table);
 }
 
 static inline int AllWatchSerialize_PropertyBinding_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_PropertyBinding_type_identifier, &AllWatchSerialize_PropertyBinding_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_PropertyBinding_type_Id, &AllWatchSerialize_PropertyBinding_verify_table);
 }
 
-static inline int AllWatchSerialize_PropertyBinding_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_PropertyBinding_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_PropertyBinding_verify_table);
 }
@@ -1672,15 +1672,15 @@ static int AllWatchSerialize_DataBinding_verify_table(flatcc_table_verifier_desc
 
 static inline int AllWatchSerialize_DataBinding_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_DataBinding_identifier, &AllWatchSerialize_DataBinding_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_DataBinding_Id, &AllWatchSerialize_DataBinding_verify_table);
 }
 
 static inline int AllWatchSerialize_DataBinding_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_DataBinding_type_identifier, &AllWatchSerialize_DataBinding_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_DataBinding_type_Id, &AllWatchSerialize_DataBinding_verify_table);
 }
 
-static inline int AllWatchSerialize_DataBinding_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_DataBinding_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_DataBinding_verify_table);
 }
@@ -1711,8 +1711,8 @@ static inline int AllWatchSerialize_DataBinding_verify_as_root_with_type_hash(co
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -1722,11 +1722,11 @@ static inline int AllWatchSerialize_DataBinding_verify_as_root_with_type_hash(co
 typedef const struct AllWatchSerialize_CardAttributes_table *AllWatchSerialize_CardAttributes_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_CardAttributes_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_CardAttributes_mutable_vec_t;
-#ifndef AllWatchSerialize_CardAttributes_identifier
-#define AllWatchSerialize_CardAttributes_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_CardAttributes_Id
+#define AllWatchSerialize_CardAttributes_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_CardAttributes_type_hash ((flatbuffers_thash_t)0x53fd77f8)
-#define AllWatchSerialize_CardAttributes_type_identifier "\xf8\x77\xfd\x53"
+#define AllWatchSerialize_CardAttributes_type_Id "\xf8\x77\xfd\x53"
 
 
 
@@ -1763,8 +1763,8 @@ __flatbuffers_define_vector_field(3, AllWatchSerialize_CardAttributes, actions, 
 #include "Template_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -1778,7 +1778,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_CardAttributes, 4)
 #define __AllWatchSerialize_CardAttributes_formal_args , flatbuffers_string_ref_t v0, flatbuffers_int8_vec_ref_t v1, flatbuffers_int8_vec_ref_t v2, AllWatchSerialize_Action_vec_ref_t v3
 #define __AllWatchSerialize_CardAttributes_call_args , v0, v1, v2, v3
 static inline AllWatchSerialize_CardAttributes_ref_t AllWatchSerialize_CardAttributes_create(flatbuffers_builder_t *B __AllWatchSerialize_CardAttributes_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_CardAttributes, AllWatchSerialize_CardAttributes_identifier, AllWatchSerialize_CardAttributes_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_CardAttributes, AllWatchSerialize_CardAttributes_Id, AllWatchSerialize_CardAttributes_type_Id)
 
 __flatbuffers_build_string_field(0, flatbuffers_, AllWatchSerialize_CardAttributes_title, AllWatchSerialize_CardAttributes)
 __flatbuffers_build_vector_field(1, flatbuffers_, AllWatchSerialize_CardAttributes_image, flatbuffers_int8, int8_t, AllWatchSerialize_CardAttributes)
@@ -1843,15 +1843,15 @@ static int AllWatchSerialize_CardAttributes_verify_table(flatcc_table_verifier_d
 
 static inline int AllWatchSerialize_CardAttributes_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_CardAttributes_identifier, &AllWatchSerialize_CardAttributes_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_CardAttributes_Id, &AllWatchSerialize_CardAttributes_verify_table);
 }
 
 static inline int AllWatchSerialize_CardAttributes_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_CardAttributes_type_identifier, &AllWatchSerialize_CardAttributes_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_CardAttributes_type_Id, &AllWatchSerialize_CardAttributes_verify_table);
 }
 
-static inline int AllWatchSerialize_CardAttributes_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_CardAttributes_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_CardAttributes_verify_table);
 }
@@ -1876,8 +1876,8 @@ static inline int AllWatchSerialize_CardAttributes_verify_as_root_with_type_hash
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -1887,11 +1887,11 @@ static inline int AllWatchSerialize_CardAttributes_verify_as_root_with_type_hash
 typedef const struct AllWatchSerialize_ShapeAttributes_table *AllWatchSerialize_ShapeAttributes_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_ShapeAttributes_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_ShapeAttributes_mutable_vec_t;
-#ifndef AllWatchSerialize_ShapeAttributes_identifier
-#define AllWatchSerialize_ShapeAttributes_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_ShapeAttributes_Id
+#define AllWatchSerialize_ShapeAttributes_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_ShapeAttributes_type_hash ((flatbuffers_thash_t)0x1a7d05f9)
-#define AllWatchSerialize_ShapeAttributes_type_identifier "\xf9\x05\x7d\x1a"
+#define AllWatchSerialize_ShapeAttributes_type_Id "\xf9\x05\x7d\x1a"
 
 typedef int16_t AllWatchSerialize_Shape_enum_t;
 __flatbuffers_define_integer_type(AllWatchSerialize_Shape, AllWatchSerialize_Shape_enum_t, 16)
@@ -1943,8 +1943,8 @@ __flatbuffers_define_scalar_field(1, AllWatchSerialize_ShapeAttributes, fill, fl
 #include "flatbuffers_common_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -1962,7 +1962,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_ShapeAttributes, 2)
 #define __AllWatchSerialize_ShapeAttributes_formal_args , AllWatchSerialize_Shape_enum_t v0, flatbuffers_bool_t v1
 #define __AllWatchSerialize_ShapeAttributes_call_args , v0, v1
 static inline AllWatchSerialize_ShapeAttributes_ref_t AllWatchSerialize_ShapeAttributes_create(flatbuffers_builder_t *B __AllWatchSerialize_ShapeAttributes_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_ShapeAttributes, AllWatchSerialize_ShapeAttributes_identifier, AllWatchSerialize_ShapeAttributes_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_ShapeAttributes, AllWatchSerialize_ShapeAttributes_Id, AllWatchSerialize_ShapeAttributes_type_Id)
 
 __flatbuffers_build_scalar_field(0, flatbuffers_, AllWatchSerialize_ShapeAttributes_type, AllWatchSerialize_Shape, AllWatchSerialize_Shape_enum_t, 2, 2, INT16_C(0), AllWatchSerialize_ShapeAttributes)
 __flatbuffers_build_scalar_field(1, flatbuffers_, AllWatchSerialize_ShapeAttributes_fill, flatbuffers_bool, flatbuffers_bool_t, 1, 1, UINT8_C(0), AllWatchSerialize_ShapeAttributes)
@@ -2013,15 +2013,15 @@ static int AllWatchSerialize_ShapeAttributes_verify_table(flatcc_table_verifier_
 
 static inline int AllWatchSerialize_ShapeAttributes_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ShapeAttributes_identifier, &AllWatchSerialize_ShapeAttributes_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ShapeAttributes_Id, &AllWatchSerialize_ShapeAttributes_verify_table);
 }
 
 static inline int AllWatchSerialize_ShapeAttributes_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ShapeAttributes_type_identifier, &AllWatchSerialize_ShapeAttributes_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ShapeAttributes_type_Id, &AllWatchSerialize_ShapeAttributes_verify_table);
 }
 
-static inline int AllWatchSerialize_ShapeAttributes_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_ShapeAttributes_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_ShapeAttributes_verify_table);
 }
@@ -2046,8 +2046,8 @@ static inline int AllWatchSerialize_ShapeAttributes_verify_as_root_with_type_has
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -2057,11 +2057,11 @@ static inline int AllWatchSerialize_ShapeAttributes_verify_as_root_with_type_has
 typedef const struct AllWatchSerialize_TextAttributes_table *AllWatchSerialize_TextAttributes_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_TextAttributes_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_TextAttributes_mutable_vec_t;
-#ifndef AllWatchSerialize_TextAttributes_identifier
-#define AllWatchSerialize_TextAttributes_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_TextAttributes_Id
+#define AllWatchSerialize_TextAttributes_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_TextAttributes_type_hash ((flatbuffers_thash_t)0x46c4b2a9)
-#define AllWatchSerialize_TextAttributes_type_identifier "\xa9\xb2\xc4\x46"
+#define AllWatchSerialize_TextAttributes_type_Id "\xa9\xb2\xc4\x46"
 
 
 
@@ -2092,8 +2092,8 @@ __flatbuffers_define_scalar_field(3, AllWatchSerialize_TextAttributes, color, fl
 #include "flatbuffers_common_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -2107,7 +2107,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_TextAttributes, 4)
 #define __AllWatchSerialize_TextAttributes_formal_args , int16_t v0, flatbuffers_string_ref_t v1, flatbuffers_string_ref_t v2, int32_t v3
 #define __AllWatchSerialize_TextAttributes_call_args , v0, v1, v2, v3
 static inline AllWatchSerialize_TextAttributes_ref_t AllWatchSerialize_TextAttributes_create(flatbuffers_builder_t *B __AllWatchSerialize_TextAttributes_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_TextAttributes, AllWatchSerialize_TextAttributes_identifier, AllWatchSerialize_TextAttributes_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_TextAttributes, AllWatchSerialize_TextAttributes_Id, AllWatchSerialize_TextAttributes_type_Id)
 
 __flatbuffers_build_scalar_field(0, flatbuffers_, AllWatchSerialize_TextAttributes_fontSize, flatbuffers_int16, int16_t, 2, 2, INT16_C(0), AllWatchSerialize_TextAttributes)
 __flatbuffers_build_string_field(1, flatbuffers_, AllWatchSerialize_TextAttributes_fontFamily, AllWatchSerialize_TextAttributes)
@@ -2166,15 +2166,15 @@ static int AllWatchSerialize_TextAttributes_verify_table(flatcc_table_verifier_d
 
 static inline int AllWatchSerialize_TextAttributes_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TextAttributes_identifier, &AllWatchSerialize_TextAttributes_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TextAttributes_Id, &AllWatchSerialize_TextAttributes_verify_table);
 }
 
 static inline int AllWatchSerialize_TextAttributes_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TextAttributes_type_identifier, &AllWatchSerialize_TextAttributes_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TextAttributes_type_Id, &AllWatchSerialize_TextAttributes_verify_table);
 }
 
-static inline int AllWatchSerialize_TextAttributes_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_TextAttributes_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_TextAttributes_verify_table);
 }
@@ -2199,8 +2199,8 @@ static inline int AllWatchSerialize_TextAttributes_verify_as_root_with_type_hash
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -2210,11 +2210,11 @@ static inline int AllWatchSerialize_TextAttributes_verify_as_root_with_type_hash
 typedef const struct AllWatchSerialize_LayoutAttributes_table *AllWatchSerialize_LayoutAttributes_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_LayoutAttributes_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_LayoutAttributes_mutable_vec_t;
-#ifndef AllWatchSerialize_LayoutAttributes_identifier
-#define AllWatchSerialize_LayoutAttributes_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_LayoutAttributes_Id
+#define AllWatchSerialize_LayoutAttributes_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_LayoutAttributes_type_hash ((flatbuffers_thash_t)0xc54bd01c)
-#define AllWatchSerialize_LayoutAttributes_type_identifier "\x1c\xd0\x4b\xc5"
+#define AllWatchSerialize_LayoutAttributes_type_Id "\x1c\xd0\x4b\xc5"
 
 
 
@@ -2242,8 +2242,8 @@ __flatbuffers_define_scalar_field(0, AllWatchSerialize_LayoutAttributes, spacing
 #include "flatbuffers_common_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -2257,7 +2257,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_LayoutAttributes, 1)
 #define __AllWatchSerialize_LayoutAttributes_formal_args , int16_t v0
 #define __AllWatchSerialize_LayoutAttributes_call_args , v0
 static inline AllWatchSerialize_LayoutAttributes_ref_t AllWatchSerialize_LayoutAttributes_create(flatbuffers_builder_t *B __AllWatchSerialize_LayoutAttributes_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_LayoutAttributes, AllWatchSerialize_LayoutAttributes_identifier, AllWatchSerialize_LayoutAttributes_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_LayoutAttributes, AllWatchSerialize_LayoutAttributes_Id, AllWatchSerialize_LayoutAttributes_type_Id)
 
 __flatbuffers_build_scalar_field(0, flatbuffers_, AllWatchSerialize_LayoutAttributes_spacing, flatbuffers_int16, int16_t, 2, 2, INT16_C(0), AllWatchSerialize_LayoutAttributes)
 
@@ -2304,15 +2304,15 @@ static int AllWatchSerialize_LayoutAttributes_verify_table(flatcc_table_verifier
 
 static inline int AllWatchSerialize_LayoutAttributes_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_LayoutAttributes_identifier, &AllWatchSerialize_LayoutAttributes_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_LayoutAttributes_Id, &AllWatchSerialize_LayoutAttributes_verify_table);
 }
 
 static inline int AllWatchSerialize_LayoutAttributes_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_LayoutAttributes_type_identifier, &AllWatchSerialize_LayoutAttributes_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_LayoutAttributes_type_Id, &AllWatchSerialize_LayoutAttributes_verify_table);
 }
 
-static inline int AllWatchSerialize_LayoutAttributes_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_LayoutAttributes_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_LayoutAttributes_verify_table);
 }
@@ -2337,8 +2337,8 @@ static inline int AllWatchSerialize_LayoutAttributes_verify_as_root_with_type_ha
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -2348,11 +2348,11 @@ static inline int AllWatchSerialize_LayoutAttributes_verify_as_root_with_type_ha
 typedef const struct AllWatchSerialize_Background_table *AllWatchSerialize_Background_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_Background_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_Background_mutable_vec_t;
-#ifndef AllWatchSerialize_Background_identifier
-#define AllWatchSerialize_Background_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_Background_Id
+#define AllWatchSerialize_Background_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_Background_type_hash ((flatbuffers_thash_t)0xe07f766b)
-#define AllWatchSerialize_Background_type_identifier "\x6b\x76\x7f\xe0"
+#define AllWatchSerialize_Background_type_Id "\x6b\x76\x7f\xe0"
 
 
 
@@ -2381,8 +2381,8 @@ __flatbuffers_define_vector_field(1, AllWatchSerialize_Background, backgroundIma
 #include "flatbuffers_common_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -2396,7 +2396,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Background, 2)
 #define __AllWatchSerialize_Background_formal_args , int32_t v0, flatbuffers_int8_vec_ref_t v1
 #define __AllWatchSerialize_Background_call_args , v0, v1
 static inline AllWatchSerialize_Background_ref_t AllWatchSerialize_Background_create(flatbuffers_builder_t *B __AllWatchSerialize_Background_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Background, AllWatchSerialize_Background_identifier, AllWatchSerialize_Background_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Background, AllWatchSerialize_Background_Id, AllWatchSerialize_Background_type_Id)
 
 __flatbuffers_build_scalar_field(0, flatbuffers_, AllWatchSerialize_Background_backgroundColor, flatbuffers_int32, int32_t, 4, 4, INT32_C(0), AllWatchSerialize_Background)
 __flatbuffers_build_vector_field(1, flatbuffers_, AllWatchSerialize_Background_backgroundImage, flatbuffers_int8, int8_t, AllWatchSerialize_Background)
@@ -2447,15 +2447,15 @@ static int AllWatchSerialize_Background_verify_table(flatcc_table_verifier_descr
 
 static inline int AllWatchSerialize_Background_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Background_identifier, &AllWatchSerialize_Background_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Background_Id, &AllWatchSerialize_Background_verify_table);
 }
 
 static inline int AllWatchSerialize_Background_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Background_type_identifier, &AllWatchSerialize_Background_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Background_type_Id, &AllWatchSerialize_Background_verify_table);
 }
 
-static inline int AllWatchSerialize_Background_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_Background_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Background_verify_table);
 }
@@ -2483,8 +2483,8 @@ static inline int AllWatchSerialize_Background_verify_as_root_with_type_hash(con
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -2494,11 +2494,11 @@ static inline int AllWatchSerialize_Background_verify_as_root_with_type_hash(con
 typedef const struct AllWatchSerialize_Style_table *AllWatchSerialize_Style_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_Style_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_Style_mutable_vec_t;
-#ifndef AllWatchSerialize_Style_identifier
-#define AllWatchSerialize_Style_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_Style_Id
+#define AllWatchSerialize_Style_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_Style_type_hash ((flatbuffers_thash_t)0xedf8dd8)
-#define AllWatchSerialize_Style_type_identifier "\xd8\x8d\xdf\x0e"
+#define AllWatchSerialize_Style_type_Id "\xd8\x8d\xdf\x0e"
 
 
 
@@ -2543,8 +2543,8 @@ __flatbuffers_define_scalar_field(14, AllWatchSerialize_Style, offsetY, flatbuff
 #include "Background_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -2566,7 +2566,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Style, 15)
   v8, v9, v10, v11,\
   v12, v13, v14
 static inline AllWatchSerialize_Style_ref_t AllWatchSerialize_Style_create(flatbuffers_builder_t *B __AllWatchSerialize_Style_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Style, AllWatchSerialize_Style_identifier, AllWatchSerialize_Style_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Style, AllWatchSerialize_Style_Id, AllWatchSerialize_Style_type_Id)
 
 __flatbuffers_build_scalar_field(0, flatbuffers_, AllWatchSerialize_Style_absoluteWidth, flatbuffers_int16, int16_t, 2, 2, INT16_C(0), AllWatchSerialize_Style)
 __flatbuffers_build_scalar_field(1, flatbuffers_, AllWatchSerialize_Style_absoluteHeight, flatbuffers_int16, int16_t, 2, 2, INT16_C(0), AllWatchSerialize_Style)
@@ -2672,15 +2672,15 @@ static int AllWatchSerialize_Style_verify_table(flatcc_table_verifier_descriptor
 
 static inline int AllWatchSerialize_Style_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Style_identifier, &AllWatchSerialize_Style_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Style_Id, &AllWatchSerialize_Style_verify_table);
 }
 
 static inline int AllWatchSerialize_Style_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Style_type_identifier, &AllWatchSerialize_Style_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Style_type_Id, &AllWatchSerialize_Style_verify_table);
 }
 
-static inline int AllWatchSerialize_Style_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_Style_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Style_verify_table);
 }
@@ -2723,8 +2723,8 @@ static inline int AllWatchSerialize_Style_verify_as_root_with_type_hash(const vo
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -2734,11 +2734,11 @@ static inline int AllWatchSerialize_Style_verify_as_root_with_type_hash(const vo
 typedef const struct AllWatchSerialize_Template_table *AllWatchSerialize_Template_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_Template_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_Template_mutable_vec_t;
-#ifndef AllWatchSerialize_Template_identifier
-#define AllWatchSerialize_Template_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_Template_Id
+#define AllWatchSerialize_Template_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_Template_type_hash ((flatbuffers_thash_t)0x506fd485)
-#define AllWatchSerialize_Template_type_identifier "\x85\xd4\x6f\x50"
+#define AllWatchSerialize_Template_type_Id "\x85\xd4\x6f\x50"
 
 typedef int16_t AllWatchSerialize_Type_enum_t;
 __flatbuffers_define_integer_type(AllWatchSerialize_Type, AllWatchSerialize_Type_enum_t, 16)
@@ -2863,8 +2863,8 @@ __flatbuffers_define_vector_field(6, AllWatchSerialize_Template, children, AllWa
 #include "Style_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -2888,7 +2888,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Template, 7)
 #define __AllWatchSerialize_Template_call_args ,\
   v0, v1, v2, v4, v5, v6
 static inline AllWatchSerialize_Template_ref_t AllWatchSerialize_Template_create(flatbuffers_builder_t *B __AllWatchSerialize_Template_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Template, AllWatchSerialize_Template_identifier, AllWatchSerialize_Template_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Template, AllWatchSerialize_Template_Id, AllWatchSerialize_Template_type_Id)
 
 static inline AllWatchSerialize_Attributes_union_ref_t AllWatchSerialize_Attributes_as_NONE()
 { AllWatchSerialize_Attributes_union_ref_t uref; uref.type = AllWatchSerialize_Attributes_NONE; uref.value = 0; return uref; }
@@ -3012,15 +3012,15 @@ static int AllWatchSerialize_Template_verify_table(flatcc_table_verifier_descrip
 
 static inline int AllWatchSerialize_Template_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Template_identifier, &AllWatchSerialize_Template_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Template_Id, &AllWatchSerialize_Template_verify_table);
 }
 
 static inline int AllWatchSerialize_Template_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Template_type_identifier, &AllWatchSerialize_Template_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Template_type_Id, &AllWatchSerialize_Template_verify_table);
 }
 
-static inline int AllWatchSerialize_Template_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_Template_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Template_verify_table);
 }
@@ -3054,8 +3054,8 @@ static inline int AllWatchSerialize_Template_verify_as_root_with_type_hash(const
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -3065,11 +3065,11 @@ static inline int AllWatchSerialize_Template_verify_as_root_with_type_hash(const
 typedef const struct AllWatchSerialize_TemplateRoot_table *AllWatchSerialize_TemplateRoot_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_TemplateRoot_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_TemplateRoot_mutable_vec_t;
-#ifndef AllWatchSerialize_TemplateRoot_identifier
-#define AllWatchSerialize_TemplateRoot_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_TemplateRoot_Id
+#define AllWatchSerialize_TemplateRoot_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_TemplateRoot_type_hash ((flatbuffers_thash_t)0x6ab2b525)
-#define AllWatchSerialize_TemplateRoot_type_identifier "\x25\xb5\xb2\x6a"
+#define AllWatchSerialize_TemplateRoot_type_Id "\x25\xb5\xb2\x6a"
 
 
 
@@ -3108,8 +3108,8 @@ __flatbuffers_define_vector_field(2, AllWatchSerialize_TemplateRoot, dataBinding
 #include "Template_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -3123,7 +3123,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_TemplateRoot, 3)
 #define __AllWatchSerialize_TemplateRoot_formal_args , flatbuffers_string_ref_t v0, AllWatchSerialize_Template_ref_t v1, AllWatchSerialize_DataBinding_vec_ref_t v2
 #define __AllWatchSerialize_TemplateRoot_call_args , v0, v1, v2
 static inline AllWatchSerialize_TemplateRoot_ref_t AllWatchSerialize_TemplateRoot_create(flatbuffers_builder_t *B __AllWatchSerialize_TemplateRoot_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_TemplateRoot, AllWatchSerialize_TemplateRoot_identifier, AllWatchSerialize_TemplateRoot_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_TemplateRoot, AllWatchSerialize_TemplateRoot_Id, AllWatchSerialize_TemplateRoot_type_Id)
 
 __flatbuffers_build_string_field(0, flatbuffers_, AllWatchSerialize_TemplateRoot_name, AllWatchSerialize_TemplateRoot)
 __flatbuffers_build_table_field(1, flatbuffers_, AllWatchSerialize_TemplateRoot_layout, AllWatchSerialize_Template, AllWatchSerialize_TemplateRoot)
@@ -3187,15 +3187,15 @@ static int AllWatchSerialize_TemplateRoot_verify_table(flatcc_table_verifier_des
 
 static inline int AllWatchSerialize_TemplateRoot_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TemplateRoot_identifier, &AllWatchSerialize_TemplateRoot_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TemplateRoot_Id, &AllWatchSerialize_TemplateRoot_verify_table);
 }
 
 static inline int AllWatchSerialize_TemplateRoot_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TemplateRoot_type_identifier, &AllWatchSerialize_TemplateRoot_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TemplateRoot_type_Id, &AllWatchSerialize_TemplateRoot_verify_table);
 }
 
-static inline int AllWatchSerialize_TemplateRoot_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_TemplateRoot_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_TemplateRoot_verify_table);
 }
@@ -3207,8 +3207,8 @@ static inline int AllWatchSerialize_TemplateRoot_verify_as_root_with_type_hash(c
 
 #include "flatcc/flatcc_epilogue.h"
 #endif /* TEMPLATEROOT_VERIFIER_H */
-#ifndef IDENTIFIER_READER_H
-#define IDENTIFIER_READER_H
+#ifndef Id_READER_H
+#define Id_READER_H
 
 /* Generated by flatcc 0.5.2 FlatBuffers schema compiler for C by dvide.com */
 
@@ -3220,112 +3220,112 @@ static inline int AllWatchSerialize_TemplateRoot_verify_as_root_with_type_hash(c
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
 #endif
 
 
-typedef const struct AllWatchSerialize_Identifier_table *AllWatchSerialize_Identifier_table_t;
-typedef const flatbuffers_uoffset_t *AllWatchSerialize_Identifier_vec_t;
-typedef flatbuffers_uoffset_t *AllWatchSerialize_Identifier_mutable_vec_t;
-#ifndef AllWatchSerialize_Identifier_identifier
-#define AllWatchSerialize_Identifier_identifier flatbuffers_identifier
+typedef const struct AllWatchSerialize_Id_table *AllWatchSerialize_Id_table_t;
+typedef const flatbuffers_uoffset_t *AllWatchSerialize_Id_vec_t;
+typedef flatbuffers_uoffset_t *AllWatchSerialize_Id_mutable_vec_t;
+#ifndef AllWatchSerialize_Id_Id
+#define AllWatchSerialize_Id_Id flatbuffers_Id
 #endif
-#define AllWatchSerialize_Identifier_type_hash ((flatbuffers_thash_t)0xb03cc80c)
-#define AllWatchSerialize_Identifier_type_identifier "\x0c\xc8\x3c\xb0"
+#define AllWatchSerialize_Id_type_hash ((flatbuffers_thash_t)0xb03cc80c)
+#define AllWatchSerialize_Id_type_Id "\x0c\xc8\x3c\xb0"
 
 
 
-struct AllWatchSerialize_Identifier_table { uint8_t unused__; };
+struct AllWatchSerialize_Id_table { uint8_t unused__; };
 
-static inline size_t AllWatchSerialize_Identifier_vec_len(AllWatchSerialize_Identifier_vec_t vec)
+static inline size_t AllWatchSerialize_Id_vec_len(AllWatchSerialize_Id_vec_t vec)
 __flatbuffers_vec_len(vec)
-static inline AllWatchSerialize_Identifier_table_t AllWatchSerialize_Identifier_vec_at(AllWatchSerialize_Identifier_vec_t vec, size_t i)
-__flatbuffers_offset_vec_at(AllWatchSerialize_Identifier_table_t, vec, i, 0)
-__flatbuffers_table_as_root(AllWatchSerialize_Identifier)
+static inline AllWatchSerialize_Id_table_t AllWatchSerialize_Id_vec_at(AllWatchSerialize_Id_vec_t vec, size_t i)
+__flatbuffers_offset_vec_at(AllWatchSerialize_Id_table_t, vec, i, 0)
+__flatbuffers_table_as_root(AllWatchSerialize_Id)
 
-__flatbuffers_define_string_field(0, AllWatchSerialize_Identifier, packageName, 0)
-__flatbuffers_define_find_by_string_field(AllWatchSerialize_Identifier, packageName)
-__flatbuffers_define_sort_by_string_field(AllWatchSerialize_Identifier, packageName)
-__flatbuffers_define_default_find_by_string_field(AllWatchSerialize_Identifier, packageName)
-__flatbuffers_define_default_scan_by_string_field(AllWatchSerialize_Identifier, packageName)
-#define AllWatchSerialize_Identifier_vec_sort AllWatchSerialize_Identifier_vec_sort_by_packageName
-__flatbuffers_define_string_field(1, AllWatchSerialize_Identifier, friendlyName, 0)
+__flatbuffers_define_string_field(0, AllWatchSerialize_Id, packageName, 0)
+__flatbuffers_define_find_by_string_field(AllWatchSerialize_Id, packageName)
+__flatbuffers_define_sort_by_string_field(AllWatchSerialize_Id, packageName)
+__flatbuffers_define_default_find_by_string_field(AllWatchSerialize_Id, packageName)
+__flatbuffers_define_default_scan_by_string_field(AllWatchSerialize_Id, packageName)
+#define AllWatchSerialize_Id_vec_sort AllWatchSerialize_Id_vec_sort_by_packageName
+__flatbuffers_define_string_field(1, AllWatchSerialize_Id, friendlyName, 0)
 
 #include "flatcc/flatcc_epilogue.h"
-#endif /* IDENTIFIER_READER_H */
-#ifndef IDENTIFIER_BUILDER_H
-#define IDENTIFIER_BUILDER_H
+#endif /* Id_READER_H */
+#ifndef Id_BUILDER_H
+#define Id_BUILDER_H
 
 /* Generated by flatcc 0.5.2 FlatBuffers schema compiler for C by dvide.com */
 
-#ifndef IDENTIFIER_READER_H
-#include "Identifier_reader.h"
+#ifndef Id_READER_H
+#include "Id_reader.h"
 #endif
 #ifndef FLATBUFFERS_COMMON_BUILDER_H
 #include "flatbuffers_common_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
 #endif
 
-static const flatbuffers_voffset_t __AllWatchSerialize_Identifier_required[] = { 0 };
-typedef flatbuffers_ref_t AllWatchSerialize_Identifier_ref_t;
-static AllWatchSerialize_Identifier_ref_t AllWatchSerialize_Identifier_clone(flatbuffers_builder_t *B, AllWatchSerialize_Identifier_table_t t);
-__flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Identifier, 2)
+static const flatbuffers_voffset_t __AllWatchSerialize_Id_required[] = { 0 };
+typedef flatbuffers_ref_t AllWatchSerialize_Id_ref_t;
+static AllWatchSerialize_Id_ref_t AllWatchSerialize_Id_clone(flatbuffers_builder_t *B, AllWatchSerialize_Id_table_t t);
+__flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Id, 2)
 
-#define __AllWatchSerialize_Identifier_formal_args , flatbuffers_string_ref_t v0, flatbuffers_string_ref_t v1
-#define __AllWatchSerialize_Identifier_call_args , v0, v1
-static inline AllWatchSerialize_Identifier_ref_t AllWatchSerialize_Identifier_create(flatbuffers_builder_t *B __AllWatchSerialize_Identifier_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Identifier, AllWatchSerialize_Identifier_identifier, AllWatchSerialize_Identifier_type_identifier)
+#define __AllWatchSerialize_Id_formal_args , flatbuffers_string_ref_t v0, flatbuffers_string_ref_t v1
+#define __AllWatchSerialize_Id_call_args , v0, v1
+static inline AllWatchSerialize_Id_ref_t AllWatchSerialize_Id_create(flatbuffers_builder_t *B __AllWatchSerialize_Id_formal_args);
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Id, AllWatchSerialize_Id_Id, AllWatchSerialize_Id_type_Id)
 
-__flatbuffers_build_string_field(0, flatbuffers_, AllWatchSerialize_Identifier_packageName, AllWatchSerialize_Identifier)
-__flatbuffers_build_string_field(1, flatbuffers_, AllWatchSerialize_Identifier_friendlyName, AllWatchSerialize_Identifier)
+__flatbuffers_build_string_field(0, flatbuffers_, AllWatchSerialize_Id_packageName, AllWatchSerialize_Id)
+__flatbuffers_build_string_field(1, flatbuffers_, AllWatchSerialize_Id_friendlyName, AllWatchSerialize_Id)
 
-static inline AllWatchSerialize_Identifier_ref_t AllWatchSerialize_Identifier_create(flatbuffers_builder_t *B __AllWatchSerialize_Identifier_formal_args)
+static inline AllWatchSerialize_Id_ref_t AllWatchSerialize_Id_create(flatbuffers_builder_t *B __AllWatchSerialize_Id_formal_args)
 {
-    if (AllWatchSerialize_Identifier_start(B)
-        || AllWatchSerialize_Identifier_packageName_add(B, v0)
-        || AllWatchSerialize_Identifier_friendlyName_add(B, v1)) {
+    if (AllWatchSerialize_Id_start(B)
+        || AllWatchSerialize_Id_packageName_add(B, v0)
+        || AllWatchSerialize_Id_friendlyName_add(B, v1)) {
         return 0;
     }
-    return AllWatchSerialize_Identifier_end(B);
+    return AllWatchSerialize_Id_end(B);
 }
 
-static AllWatchSerialize_Identifier_ref_t AllWatchSerialize_Identifier_clone(flatbuffers_builder_t *B, AllWatchSerialize_Identifier_table_t t)
+static AllWatchSerialize_Id_ref_t AllWatchSerialize_Id_clone(flatbuffers_builder_t *B, AllWatchSerialize_Id_table_t t)
 {
     __flatbuffers_memoize_begin(B, t);
-    if (AllWatchSerialize_Identifier_start(B)
-        || AllWatchSerialize_Identifier_packageName_pick(B, t)
-        || AllWatchSerialize_Identifier_friendlyName_pick(B, t)) {
+    if (AllWatchSerialize_Id_start(B)
+        || AllWatchSerialize_Id_packageName_pick(B, t)
+        || AllWatchSerialize_Id_friendlyName_pick(B, t)) {
         return 0;
     }
-    __flatbuffers_memoize_end(B, t, AllWatchSerialize_Identifier_end(B));
+    __flatbuffers_memoize_end(B, t, AllWatchSerialize_Id_end(B));
 }
 
 #include "flatcc/flatcc_epilogue.h"
-#endif /* IDENTIFIER_BUILDER_H */
-#ifndef IDENTIFIER_VERIFIER_H
-#define IDENTIFIER_VERIFIER_H
+#endif /* Id_BUILDER_H */
+#ifndef Id_VERIFIER_H
+#define Id_VERIFIER_H
 
 /* Generated by flatcc 0.5.2 FlatBuffers schema compiler for C by dvide.com */
 
-#ifndef IDENTIFIER_READER_H
-#include "Identifier_reader.h"
+#ifndef Id_READER_H
+#include "Id_reader.h"
 #endif
 #include "flatcc/flatcc_verifier.h"
 #include "flatcc/flatcc_prologue.h"
 
-static int AllWatchSerialize_Identifier_verify_table(flatcc_table_verifier_descriptor_t *td);
+static int AllWatchSerialize_Id_verify_table(flatcc_table_verifier_descriptor_t *td);
 
-static int AllWatchSerialize_Identifier_verify_table(flatcc_table_verifier_descriptor_t *td)
+static int AllWatchSerialize_Id_verify_table(flatcc_table_verifier_descriptor_t *td)
 {
     int ret;
     if ((ret = flatcc_verify_string_field(td, 0, 0) /* packageName */)) return ret;
@@ -3333,28 +3333,28 @@ static int AllWatchSerialize_Identifier_verify_table(flatcc_table_verifier_descr
     return flatcc_verify_ok;
 }
 
-static inline int AllWatchSerialize_Identifier_verify_as_root(const void *buf, size_t bufsiz)
+static inline int AllWatchSerialize_Id_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Identifier_identifier, &AllWatchSerialize_Identifier_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Id_Id, &AllWatchSerialize_Id_verify_table);
 }
 
-static inline int AllWatchSerialize_Identifier_verify_as_typed_root(const void *buf, size_t bufsiz)
+static inline int AllWatchSerialize_Id_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Identifier_type_identifier, &AllWatchSerialize_Identifier_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Id_type_Id, &AllWatchSerialize_Id_verify_table);
 }
 
-static inline int AllWatchSerialize_Identifier_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_Id_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Identifier_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Id_verify_table);
 }
 
-static inline int AllWatchSerialize_Identifier_verify_as_root_with_type_hash(const void *buf, size_t bufsiz, flatbuffers_thash_t thash)
+static inline int AllWatchSerialize_Id_verify_as_root_with_type_hash(const void *buf, size_t bufsiz, flatbuffers_thash_t thash)
 {
-    return flatcc_verify_table_as_typed_root(buf, bufsiz, thash, &AllWatchSerialize_Identifier_verify_table);
+    return flatcc_verify_table_as_typed_root(buf, bufsiz, thash, &AllWatchSerialize_Id_verify_table);
 }
 
 #include "flatcc/flatcc_epilogue.h"
-#endif /* IDENTIFIER_VERIFIER_H */
+#endif /* Id_VERIFIER_H */
 #ifndef WIDGET_READER_H
 #define WIDGET_READER_H
 
@@ -3366,16 +3366,16 @@ static inline int AllWatchSerialize_Identifier_verify_as_root_with_type_hash(con
 #ifndef TEMPLATEROOT_READER_H
 #include "TemplateRoot_reader.h"
 #endif
-#ifndef IDENTIFIER_READER_H
-#include "Identifier_reader.h"
+#ifndef Id_READER_H
+#include "Id_reader.h"
 #endif
 #include "flatcc/flatcc_flatbuffers.h"
 #ifndef __alignas_is_defined
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -3385,11 +3385,11 @@ static inline int AllWatchSerialize_Identifier_verify_as_root_with_type_hash(con
 typedef const struct AllWatchSerialize_Widget_table *AllWatchSerialize_Widget_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_Widget_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_Widget_mutable_vec_t;
-#ifndef AllWatchSerialize_Widget_identifier
-#define AllWatchSerialize_Widget_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_Widget_Id
+#define AllWatchSerialize_Widget_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_Widget_type_hash ((flatbuffers_thash_t)0xb5c9588f)
-#define AllWatchSerialize_Widget_type_identifier "\x8f\x58\xc9\xb5"
+#define AllWatchSerialize_Widget_type_Id "\x8f\x58\xc9\xb5"
 
 
 
@@ -3403,7 +3403,7 @@ __flatbuffers_table_as_root(AllWatchSerialize_Widget)
 
 __flatbuffers_define_scalar_field(0, AllWatchSerialize_Widget, refresh, flatbuffers_int64, int64_t, INT64_C(0))
 __flatbuffers_define_table_field(1, AllWatchSerialize_Widget, template, AllWatchSerialize_TemplateRoot_table_t, 0)
-__flatbuffers_define_table_field(2, AllWatchSerialize_Widget, id, AllWatchSerialize_Identifier_table_t, 0)
+__flatbuffers_define_table_field(2, AllWatchSerialize_Widget, id, AllWatchSerialize_Id_table_t, 0)
 
 #include "flatcc/flatcc_epilogue.h"
 #endif /* WIDGET_READER_H */
@@ -3421,12 +3421,12 @@ __flatbuffers_define_table_field(2, AllWatchSerialize_Widget, id, AllWatchSerial
 #ifndef TEMPLATEROOT_BUILDER_H
 #include "TemplateRoot_builder.h"
 #endif
-#ifndef IDENTIFIER_BUILDER_H
-#include "Identifier_builder.h"
+#ifndef Id_BUILDER_H
+#include "Id_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -3437,14 +3437,14 @@ typedef flatbuffers_ref_t AllWatchSerialize_Widget_ref_t;
 static AllWatchSerialize_Widget_ref_t AllWatchSerialize_Widget_clone(flatbuffers_builder_t *B, AllWatchSerialize_Widget_table_t t);
 __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Widget, 3)
 
-#define __AllWatchSerialize_Widget_formal_args , int64_t v0, AllWatchSerialize_TemplateRoot_ref_t v1, AllWatchSerialize_Identifier_ref_t v2
+#define __AllWatchSerialize_Widget_formal_args , int64_t v0, AllWatchSerialize_TemplateRoot_ref_t v1, AllWatchSerialize_Id_ref_t v2
 #define __AllWatchSerialize_Widget_call_args , v0, v1, v2
 static inline AllWatchSerialize_Widget_ref_t AllWatchSerialize_Widget_create(flatbuffers_builder_t *B __AllWatchSerialize_Widget_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Widget, AllWatchSerialize_Widget_identifier, AllWatchSerialize_Widget_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Widget, AllWatchSerialize_Widget_Id, AllWatchSerialize_Widget_type_Id)
 
 __flatbuffers_build_scalar_field(0, flatbuffers_, AllWatchSerialize_Widget_refresh, flatbuffers_int64, int64_t, 8, 8, INT64_C(0), AllWatchSerialize_Widget)
 __flatbuffers_build_table_field(1, flatbuffers_, AllWatchSerialize_Widget_template, AllWatchSerialize_TemplateRoot, AllWatchSerialize_Widget)
-__flatbuffers_build_table_field(2, flatbuffers_, AllWatchSerialize_Widget_id, AllWatchSerialize_Identifier, AllWatchSerialize_Widget)
+__flatbuffers_build_table_field(2, flatbuffers_, AllWatchSerialize_Widget_id, AllWatchSerialize_Id, AllWatchSerialize_Widget)
 
 static inline AllWatchSerialize_Widget_ref_t AllWatchSerialize_Widget_create(flatbuffers_builder_t *B __AllWatchSerialize_Widget_formal_args)
 {
@@ -3483,8 +3483,8 @@ static AllWatchSerialize_Widget_ref_t AllWatchSerialize_Widget_clone(flatbuffers
 #ifndef TEMPLATEROOT_VERIFIER_H
 #include "TemplateRoot_verifier.h"
 #endif
-#ifndef IDENTIFIER_VERIFIER_H
-#include "Identifier_verifier.h"
+#ifndef Id_VERIFIER_H
+#include "Id_verifier.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
 
@@ -3495,21 +3495,21 @@ static int AllWatchSerialize_Widget_verify_table(flatcc_table_verifier_descripto
     int ret;
     if ((ret = flatcc_verify_field(td, 0, 8, 8) /* refresh */)) return ret;
     if ((ret = flatcc_verify_table_field(td, 1, 0, &AllWatchSerialize_TemplateRoot_verify_table) /* template */)) return ret;
-    if ((ret = flatcc_verify_table_field(td, 2, 0, &AllWatchSerialize_Identifier_verify_table) /* id */)) return ret;
+    if ((ret = flatcc_verify_table_field(td, 2, 0, &AllWatchSerialize_Id_verify_table) /* id */)) return ret;
     return flatcc_verify_ok;
 }
 
 static inline int AllWatchSerialize_Widget_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Widget_identifier, &AllWatchSerialize_Widget_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Widget_Id, &AllWatchSerialize_Widget_verify_table);
 }
 
 static inline int AllWatchSerialize_Widget_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Widget_type_identifier, &AllWatchSerialize_Widget_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Widget_type_Id, &AllWatchSerialize_Widget_verify_table);
 }
 
-static inline int AllWatchSerialize_Widget_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_Widget_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Widget_verify_table);
 }
@@ -3534,8 +3534,8 @@ static inline int AllWatchSerialize_Widget_verify_as_root_with_type_hash(const v
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -3597,8 +3597,8 @@ static inline int AllWatchSerialize_Requirements_is_known_value(AllWatchSerializ
 #include "flatbuffers_common_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -3638,16 +3638,16 @@ __flatbuffers_build_scalar(flatbuffers_, AllWatchSerialize_Requirements, AllWatc
 #ifndef REQUIREMENTS_READER_H
 #include "Requirements_reader.h"
 #endif
-#ifndef IDENTIFIER_READER_H
-#include "Identifier_reader.h"
+#ifndef Id_READER_H
+#include "Id_reader.h"
 #endif
 #include "flatcc/flatcc_flatbuffers.h"
 #ifndef __alignas_is_defined
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -3657,11 +3657,11 @@ __flatbuffers_build_scalar(flatbuffers_, AllWatchSerialize_Requirements, AllWatc
 typedef const struct AllWatchSerialize_Application_table *AllWatchSerialize_Application_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_Application_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_Application_mutable_vec_t;
-#ifndef AllWatchSerialize_Application_identifier
-#define AllWatchSerialize_Application_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_Application_Id
+#define AllWatchSerialize_Application_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_Application_type_hash ((flatbuffers_thash_t)0x198a96bf)
-#define AllWatchSerialize_Application_type_identifier "\xbf\x96\x8a\x19"
+#define AllWatchSerialize_Application_type_Id "\xbf\x96\x8a\x19"
 
 
 
@@ -3674,7 +3674,7 @@ __flatbuffers_offset_vec_at(AllWatchSerialize_Application_table_t, vec, i, 0)
 __flatbuffers_table_as_root(AllWatchSerialize_Application)
 
 __flatbuffers_define_scalar_field(0, AllWatchSerialize_Application, reinstall, flatbuffers_bool, flatbuffers_bool_t, UINT8_C(0))
-__flatbuffers_define_table_field(1, AllWatchSerialize_Application, identifier, AllWatchSerialize_Identifier_table_t, 0)
+__flatbuffers_define_table_field(1, AllWatchSerialize_Application, Id, AllWatchSerialize_Id_table_t, 0)
 __flatbuffers_define_vector_field(2, AllWatchSerialize_Application, icon, flatbuffers_int8_vec_t, 0)
 __flatbuffers_define_vector_field(3, AllWatchSerialize_Application, requirements, AllWatchSerialize_Requirements_vec_t, 0)
 __flatbuffers_define_vector_field(4, AllWatchSerialize_Application, voicePhrases, flatbuffers_string_vec_t, 0)
@@ -3699,12 +3699,12 @@ __flatbuffers_define_table_field(5, AllWatchSerialize_Application, widget, AllWa
 #ifndef REQUIREMENTS_BUILDER_H
 #include "Requirements_builder.h"
 #endif
-#ifndef IDENTIFIER_BUILDER_H
-#include "Identifier_builder.h"
+#ifndef Id_BUILDER_H
+#include "Id_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -3716,14 +3716,14 @@ static AllWatchSerialize_Application_ref_t AllWatchSerialize_Application_clone(f
 __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Application, 6)
 
 #define __AllWatchSerialize_Application_formal_args ,\
-  flatbuffers_bool_t v0, AllWatchSerialize_Identifier_ref_t v1, flatbuffers_int8_vec_ref_t v2, AllWatchSerialize_Requirements_vec_ref_t v3, flatbuffers_string_vec_ref_t v4, AllWatchSerialize_Widget_ref_t v5
+  flatbuffers_bool_t v0, AllWatchSerialize_Id_ref_t v1, flatbuffers_int8_vec_ref_t v2, AllWatchSerialize_Requirements_vec_ref_t v3, flatbuffers_string_vec_ref_t v4, AllWatchSerialize_Widget_ref_t v5
 #define __AllWatchSerialize_Application_call_args ,\
   v0, v1, v2, v3, v4, v5
 static inline AllWatchSerialize_Application_ref_t AllWatchSerialize_Application_create(flatbuffers_builder_t *B __AllWatchSerialize_Application_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Application, AllWatchSerialize_Application_identifier, AllWatchSerialize_Application_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Application, AllWatchSerialize_Application_Id, AllWatchSerialize_Application_type_Id)
 
 __flatbuffers_build_scalar_field(0, flatbuffers_, AllWatchSerialize_Application_reinstall, flatbuffers_bool, flatbuffers_bool_t, 1, 1, UINT8_C(0), AllWatchSerialize_Application)
-__flatbuffers_build_table_field(1, flatbuffers_, AllWatchSerialize_Application_identifier, AllWatchSerialize_Identifier, AllWatchSerialize_Application)
+__flatbuffers_build_table_field(1, flatbuffers_, AllWatchSerialize_Application_Id, AllWatchSerialize_Id, AllWatchSerialize_Application)
 __flatbuffers_build_vector_field(2, flatbuffers_, AllWatchSerialize_Application_icon, flatbuffers_int8, int8_t, AllWatchSerialize_Application)
 __flatbuffers_build_vector_field(3, flatbuffers_, AllWatchSerialize_Application_requirements, AllWatchSerialize_Requirements, AllWatchSerialize_Requirements_enum_t, AllWatchSerialize_Application)
 __flatbuffers_build_string_vector_field(4, flatbuffers_, AllWatchSerialize_Application_voicePhrases, AllWatchSerialize_Application)
@@ -3732,7 +3732,7 @@ __flatbuffers_build_table_field(5, flatbuffers_, AllWatchSerialize_Application_w
 static inline AllWatchSerialize_Application_ref_t AllWatchSerialize_Application_create(flatbuffers_builder_t *B __AllWatchSerialize_Application_formal_args)
 {
     if (AllWatchSerialize_Application_start(B)
-        || AllWatchSerialize_Application_identifier_add(B, v1)
+        || AllWatchSerialize_Application_Id_add(B, v1)
         || AllWatchSerialize_Application_icon_add(B, v2)
         || AllWatchSerialize_Application_requirements_add(B, v3)
         || AllWatchSerialize_Application_voicePhrases_add(B, v4)
@@ -3747,7 +3747,7 @@ static AllWatchSerialize_Application_ref_t AllWatchSerialize_Application_clone(f
 {
     __flatbuffers_memoize_begin(B, t);
     if (AllWatchSerialize_Application_start(B)
-        || AllWatchSerialize_Application_identifier_pick(B, t)
+        || AllWatchSerialize_Application_Id_pick(B, t)
         || AllWatchSerialize_Application_icon_pick(B, t)
         || AllWatchSerialize_Application_requirements_pick(B, t)
         || AllWatchSerialize_Application_voicePhrases_pick(B, t)
@@ -3775,8 +3775,8 @@ static AllWatchSerialize_Application_ref_t AllWatchSerialize_Application_clone(f
 #ifndef REQUIREMENTS_VERIFIER_H
 #include "Requirements_verifier.h"
 #endif
-#ifndef IDENTIFIER_VERIFIER_H
-#include "Identifier_verifier.h"
+#ifndef Id_VERIFIER_H
+#include "Id_verifier.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
 
@@ -3786,7 +3786,7 @@ static int AllWatchSerialize_Application_verify_table(flatcc_table_verifier_desc
 {
     int ret;
     if ((ret = flatcc_verify_field(td, 0, 1, 1) /* reinstall */)) return ret;
-    if ((ret = flatcc_verify_table_field(td, 1, 0, &AllWatchSerialize_Identifier_verify_table) /* identifier */)) return ret;
+    if ((ret = flatcc_verify_table_field(td, 1, 0, &AllWatchSerialize_Id_verify_table) /* Id */)) return ret;
     if ((ret = flatcc_verify_vector_field(td, 2, 0, 1, 1, INT64_C(4294967295)) /* icon */)) return ret;
     if ((ret = flatcc_verify_vector_field(td, 3, 0, 2, 2, INT64_C(2147483647)) /* requirements */)) return ret;
     if ((ret = flatcc_verify_string_vector_field(td, 4, 0) /* voicePhrases */)) return ret;
@@ -3796,15 +3796,15 @@ static int AllWatchSerialize_Application_verify_table(flatcc_table_verifier_desc
 
 static inline int AllWatchSerialize_Application_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Application_identifier, &AllWatchSerialize_Application_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Application_Id, &AllWatchSerialize_Application_verify_table);
 }
 
 static inline int AllWatchSerialize_Application_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Application_type_identifier, &AllWatchSerialize_Application_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Application_type_Id, &AllWatchSerialize_Application_verify_table);
 }
 
-static inline int AllWatchSerialize_Application_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_Application_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Application_verify_table);
 }
@@ -3832,8 +3832,8 @@ static inline int AllWatchSerialize_Application_verify_as_root_with_type_hash(co
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -3843,11 +3843,11 @@ static inline int AllWatchSerialize_Application_verify_as_root_with_type_hash(co
 typedef const struct AllWatchSerialize_SimpleListEntry_table *AllWatchSerialize_SimpleListEntry_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_SimpleListEntry_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_SimpleListEntry_mutable_vec_t;
-#ifndef AllWatchSerialize_SimpleListEntry_identifier
-#define AllWatchSerialize_SimpleListEntry_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_SimpleListEntry_Id
+#define AllWatchSerialize_SimpleListEntry_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_SimpleListEntry_type_hash ((flatbuffers_thash_t)0x420b50d7)
-#define AllWatchSerialize_SimpleListEntry_type_identifier "\xd7\x50\x0b\x42"
+#define AllWatchSerialize_SimpleListEntry_type_Id "\xd7\x50\x0b\x42"
 
 typedef int16_t AllWatchSerialize_Layout_enum_t;
 __flatbuffers_define_integer_type(AllWatchSerialize_Layout, AllWatchSerialize_Layout_enum_t, 16)
@@ -3911,8 +3911,8 @@ __flatbuffers_define_vector_field(4, AllWatchSerialize_SimpleListEntry, icon, fl
 #include "Action_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -3932,7 +3932,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_SimpleListEntry, 5)
 #define __AllWatchSerialize_SimpleListEntry_call_args ,\
   v0, v1, v2, v3, v4
 static inline AllWatchSerialize_SimpleListEntry_ref_t AllWatchSerialize_SimpleListEntry_create(flatbuffers_builder_t *B __AllWatchSerialize_SimpleListEntry_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_SimpleListEntry, AllWatchSerialize_SimpleListEntry_identifier, AllWatchSerialize_SimpleListEntry_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_SimpleListEntry, AllWatchSerialize_SimpleListEntry_Id, AllWatchSerialize_SimpleListEntry_type_Id)
 
 __flatbuffers_build_scalar_field(0, flatbuffers_, AllWatchSerialize_SimpleListEntry_layout, AllWatchSerialize_Layout, AllWatchSerialize_Layout_enum_t, 2, 2, INT16_C(0), AllWatchSerialize_SimpleListEntry)
 __flatbuffers_build_table_field(1, flatbuffers_, AllWatchSerialize_SimpleListEntry_mainAction, AllWatchSerialize_Action, AllWatchSerialize_SimpleListEntry)
@@ -3998,15 +3998,15 @@ static int AllWatchSerialize_SimpleListEntry_verify_table(flatcc_table_verifier_
 
 static inline int AllWatchSerialize_SimpleListEntry_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_SimpleListEntry_identifier, &AllWatchSerialize_SimpleListEntry_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_SimpleListEntry_Id, &AllWatchSerialize_SimpleListEntry_verify_table);
 }
 
 static inline int AllWatchSerialize_SimpleListEntry_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_SimpleListEntry_type_identifier, &AllWatchSerialize_SimpleListEntry_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_SimpleListEntry_type_Id, &AllWatchSerialize_SimpleListEntry_verify_table);
 }
 
-static inline int AllWatchSerialize_SimpleListEntry_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_SimpleListEntry_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_SimpleListEntry_verify_table);
 }
@@ -4037,8 +4037,8 @@ static inline int AllWatchSerialize_SimpleListEntry_verify_as_root_with_type_has
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -4048,11 +4048,11 @@ static inline int AllWatchSerialize_SimpleListEntry_verify_as_root_with_type_has
 typedef const struct AllWatchSerialize_ListData_table *AllWatchSerialize_ListData_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_ListData_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_ListData_mutable_vec_t;
-#ifndef AllWatchSerialize_ListData_identifier
-#define AllWatchSerialize_ListData_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_ListData_Id
+#define AllWatchSerialize_ListData_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_ListData_type_hash ((flatbuffers_thash_t)0x8a342237)
-#define AllWatchSerialize_ListData_type_identifier "\x37\x22\x34\x8a"
+#define AllWatchSerialize_ListData_type_Id "\x37\x22\x34\x8a"
 
 
 
@@ -4088,8 +4088,8 @@ __flatbuffers_define_vector_field(2, AllWatchSerialize_ListData, simpleEntries, 
 #include "SimpleListEntry_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -4103,7 +4103,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_ListData, 3)
 #define __AllWatchSerialize_ListData_formal_args , flatbuffers_bool_t v0, AllWatchSerialize_Template_vec_ref_t v1, AllWatchSerialize_SimpleListEntry_vec_ref_t v2
 #define __AllWatchSerialize_ListData_call_args , v0, v1, v2
 static inline AllWatchSerialize_ListData_ref_t AllWatchSerialize_ListData_create(flatbuffers_builder_t *B __AllWatchSerialize_ListData_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_ListData, AllWatchSerialize_ListData_identifier, AllWatchSerialize_ListData_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_ListData, AllWatchSerialize_ListData_Id, AllWatchSerialize_ListData_type_Id)
 
 __flatbuffers_build_scalar_field(0, flatbuffers_, AllWatchSerialize_ListData_useCustomTemplate, flatbuffers_bool, flatbuffers_bool_t, 1, 1, UINT8_C(0), AllWatchSerialize_ListData)
 __flatbuffers_build_table_vector_field(1, flatbuffers_, AllWatchSerialize_ListData_customContent, AllWatchSerialize_Template, AllWatchSerialize_ListData)
@@ -4164,15 +4164,15 @@ static int AllWatchSerialize_ListData_verify_table(flatcc_table_verifier_descrip
 
 static inline int AllWatchSerialize_ListData_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ListData_identifier, &AllWatchSerialize_ListData_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ListData_Id, &AllWatchSerialize_ListData_verify_table);
 }
 
 static inline int AllWatchSerialize_ListData_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ListData_type_identifier, &AllWatchSerialize_ListData_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ListData_type_Id, &AllWatchSerialize_ListData_verify_table);
 }
 
-static inline int AllWatchSerialize_ListData_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_ListData_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_ListData_verify_table);
 }
@@ -4197,8 +4197,8 @@ static inline int AllWatchSerialize_ListData_verify_as_root_with_type_hash(const
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -4214,21 +4214,21 @@ typedef flatbuffers_uoffset_t *AllWatchSerialize_ImageBackground_mutable_vec_t;
 typedef const struct AllWatchSerialize_Component_table *AllWatchSerialize_Component_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_Component_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_Component_mutable_vec_t;
-#ifndef AllWatchSerialize_ProgressBar_identifier
-#define AllWatchSerialize_ProgressBar_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_ProgressBar_Id
+#define AllWatchSerialize_ProgressBar_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_ProgressBar_type_hash ((flatbuffers_thash_t)0xc934bc9d)
-#define AllWatchSerialize_ProgressBar_type_identifier "\x9d\xbc\x34\xc9"
-#ifndef AllWatchSerialize_ImageBackground_identifier
-#define AllWatchSerialize_ImageBackground_identifier flatbuffers_identifier
+#define AllWatchSerialize_ProgressBar_type_Id "\x9d\xbc\x34\xc9"
+#ifndef AllWatchSerialize_ImageBackground_Id
+#define AllWatchSerialize_ImageBackground_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_ImageBackground_type_hash ((flatbuffers_thash_t)0x799c6728)
-#define AllWatchSerialize_ImageBackground_type_identifier "\x28\x67\x9c\x79"
-#ifndef AllWatchSerialize_Component_identifier
-#define AllWatchSerialize_Component_identifier flatbuffers_identifier
+#define AllWatchSerialize_ImageBackground_type_Id "\x28\x67\x9c\x79"
+#ifndef AllWatchSerialize_Component_Id
+#define AllWatchSerialize_Component_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_Component_type_hash ((flatbuffers_thash_t)0xcc524402)
-#define AllWatchSerialize_Component_type_identifier "\x02\x44\x52\xcc"
+#define AllWatchSerialize_Component_type_Id "\x02\x44\x52\xcc"
 
 
 
@@ -4303,8 +4303,8 @@ __flatbuffers_define_union_field(flatbuffers_, 1, AllWatchSerialize_Component, c
 #include "flatbuffers_common_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -4332,17 +4332,17 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Component, 2)
 #define __AllWatchSerialize_ProgressBar_formal_args , float v0
 #define __AllWatchSerialize_ProgressBar_call_args , v0
 static inline AllWatchSerialize_ProgressBar_ref_t AllWatchSerialize_ProgressBar_create(flatbuffers_builder_t *B __AllWatchSerialize_ProgressBar_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_ProgressBar, AllWatchSerialize_ProgressBar_identifier, AllWatchSerialize_ProgressBar_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_ProgressBar, AllWatchSerialize_ProgressBar_Id, AllWatchSerialize_ProgressBar_type_Id)
 
 #define __AllWatchSerialize_ImageBackground_formal_args , flatbuffers_int8_vec_ref_t v0
 #define __AllWatchSerialize_ImageBackground_call_args , v0
 static inline AllWatchSerialize_ImageBackground_ref_t AllWatchSerialize_ImageBackground_create(flatbuffers_builder_t *B __AllWatchSerialize_ImageBackground_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_ImageBackground, AllWatchSerialize_ImageBackground_identifier, AllWatchSerialize_ImageBackground_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_ImageBackground, AllWatchSerialize_ImageBackground_Id, AllWatchSerialize_ImageBackground_type_Id)
 
 #define __AllWatchSerialize_Component_formal_args , AllWatchSerialize_Components_union_ref_t v1
 #define __AllWatchSerialize_Component_call_args , v1
 static inline AllWatchSerialize_Component_ref_t AllWatchSerialize_Component_create(flatbuffers_builder_t *B __AllWatchSerialize_Component_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Component, AllWatchSerialize_Component_identifier, AllWatchSerialize_Component_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Component, AllWatchSerialize_Component_Id, AllWatchSerialize_Component_type_Id)
 
 static inline AllWatchSerialize_Components_union_ref_t AllWatchSerialize_Components_as_NONE()
 { AllWatchSerialize_Components_union_ref_t uref; uref.type = AllWatchSerialize_Components_NONE; uref.value = 0; return uref; }
@@ -4462,15 +4462,15 @@ static int AllWatchSerialize_ProgressBar_verify_table(flatcc_table_verifier_desc
 
 static inline int AllWatchSerialize_ProgressBar_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ProgressBar_identifier, &AllWatchSerialize_ProgressBar_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ProgressBar_Id, &AllWatchSerialize_ProgressBar_verify_table);
 }
 
 static inline int AllWatchSerialize_ProgressBar_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ProgressBar_type_identifier, &AllWatchSerialize_ProgressBar_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ProgressBar_type_Id, &AllWatchSerialize_ProgressBar_verify_table);
 }
 
-static inline int AllWatchSerialize_ProgressBar_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_ProgressBar_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_ProgressBar_verify_table);
 }
@@ -4489,15 +4489,15 @@ static int AllWatchSerialize_ImageBackground_verify_table(flatcc_table_verifier_
 
 static inline int AllWatchSerialize_ImageBackground_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ImageBackground_identifier, &AllWatchSerialize_ImageBackground_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ImageBackground_Id, &AllWatchSerialize_ImageBackground_verify_table);
 }
 
 static inline int AllWatchSerialize_ImageBackground_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ImageBackground_type_identifier, &AllWatchSerialize_ImageBackground_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_ImageBackground_type_Id, &AllWatchSerialize_ImageBackground_verify_table);
 }
 
-static inline int AllWatchSerialize_ImageBackground_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_ImageBackground_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_ImageBackground_verify_table);
 }
@@ -4516,15 +4516,15 @@ static int AllWatchSerialize_Component_verify_table(flatcc_table_verifier_descri
 
 static inline int AllWatchSerialize_Component_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Component_identifier, &AllWatchSerialize_Component_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Component_Id, &AllWatchSerialize_Component_verify_table);
 }
 
 static inline int AllWatchSerialize_Component_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Component_type_identifier, &AllWatchSerialize_Component_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Component_type_Id, &AllWatchSerialize_Component_verify_table);
 }
 
-static inline int AllWatchSerialize_Component_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_Component_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Component_verify_table);
 }
@@ -4552,8 +4552,8 @@ static inline int AllWatchSerialize_Component_verify_as_root_with_type_hash(cons
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -4563,11 +4563,11 @@ static inline int AllWatchSerialize_Component_verify_as_root_with_type_hash(cons
 typedef const struct AllWatchSerialize_TextData_table *AllWatchSerialize_TextData_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_TextData_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_TextData_mutable_vec_t;
-#ifndef AllWatchSerialize_TextData_identifier
-#define AllWatchSerialize_TextData_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_TextData_Id
+#define AllWatchSerialize_TextData_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_TextData_type_hash ((flatbuffers_thash_t)0xc9bca268)
-#define AllWatchSerialize_TextData_type_identifier "\x68\xa2\xbc\xc9"
+#define AllWatchSerialize_TextData_type_Id "\x68\xa2\xbc\xc9"
 
 
 
@@ -4600,8 +4600,8 @@ __flatbuffers_define_vector_field(2, AllWatchSerialize_TextData, additionalCompo
 #include "Components_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -4615,7 +4615,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_TextData, 3)
 #define __AllWatchSerialize_TextData_formal_args , flatbuffers_string_ref_t v0, flatbuffers_string_ref_t v1, AllWatchSerialize_Component_vec_ref_t v2
 #define __AllWatchSerialize_TextData_call_args , v0, v1, v2
 static inline AllWatchSerialize_TextData_ref_t AllWatchSerialize_TextData_create(flatbuffers_builder_t *B __AllWatchSerialize_TextData_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_TextData, AllWatchSerialize_TextData_identifier, AllWatchSerialize_TextData_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_TextData, AllWatchSerialize_TextData_Id, AllWatchSerialize_TextData_type_Id)
 
 __flatbuffers_build_string_field(0, flatbuffers_, AllWatchSerialize_TextData_major, AllWatchSerialize_TextData)
 __flatbuffers_build_string_field(1, flatbuffers_, AllWatchSerialize_TextData_minor, AllWatchSerialize_TextData)
@@ -4673,15 +4673,15 @@ static int AllWatchSerialize_TextData_verify_table(flatcc_table_verifier_descrip
 
 static inline int AllWatchSerialize_TextData_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TextData_identifier, &AllWatchSerialize_TextData_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TextData_Id, &AllWatchSerialize_TextData_verify_table);
 }
 
 static inline int AllWatchSerialize_TextData_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TextData_type_identifier, &AllWatchSerialize_TextData_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_TextData_type_Id, &AllWatchSerialize_TextData_verify_table);
 }
 
-static inline int AllWatchSerialize_TextData_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_TextData_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_TextData_verify_table);
 }
@@ -4706,8 +4706,8 @@ static inline int AllWatchSerialize_TextData_verify_as_root_with_type_hash(const
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -4763,8 +4763,8 @@ static inline int AllWatchSerialize_DefaultDatatypes_is_known_value(AllWatchSeri
 #include "flatbuffers_common_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -4813,16 +4813,16 @@ __flatbuffers_build_scalar(flatbuffers_, AllWatchSerialize_DefaultDatatypes, All
 #ifndef TEMPLATEROOT_READER_H
 #include "TemplateRoot_reader.h"
 #endif
-#ifndef IDENTIFIER_READER_H
-#include "Identifier_reader.h"
+#ifndef Id_READER_H
+#include "Id_reader.h"
 #endif
 #include "flatcc/flatcc_flatbuffers.h"
 #ifndef __alignas_is_defined
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -4832,11 +4832,11 @@ __flatbuffers_build_scalar(flatbuffers_, AllWatchSerialize_DefaultDatatypes, All
 typedef const struct AllWatchSerialize_View_table *AllWatchSerialize_View_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_View_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_View_mutable_vec_t;
-#ifndef AllWatchSerialize_View_identifier
-#define AllWatchSerialize_View_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_View_Id
+#define AllWatchSerialize_View_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_View_type_hash ((flatbuffers_thash_t)0x10a39382)
-#define AllWatchSerialize_View_type_identifier "\x82\x93\xa3\x10"
+#define AllWatchSerialize_View_type_Id "\x82\x93\xa3\x10"
 
 typedef int16_t AllWatchSerialize_DefaultStyle_enum_t;
 __flatbuffers_define_integer_type(AllWatchSerialize_DefaultStyle, AllWatchSerialize_DefaultStyle_enum_t, 16)
@@ -4907,7 +4907,7 @@ static inline AllWatchSerialize_View_table_t AllWatchSerialize_View_vec_at(AllWa
 __flatbuffers_offset_vec_at(AllWatchSerialize_View_table_t, vec, i, 0)
 __flatbuffers_table_as_root(AllWatchSerialize_View)
 
-__flatbuffers_define_table_field(0, AllWatchSerialize_View, id, AllWatchSerialize_Identifier_table_t, 0)
+__flatbuffers_define_table_field(0, AllWatchSerialize_View, id, AllWatchSerialize_Id_table_t, 0)
 __flatbuffers_define_string_field(1, AllWatchSerialize_View, name, 0)
 __flatbuffers_define_scalar_field(2, AllWatchSerialize_View, datatype, AllWatchSerialize_DefaultDatatypes, AllWatchSerialize_DefaultDatatypes_enum_t, INT16_C(0))
 __flatbuffers_define_scalar_field(3, AllWatchSerialize_View, usesTemplate, flatbuffers_bool, flatbuffers_bool_t, UINT8_C(0))
@@ -4944,12 +4944,12 @@ __flatbuffers_define_scalar_field(8, AllWatchSerialize_View, defaultStyle, AllWa
 #ifndef TEMPLATEROOT_BUILDER_H
 #include "TemplateRoot_builder.h"
 #endif
-#ifndef IDENTIFIER_BUILDER_H
-#include "Identifier_builder.h"
+#ifndef Id_BUILDER_H
+#include "Id_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -4969,13 +4969,13 @@ static AllWatchSerialize_View_ref_t AllWatchSerialize_View_clone(flatbuffers_bui
 __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_View, 9)
 
 #define __AllWatchSerialize_View_formal_args ,\
-  AllWatchSerialize_Identifier_ref_t v0, flatbuffers_string_ref_t v1, AllWatchSerialize_DefaultDatatypes_enum_t v2, flatbuffers_bool_t v3,\
+  AllWatchSerialize_Id_ref_t v0, flatbuffers_string_ref_t v1, AllWatchSerialize_DefaultDatatypes_enum_t v2, flatbuffers_bool_t v3,\
   AllWatchSerialize_TemplateRoot_ref_t v4, AllWatchSerialize_ViewData_union_ref_t v6, AllWatchSerialize_Action_vec_ref_t v7, AllWatchSerialize_DefaultStyle_enum_t v8
 #define __AllWatchSerialize_View_call_args ,\
   v0, v1, v2, v3,\
   v4, v6, v7, v8
 static inline AllWatchSerialize_View_ref_t AllWatchSerialize_View_create(flatbuffers_builder_t *B __AllWatchSerialize_View_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_View, AllWatchSerialize_View_identifier, AllWatchSerialize_View_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_View, AllWatchSerialize_View_Id, AllWatchSerialize_View_type_Id)
 
 static inline AllWatchSerialize_ViewData_union_ref_t AllWatchSerialize_ViewData_as_NONE()
 { AllWatchSerialize_ViewData_union_ref_t uref; uref.type = AllWatchSerialize_ViewData_NONE; uref.value = 0; return uref; }
@@ -4994,7 +4994,7 @@ static AllWatchSerialize_ViewData_union_ref_t AllWatchSerialize_ViewData_clone(f
     }
 }
 
-__flatbuffers_build_table_field(0, flatbuffers_, AllWatchSerialize_View_id, AllWatchSerialize_Identifier, AllWatchSerialize_View)
+__flatbuffers_build_table_field(0, flatbuffers_, AllWatchSerialize_View_id, AllWatchSerialize_Id, AllWatchSerialize_View)
 __flatbuffers_build_string_field(1, flatbuffers_, AllWatchSerialize_View_name, AllWatchSerialize_View)
 __flatbuffers_build_scalar_field(2, flatbuffers_, AllWatchSerialize_View_datatype, AllWatchSerialize_DefaultDatatypes, AllWatchSerialize_DefaultDatatypes_enum_t, 2, 2, INT16_C(0), AllWatchSerialize_View)
 __flatbuffers_build_scalar_field(3, flatbuffers_, AllWatchSerialize_View_usesTemplate, flatbuffers_bool, flatbuffers_bool_t, 1, 1, UINT8_C(0), AllWatchSerialize_View)
@@ -5065,8 +5065,8 @@ static AllWatchSerialize_View_ref_t AllWatchSerialize_View_clone(flatbuffers_bui
 #ifndef TEMPLATEROOT_VERIFIER_H
 #include "TemplateRoot_verifier.h"
 #endif
-#ifndef IDENTIFIER_VERIFIER_H
-#include "Identifier_verifier.h"
+#ifndef Id_VERIFIER_H
+#include "Id_verifier.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
 
@@ -5084,7 +5084,7 @@ static int AllWatchSerialize_ViewData_union_verifier(flatcc_union_verifier_descr
 static int AllWatchSerialize_View_verify_table(flatcc_table_verifier_descriptor_t *td)
 {
     int ret;
-    if ((ret = flatcc_verify_table_field(td, 0, 0, &AllWatchSerialize_Identifier_verify_table) /* id */)) return ret;
+    if ((ret = flatcc_verify_table_field(td, 0, 0, &AllWatchSerialize_Id_verify_table) /* id */)) return ret;
     if ((ret = flatcc_verify_string_field(td, 1, 0) /* name */)) return ret;
     if ((ret = flatcc_verify_field(td, 2, 2, 2) /* datatype */)) return ret;
     if ((ret = flatcc_verify_field(td, 3, 1, 1) /* usesTemplate */)) return ret;
@@ -5097,15 +5097,15 @@ static int AllWatchSerialize_View_verify_table(flatcc_table_verifier_descriptor_
 
 static inline int AllWatchSerialize_View_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_View_identifier, &AllWatchSerialize_View_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_View_Id, &AllWatchSerialize_View_verify_table);
 }
 
 static inline int AllWatchSerialize_View_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_View_type_identifier, &AllWatchSerialize_View_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_View_type_Id, &AllWatchSerialize_View_verify_table);
 }
 
-static inline int AllWatchSerialize_View_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_View_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_View_verify_table);
 }
@@ -5133,8 +5133,8 @@ static inline int AllWatchSerialize_View_verify_as_root_with_type_hash(const voi
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -5144,11 +5144,11 @@ static inline int AllWatchSerialize_View_verify_as_root_with_type_hash(const voi
 typedef const struct AllWatchSerialize_Handshake_table *AllWatchSerialize_Handshake_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_Handshake_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_Handshake_mutable_vec_t;
-#ifndef AllWatchSerialize_Handshake_identifier
-#define AllWatchSerialize_Handshake_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_Handshake_Id
+#define AllWatchSerialize_Handshake_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_Handshake_type_hash ((flatbuffers_thash_t)0xb7040d68)
-#define AllWatchSerialize_Handshake_type_identifier "\x68\x0d\x04\xb7"
+#define AllWatchSerialize_Handshake_type_Id "\x68\x0d\x04\xb7"
 
 
 
@@ -5185,8 +5185,8 @@ __flatbuffers_define_vector_field(6, AllWatchSerialize_Handshake, requirements, 
 #include "Requirements_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -5204,7 +5204,7 @@ __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Handshake, 7)
   v0, v1, v2, v3,\
   v4, v5, v6
 static inline AllWatchSerialize_Handshake_ref_t AllWatchSerialize_Handshake_create(flatbuffers_builder_t *B __AllWatchSerialize_Handshake_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Handshake, AllWatchSerialize_Handshake_identifier, AllWatchSerialize_Handshake_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Handshake, AllWatchSerialize_Handshake_Id, AllWatchSerialize_Handshake_type_Id)
 
 __flatbuffers_build_string_field(0, flatbuffers_, AllWatchSerialize_Handshake_manufacturer, AllWatchSerialize_Handshake)
 __flatbuffers_build_string_field(1, flatbuffers_, AllWatchSerialize_Handshake_modelName, AllWatchSerialize_Handshake)
@@ -5278,15 +5278,15 @@ static int AllWatchSerialize_Handshake_verify_table(flatcc_table_verifier_descri
 
 static inline int AllWatchSerialize_Handshake_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Handshake_identifier, &AllWatchSerialize_Handshake_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Handshake_Id, &AllWatchSerialize_Handshake_verify_table);
 }
 
 static inline int AllWatchSerialize_Handshake_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Handshake_type_identifier, &AllWatchSerialize_Handshake_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Handshake_type_Id, &AllWatchSerialize_Handshake_verify_table);
 }
 
-static inline int AllWatchSerialize_Handshake_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_Handshake_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Handshake_verify_table);
 }
@@ -5315,8 +5315,8 @@ static inline int AllWatchSerialize_Handshake_verify_as_root_with_type_hash(cons
 #ifndef VIEW_READER_H
 #include "View_reader.h"
 #endif
-#ifndef IDENTIFIER_READER_H
-#include "Identifier_reader.h"
+#ifndef Id_READER_H
+#include "Id_reader.h"
 #endif
 #ifndef HANDSHAKE_READER_H
 #include "Handshake_reader.h"
@@ -5326,8 +5326,8 @@ static inline int AllWatchSerialize_Handshake_verify_as_root_with_type_hash(cons
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -5337,11 +5337,11 @@ static inline int AllWatchSerialize_Handshake_verify_as_root_with_type_hash(cons
 typedef const struct AllWatchSerialize_Command_table *AllWatchSerialize_Command_table_t;
 typedef const flatbuffers_uoffset_t *AllWatchSerialize_Command_vec_t;
 typedef flatbuffers_uoffset_t *AllWatchSerialize_Command_mutable_vec_t;
-#ifndef AllWatchSerialize_Command_identifier
-#define AllWatchSerialize_Command_identifier flatbuffers_identifier
+#ifndef AllWatchSerialize_Command_Id
+#define AllWatchSerialize_Command_Id flatbuffers_Id
 #endif
 #define AllWatchSerialize_Command_type_hash ((flatbuffers_thash_t)0xd4b1d714)
-#define AllWatchSerialize_Command_type_identifier "\x14\xd7\xb1\xd4"
+#define AllWatchSerialize_Command_type_Id "\x14\xd7\xb1\xd4"
 
 
 typedef uint8_t AllWatchSerialize_CommandType_union_type_t;
@@ -5387,7 +5387,7 @@ __flatbuffers_offset_vec_at(AllWatchSerialize_Command_table_t, vec, i, 0)
 __flatbuffers_table_as_root(AllWatchSerialize_Command)
 
 __flatbuffers_define_union_field(flatbuffers_, 1, AllWatchSerialize_Command, command, AllWatchSerialize_CommandType, 0)
-__flatbuffers_define_table_field(2, AllWatchSerialize_Command, id, AllWatchSerialize_Identifier_table_t, 0)
+__flatbuffers_define_table_field(2, AllWatchSerialize_Command, id, AllWatchSerialize_Id_table_t, 0)
 
 #include "flatcc/flatcc_epilogue.h"
 #endif /* COMMAND_READER_H */
@@ -5411,15 +5411,15 @@ __flatbuffers_define_table_field(2, AllWatchSerialize_Command, id, AllWatchSeria
 #ifndef VIEW_BUILDER_H
 #include "View_builder.h"
 #endif
-#ifndef IDENTIFIER_BUILDER_H
-#include "Identifier_builder.h"
+#ifndef Id_BUILDER_H
+#include "Id_builder.h"
 #endif
 #ifndef HANDSHAKE_BUILDER_H
 #include "Handshake_builder.h"
 #endif
 #include "flatcc/flatcc_prologue.h"
-#ifndef flatbuffers_identifier
-#define flatbuffers_identifier 0
+#ifndef flatbuffers_Id
+#define flatbuffers_Id 0
 #endif
 #ifndef flatbuffers_extension
 #define flatbuffers_extension ".bin"
@@ -5434,10 +5434,10 @@ typedef flatbuffers_ref_t AllWatchSerialize_Command_ref_t;
 static AllWatchSerialize_Command_ref_t AllWatchSerialize_Command_clone(flatbuffers_builder_t *B, AllWatchSerialize_Command_table_t t);
 __flatbuffers_build_table(flatbuffers_, AllWatchSerialize_Command, 3)
 
-#define __AllWatchSerialize_Command_formal_args , AllWatchSerialize_CommandType_union_ref_t v1, AllWatchSerialize_Identifier_ref_t v2
+#define __AllWatchSerialize_Command_formal_args , AllWatchSerialize_CommandType_union_ref_t v1, AllWatchSerialize_Id_ref_t v2
 #define __AllWatchSerialize_Command_call_args , v1, v2
 static inline AllWatchSerialize_Command_ref_t AllWatchSerialize_Command_create(flatbuffers_builder_t *B __AllWatchSerialize_Command_formal_args);
-__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Command, AllWatchSerialize_Command_identifier, AllWatchSerialize_Command_type_identifier)
+__flatbuffers_build_table_prolog(flatbuffers_, AllWatchSerialize_Command, AllWatchSerialize_Command_Id, AllWatchSerialize_Command_type_Id)
 
 static inline AllWatchSerialize_CommandType_union_ref_t AllWatchSerialize_CommandType_as_NONE()
 { AllWatchSerialize_CommandType_union_ref_t uref; uref.type = AllWatchSerialize_CommandType_NONE; uref.value = 0; return uref; }
@@ -5467,7 +5467,7 @@ __flatbuffers_build_union_table_value_field(flatbuffers_, AllWatchSerialize_Comm
 __flatbuffers_build_union_table_value_field(flatbuffers_, AllWatchSerialize_Command_command, AllWatchSerialize_CommandType, Application, AllWatchSerialize_Application)
 __flatbuffers_build_union_table_value_field(flatbuffers_, AllWatchSerialize_Command_command, AllWatchSerialize_CommandType, Action, AllWatchSerialize_Action)
 __flatbuffers_build_union_table_value_field(flatbuffers_, AllWatchSerialize_Command_command, AllWatchSerialize_CommandType, View, AllWatchSerialize_View)
-__flatbuffers_build_table_field(2, flatbuffers_, AllWatchSerialize_Command_id, AllWatchSerialize_Identifier, AllWatchSerialize_Command)
+__flatbuffers_build_table_field(2, flatbuffers_, AllWatchSerialize_Command_id, AllWatchSerialize_Id, AllWatchSerialize_Command)
 
 static inline AllWatchSerialize_Command_ref_t AllWatchSerialize_Command_create(flatbuffers_builder_t *B __AllWatchSerialize_Command_formal_args)
 {
@@ -5511,8 +5511,8 @@ static AllWatchSerialize_Command_ref_t AllWatchSerialize_Command_clone(flatbuffe
 #ifndef VIEW_VERIFIER_H
 #include "View_verifier.h"
 #endif
-#ifndef IDENTIFIER_VERIFIER_H
-#include "Identifier_verifier.h"
+#ifndef Id_VERIFIER_H
+#include "Id_verifier.h"
 #endif
 #ifndef HANDSHAKE_VERIFIER_H
 #include "Handshake_verifier.h"
@@ -5536,21 +5536,21 @@ static int AllWatchSerialize_Command_verify_table(flatcc_table_verifier_descript
 {
     int ret;
     if ((ret = flatcc_verify_union_field(td, 1, 0, &AllWatchSerialize_CommandType_union_verifier) /* command */)) return ret;
-    if ((ret = flatcc_verify_table_field(td, 2, 0, &AllWatchSerialize_Identifier_verify_table) /* id */)) return ret;
+    if ((ret = flatcc_verify_table_field(td, 2, 0, &AllWatchSerialize_Id_verify_table) /* id */)) return ret;
     return flatcc_verify_ok;
 }
 
 static inline int AllWatchSerialize_Command_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Command_identifier, &AllWatchSerialize_Command_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Command_Id, &AllWatchSerialize_Command_verify_table);
 }
 
 static inline int AllWatchSerialize_Command_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Command_type_identifier, &AllWatchSerialize_Command_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, AllWatchSerialize_Command_type_Id, &AllWatchSerialize_Command_verify_table);
 }
 
-static inline int AllWatchSerialize_Command_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int AllWatchSerialize_Command_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &AllWatchSerialize_Command_verify_table);
 }

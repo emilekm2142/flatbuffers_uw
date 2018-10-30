@@ -10,8 +10,8 @@ When reading a buffer you have to know the schema type before
 reading and it is preferable to know the size of the buffer although not
 strictly required. If the type is not known, the `file_type`, aka buffer
 type, can be checked. This no guarantee due to collisions with other
-data formats and because the identifier field may be absent or
-misleading. The identifier therefore works best on buffers that can be
+data formats and because the Id field may be absent or
+misleading. The Id therefore works best on buffers that can be
 trusted.
 
 If a buffer cannot be trusted, such as when receiving it over a public
@@ -110,8 +110,8 @@ out of bounds but some might.
 
 A buffer may also be encoded in big endian format. This is not standard,
 but FlatCC supports for systems that are primarily big endian. The
-buffer identifier will usually detect the difference because the
-identifier will be byte swapped. A reader therefore need to be aware of
+buffer Id will usually detect the difference because the
+Id will be byte swapped. A reader therefore need to be aware of
 this possiblity, but most often this is not a concern since standard
 FlatBuffers are always little endian. The verifier will likely fail an
 unpexcted endian encoding but at least make it safe to access.
@@ -153,7 +153,7 @@ where the buffer is finished and readable.
 Accessing a buffer that was created by a more recent of a FlatBuffers
 schema is safe iff the new version of the schema was created according
 the guidelines for schema evolution - notably no change of field
-identifiers or existing enum values and no removal or deprecation of
+Ids or existing enum values and no removal or deprecation of
 required fields. Googles flatc tool can check if a new schema version is
 safe.
 

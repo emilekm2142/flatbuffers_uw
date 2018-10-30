@@ -140,7 +140,7 @@
   `MyUnion.MyUnionMember` were not accepted on a union type field but
   `MyNamespace.MyUnion.MyMember` and `MyMember` was supported. This has been
   fixed so all forms are valid. Plain enums did not have this issue.
-- Place type identifiers early in generated `_reader.h` file to avoid
+- Place type Ids early in generated `_reader.h` file to avoid
   circular reference issue with nested buffers when nested buffer type
   is placed after referencing table in schema.
 - Fix verify bug on struct buffers - and in test case - not affecting
@@ -248,7 +248,7 @@ platforms with little endian wire format.
   endian host platforms via `FLATBUFFERS_PROTOCOL_IS_LE/BE` in
   `include/flatcc/flatcc_types.h`. Use `flatbuffers_is_native_pe()` to
   see if the host native endian format matches the buffer protocol.
-  NOTE: file identifier at buffer offset 4 is always byteswapped.
+  NOTE: file Id at buffer offset 4 is always byteswapped.
 
 In more detail:
 
@@ -296,19 +296,19 @@ In more detail:
 
 ## [0.3.3]
 
-- BREAKING: `verify_as_root` no longer takes an identifier argument, use
-  `verify_as_root_with_identifier`. `myschema_verifier.h` now
-  includes `myschema_reader.h` to access identifier.
-  identifer argument, and variants for type identifiers;.
+- BREAKING: `verify_as_root` no longer takes an Id argument, use
+  `verify_as_root_with_Id`. `myschema_verifier.h` now
+  includes `myschema_reader.h` to access Id.
+  identifer argument, and variants for type Ids;.
 - Added scripts/setup.sh to quickly get started on small user projects.
 - Support `namespace ;` for reverting to global namespace in schema.
 - Enable block comments now that they are supported in flatc.
 - Parse and validate new `rpc_service` schema syntax, but with no
   support for code generation.
 - Add type hash support (`create/verify_as_typed_root` etc.) to
-  optionally store and verify file identifiers based on hashed fully
+  optionally store and verify file Ids based on hashed fully
   qualified type names.
-- Fix potential issue with detection of valid file identifiers in
+- Fix potential issue with detection of valid file Ids in
   buffer.
 - Moved `include/support` into `include/flatcc/support`, renamed
   `include/support/readfile.h` function `read_file` to `readfile`.

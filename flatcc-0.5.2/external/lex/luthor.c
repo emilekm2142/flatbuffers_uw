@@ -11,17 +11,17 @@
  *
  * No real harm is done in accepting a superset, but the source is
  * intended to be modified, have things flagged or removed, other things
- * added. The real complicity is in numbers, identifiers, and comments,
+ * added. The real complicity is in numbers, Ids, and comments,
  * which should be fairly complete with flagging as is.
  *
  * Keyword handling is done at macroes, and described elsewhere, but for
- * identifier compatible keywords, this is quite efficient to handle on
+ * Id compatible keywords, this is quite efficient to handle on
  * a per language basis without modifying this source.
  *
  * The Lisp language family is somewhat different and not directly
  * suited for this lexer, although it can easily be modified to suit.
  * The main reason is ';' for comments, and operators used as part of
- * the identifier symbol set, and no need for operator classification,
+ * the Id symbol set, and no need for operator classification,
  * and different handling of single character symbols.
  *
  * So overall, we more or less have one efficient unified lexer that can
@@ -71,7 +71,7 @@
 /*
  * Numeric and string constants do not accept prefixes such as u, l, L,
  * U, ll, LL, f, or F in C, or various others in Julia strings. Use the
- * parser to detect juxtaposition between identifier and constant. In
+ * parser to detect juxtaposition between Id and constant. In
  * Julia numeric suffix means multiplication, in C it is a type
  * qualifier.  Sign, such as defined in JSON, are also not accepted -
  * they must be operators.  See source for various flag to enable
@@ -80,8 +80,8 @@
 
 /*
  * Includes '_' in identifers by default. Defines follow characters in
- * identifiers but not the lead character - it must be defined in switch
- * cases.  If the identifier allows for dash '-', it is probably better
+ * Ids but not the lead character - it must be defined in switch
+ * cases.  If the Id allows for dash '-', it is probably better
  * to handle it as an operator and flag surrounding space in the parser.
  */
 #ifndef lex_isalnum
@@ -89,7 +89,7 @@
 /*
  * NOTE: isalnum, isalpha, is locale dependent. We only want to
  * to consider that ASCII-7 subset and treat everything else as utf-8.
- * This table is not for leading identifiers, as it contains 0..9.
+ * This table is not for leading Ids, as it contains 0..9.
  *
  * For more correct handling of UTF-8, see:
  * https://theantlrguy.atlassian.net/wiki/display/ANTLR4/Grammar+Lexicon
@@ -1215,7 +1215,7 @@ lex_mode_normal:
                      * constant. (Not specific to octals).
                      *
                      * This can all be handled by having the parser inspect
-                     * following identifier or numeric, parser
+                     * following Id or numeric, parser
                      * here meaning a lexer post processing step, not
                      * necessarily the parser itself.
                      */
@@ -1274,7 +1274,7 @@ lex_mode_normal:
 #ifndef LEX_LOWER_CASE_NUMERIC_PREFIX
                     /*
                      * Julia v0.3 does not allow this, it thinks 0X1 is
-                     * 0 * X1, X1 being an identifier.
+                     * 0 * X1, X1 being an Id.
                      * while 0x1 is a hex value due to precedence.
                      *
                      * TODO: This might change.
@@ -1427,7 +1427,7 @@ lex_c_octal_to_exponent_part:
                 /*
                  * We do not try to ensure utf-8 is terminated correctly nor
                  * that any unicode character above ASCII is a character
-                 * suitable for identifiers.
+                 * suitable for Ids.
                  *
                  * tag is calculated for keyword lookup, and we assume these
                  * are always ASCII-7bit.  It has the form: length, first
@@ -1465,7 +1465,7 @@ lex_c_octal_to_exponent_part:
 
 #ifdef LEX_ID_WITH_UTF8
                 /*
-                 * Identifier again, in case it starts with a utf-8 lead
+                 * Id again, in case it starts with a utf-8 lead
                  * character. This time we can ignore the tag, except the
                  * length char must be valid to avoid buffer overruns
                  * on potential kw check upstream.

@@ -17,8 +17,8 @@ public final class Widget extends Table {
   public long refresh() { int o = __offset(4); return o != 0 ? bb.getLong(o + bb_pos) : 0L; }
   public TemplateRoot template() { return template(new TemplateRoot()); }
   public TemplateRoot template(TemplateRoot obj) { int o = __offset(6); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
-  public Identifier id() { return id(new Identifier()); }
-  public Identifier id(Identifier obj) { int o = __offset(8); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
+  public Id id() { return id(new Id()); }
+  public Id id(Id obj) { int o = __offset(8); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
 
   public static int createWidget(FlatBufferBuilder builder,
       long refresh,

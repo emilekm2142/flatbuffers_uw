@@ -15,8 +15,8 @@ public final class Application extends Table {
   public Application __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public boolean reinstall() { int o = __offset(4); return o != 0 ? 0!=bb.get(o + bb_pos) : false; }
-  public Identifier identifier() { return identifier(new Identifier()); }
-  public Identifier identifier(Identifier obj) { int o = __offset(6); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
+  public Id Id() { return Id(new Id()); }
+  public Id Id(Id obj) { int o = __offset(6); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
   public byte icon(int j) { int o = __offset(8); return o != 0 ? bb.get(__vector(o) + j * 1) : 0; }
   public int iconLength() { int o = __offset(8); return o != 0 ? __vector_len(o) : 0; }
   public ByteBuffer iconAsByteBuffer() { return __vector_as_bytebuffer(8, 1); }
@@ -32,7 +32,7 @@ public final class Application extends Table {
 
   public static int createApplication(FlatBufferBuilder builder,
       boolean reinstall,
-      int identifierOffset,
+      int IdOffset,
       int iconOffset,
       int requirementsOffset,
       int voicePhrasesOffset,
@@ -42,14 +42,14 @@ public final class Application extends Table {
     Application.addVoicePhrases(builder, voicePhrasesOffset);
     Application.addRequirements(builder, requirementsOffset);
     Application.addIcon(builder, iconOffset);
-    Application.addIdentifier(builder, identifierOffset);
+    Application.addId(builder, IdOffset);
     Application.addReinstall(builder, reinstall);
     return Application.endApplication(builder);
   }
 
   public static void startApplication(FlatBufferBuilder builder) { builder.startObject(6); }
   public static void addReinstall(FlatBufferBuilder builder, boolean reinstall) { builder.addBoolean(0, reinstall, false); }
-  public static void addIdentifier(FlatBufferBuilder builder, int identifierOffset) { builder.addOffset(1, identifierOffset, 0); }
+  public static void addId(FlatBufferBuilder builder, int IdOffset) { builder.addOffset(1, IdOffset, 0); }
   public static void addIcon(FlatBufferBuilder builder, int iconOffset) { builder.addOffset(2, iconOffset, 0); }
   public static int createIconVector(FlatBufferBuilder builder, byte[] data) { builder.startVector(1, data.length, 1); for (int i = data.length - 1; i >= 0; i--) builder.addByte(data[i]); return builder.endVector(); }
   public static void startIconVector(FlatBufferBuilder builder, int numElems) { builder.startVector(1, numElems, 1); }

@@ -36,12 +36,12 @@ This library can be used indirectly via pparsefp.h and pprintfp.h.
 The `pstatic_assert.h` file is often needed on C11 systems because the
 compiler and standard library  may support `_Static_assert` without
 `static_assert`. For compilers without `_Static_assert`, a unique
-identifier is needed for each assertion. This is done non-standard with
+Id is needed for each assertion. This is done non-standard with
 the `__COUNTER__` macro, but has a fallback to `pstatic_assert_scope.h`
 for systems witout the `__COUNTER__` macro. Because of this fallback,
 `pstatic_assert.h` needs to be included in every file using
 `static_assert` in order to increment a scope counter, otherwise there
-is a risk of assert identifier conflicts when `static_assert` happen on
+is a risk of assert Id conflicts when `static_assert` happen on
 the same line in different files.
 
 The `paligned_alloc.h` file implements the non-standard `aligned_free`

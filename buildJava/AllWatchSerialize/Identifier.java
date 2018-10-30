@@ -8,11 +8,11 @@ import java.util.*;
 import com.google.flatbuffers.*;
 
 @SuppressWarnings("unused")
-public final class Identifier extends Table {
-  public static Identifier getRootAsIdentifier(ByteBuffer _bb) { return getRootAsIdentifier(_bb, new Identifier()); }
-  public static Identifier getRootAsIdentifier(ByteBuffer _bb, Identifier obj) { _bb.order(ByteOrder.LITTLE_ENDIAN); return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb)); }
+public final class Id extends Table {
+  public static Id getRootAsId(ByteBuffer _bb) { return getRootAsId(_bb, new Id()); }
+  public static Id getRootAsId(ByteBuffer _bb, Id obj) { _bb.order(ByteOrder.LITTLE_ENDIAN); return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb)); }
   public void __init(int _i, ByteBuffer _bb) { bb_pos = _i; bb = _bb; }
-  public Identifier __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
+  public Id __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public String packageName() { int o = __offset(4); return o != 0 ? __string(o + bb_pos) : null; }
   public ByteBuffer packageNameAsByteBuffer() { return __vector_as_bytebuffer(4, 1); }
@@ -21,19 +21,19 @@ public final class Identifier extends Table {
   public ByteBuffer friendlyNameAsByteBuffer() { return __vector_as_bytebuffer(6, 1); }
   public ByteBuffer friendlyNameInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 6, 1); }
 
-  public static int createIdentifier(FlatBufferBuilder builder,
+  public static int createId(FlatBufferBuilder builder,
       int packageNameOffset,
       int friendlyNameOffset) {
     builder.startObject(2);
-    Identifier.addFriendlyName(builder, friendlyNameOffset);
-    Identifier.addPackageName(builder, packageNameOffset);
-    return Identifier.endIdentifier(builder);
+    Id.addFriendlyName(builder, friendlyNameOffset);
+    Id.addPackageName(builder, packageNameOffset);
+    return Id.endId(builder);
   }
 
-  public static void startIdentifier(FlatBufferBuilder builder) { builder.startObject(2); }
+  public static void startId(FlatBufferBuilder builder) { builder.startObject(2); }
   public static void addPackageName(FlatBufferBuilder builder, int packageNameOffset) { builder.addOffset(0, packageNameOffset, 0); }
   public static void addFriendlyName(FlatBufferBuilder builder, int friendlyNameOffset) { builder.addOffset(1, friendlyNameOffset, 0); }
-  public static int endIdentifier(FlatBufferBuilder builder) {
+  public static int endId(FlatBufferBuilder builder) {
     int o = builder.endObject();
     builder.required(o, 4);  // packageName
     return o;
@@ -42,7 +42,7 @@ public final class Identifier extends Table {
   @Override
   protected int keysCompare(Integer o1, Integer o2, ByteBuffer _bb) { return compareStrings(__offset(4, o1, _bb), __offset(4, o2, _bb), _bb); }
 
-  public static Identifier __lookup_by_key(Identifier obj, int vectorLocation, String key, ByteBuffer bb) {
+  public static Id __lookup_by_key(Id obj, int vectorLocation, String key, ByteBuffer bb) {
     byte[] byteKey = key.getBytes(Table.UTF8_CHARSET.get());
     int span = bb.getInt(vectorLocation - 4);
     int start = 0;
@@ -57,7 +57,7 @@ public final class Identifier extends Table {
         start += middle;
         span -= middle;
       } else {
-        return (obj == null ? new Identifier() : obj).__assign(tableOffset, bb);
+        return (obj == null ? new Id() : obj).__assign(tableOffset, bb);
       }
     }
     return null;

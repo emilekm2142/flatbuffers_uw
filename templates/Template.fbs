@@ -1,17 +1,17 @@
-//include "templates/Style.fbs";
-//include "Action.fbs";
-//include "templates/attributes/LayoutAttributes.fbs";
-//include "templates/attributes/TextAttributes.fbs";
-//include "templates/attributes/ShapeAttributes.fbs";
-//include "templates/attributes/CardAttributes.fbs";
+include "templates/Style.fbs";
+include "Action.fbs";
+include "templates/attributes/LayoutAttributes.fbs";
+include "templates/attributes/TextAttributes.fbs";
+include "templates/attributes/ShapeAttributes.fbs";
+include "templates/attributes/CardAttributes.fbs";
 namespace AllWatchSerialize;
-//enum Type:short {HorizontalLayout, VerticalLayout, Text, Label, Item, Container, Shape, Card}
-//union Attributes {LayoutAttributes, TextAttributes}//, ShapeAttributes}//, CardAttributes}
+enum Type:short {HorizontalLayout, VerticalLayout, Text, Label, Item, Container, Shape, Card}
+union Attributes {LayoutAttributes, TextAttributes, ShapeAttributes, CardAttributes}
 table Template{
-  //  type:Type;
-  //  style:Style;
-   // action:Action;
-  //  attributes:Attributes;
+    type:Type;
+    style:Style;
+    action:Action;
+   attributes:Attributes;
     id:string;
-   // children:[Template];
+    children:[Template];
 }

@@ -1,5 +1,5 @@
-#ifndef FLATCC_IDENTIFIER_H
-#define FLATCC_IDENTIFIER_H
+#ifndef FLATCC_Id_H
+#define FLATCC_Id_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 /*
- * FlatBuffers identifiers are normally specified by "file_identifer" in
+ * FlatBuffers Ids are normally specified by "file_identifer" in
  * the schema, but a standard hash of the fully qualified type name can
  * also be used. This file implements such a mapping, but the generated
  * headers also contain the necessary information for known types.
@@ -53,39 +53,39 @@ static inline flatbuffers_thash_t flatbuffers_type_hash_from_name(const char *na
 }
 
 /*
- * Type hash encoded as little endian file identifier string.
- * Note: if type hash is 0, the identifier should be null which
+ * Type hash encoded as little endian file Id string.
+ * Note: if type hash is 0, the Id should be null which
  * we cannot return in this interface.
  */
-static inline void flatbuffers_identifier_from_type_hash(flatbuffers_thash_t type_hash, flatbuffers_fid_t out_identifier)
+static inline void flatbuffers_Id_from_type_hash(flatbuffers_thash_t type_hash, flatbuffers_fid_t out_Id)
 {
-    out_identifier[0] = type_hash & 0xff;
+    out_Id[0] = type_hash & 0xff;
     type_hash >>= 8;
-    out_identifier[1] = type_hash & 0xff;
+    out_Id[1] = type_hash & 0xff;
     type_hash >>= 8;
-    out_identifier[2] = type_hash & 0xff;
+    out_Id[2] = type_hash & 0xff;
     type_hash >>= 8;
-    out_identifier[3] = type_hash & 0xff;
+    out_Id[3] = type_hash & 0xff;
 }
 
-/* Native integer encoding of file identifier. */
-static inline flatbuffers_thash_t flatbuffers_type_hash_from_identifier(const flatbuffers_fid_t identifier)
+/* Native integer encoding of file Id. */
+static inline flatbuffers_thash_t flatbuffers_type_hash_from_Id(const flatbuffers_fid_t Id)
 {
-    uint8_t *p = (uint8_t *)identifier;
+    uint8_t *p = (uint8_t *)Id;
 
-    return identifier ?
+    return Id ?
         (uint32_t)p[0] + (((uint32_t)p[1]) << 8) + (((uint32_t)p[2]) << 16) + (((uint32_t)p[3]) << 24) : 0;
 }
 
 /*
- * Convert a null terminated string identifier like "MONS" or "X" into a
- * native type hash identifier, usually for comparison. This will not
+ * Convert a null terminated string Id like "MONS" or "X" into a
+ * native type hash Id, usually for comparison. This will not
  * work with type hash strings because they can contain null bytes.
  */
-static inline flatbuffers_thash_t flatbuffers_type_hash_from_string(const char *identifier)
+static inline flatbuffers_thash_t flatbuffers_type_hash_from_string(const char *Id)
 {
     flatbuffers_thash_t h = 0;
-    const uint8_t *p = (const uint8_t *)identifier;
+    const uint8_t *p = (const uint8_t *)Id;
 
     if (!p[0]) return h;
     h += p[0];
@@ -105,17 +105,17 @@ static inline flatbuffers_thash_t flatbuffers_type_hash_from_string(const char *
  * `flatbuffers_fid_t` is just `char [4]` for the default flatbuffers
  * type system defined in `flatcc/flatcc_types.h`.
  */
-static inline void flatbuffers_identifier_from_name(const char *name, flatbuffers_fid_t out_identifier)
+static inline void flatbuffers_Id_from_name(const char *name, flatbuffers_fid_t out_Id)
 {
-    flatbuffers_identifier_from_type_hash(flatbuffers_type_hash_from_name(name), out_identifier);
+    flatbuffers_Id_from_type_hash(flatbuffers_type_hash_from_name(name), out_Id);
 }
 
 /*
  * This is a collision free hash (a permutation) of the type hash to
  * provide better distribution for use in hash tables. It is likely not
- * necessary in praxis, and for uniqueness of identifiers it provides no
+ * necessary in praxis, and for uniqueness of Ids it provides no
  * advantage over just using the FNV-1a type hash, except when truncating
- * the identifier to less than 32-bits.
+ * the Id to less than 32-bits.
  *
  * Note: the output should not be used in transmission. It provides no
  * additional information and just complicates matters. Furthermore, the
@@ -133,12 +133,12 @@ static inline uint32_t flatbuffers_disperse_type_hash(flatbuffers_thash_t type_h
 }
 
 
-/* We have hardcoded assumptions about identifier size. */
-static_assert(sizeof(flatbuffers_fid_t) == 4, "unexpected file identifier size");
+/* We have hardcoded assumptions about Id size. */
+static_assert(sizeof(flatbuffers_fid_t) == 4, "unexpected file Id size");
 static_assert(sizeof(flatbuffers_thash_t) == 4, "unexpected type hash size");
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* FLATCC_IDENTIFIER_H */
+#endif /* FLATCC_Id_H */

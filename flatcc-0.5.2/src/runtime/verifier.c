@@ -10,7 +10,7 @@
 #include "flatcc/flatcc_rtconfig.h"
 #include "flatcc/flatcc_flatbuffers.h"
 #include "flatcc/flatcc_verifier.h"
-#include "flatcc/flatcc_identifier.h"
+#include "flatcc/flatcc_Id.h"
 
 /* Customization for testing. */
 #if FLATCC_DEBUG_VERIFY
@@ -109,9 +109,9 @@ static inline uoffset_t read_uoffset(const void *p, uoffset_t base)
     return __flatbuffers_uoffset_read_from_pe((uint8_t *)p + base);
 }
 
-static inline thash_t read_thash_identifier(const char *identifier)
+static inline thash_t read_thash_Id(const char *Id)
 {
-    return flatbuffers_type_hash_from_string(identifier);
+    return flatbuffers_type_hash_from_string(Id);
 }
 
 static inline thash_t read_thash(const void *p, uoffset_t base)
@@ -462,11 +462,11 @@ int flatcc_verify_buffer_header(const void *buf, size_t bufsiz, const char *fid)
      * into account, so it is possible to fail an otherwise valid buffer
      * - but such buffers aren't safe.
      */
-    verify(bufsiz >= offset_size + FLATBUFFERS_IDENTIFIER_SIZE, flatcc_verify_error_buffer_header_too_small);
+    verify(bufsiz >= offset_size + FLATBUFFERS_Id_SIZE, flatcc_verify_error_buffer_header_too_small);
     if (fid != 0) {
-        id2 = read_thash_identifier(fid);
+        id2 = read_thash_Id(fid);
         id = read_thash(buf, offset_size);
-        verify(id2 == 0 || id == id2, flatcc_verify_error_identifier_mismatch);
+        verify(id2 == 0 || id == id2, flatcc_verify_error_Id_mismatch);
     }
     return flatcc_verify_ok;
 }
@@ -484,11 +484,11 @@ int flatcc_verify_typed_buffer_header(const void *buf, size_t bufsiz, flatbuffer
      * into account, so it is possible to fail an otherwise valid buffer
      * - but such buffers aren't safe.
      */
-    verify(bufsiz >= offset_size + FLATBUFFERS_IDENTIFIER_SIZE, flatcc_verify_error_buffer_header_too_small);
+    verify(bufsiz >= offset_size + FLATBUFFERS_Id_SIZE, flatcc_verify_error_buffer_header_too_small);
     if (thash != 0) {
         id2 = thash;
         id = read_thash(buf, offset_size);
-        verify(id2 == 0 || id == id2, flatcc_verify_error_identifier_mismatch);
+        verify(id2 == 0 || id == id2, flatcc_verify_error_Id_mismatch);
     }
     return flatcc_verify_ok;
 }
@@ -548,7 +548,7 @@ int flatcc_verify_table_as_nested_root(flatcc_table_verifier_descriptor_t *td,
     bufsiz = read_uoffset(buf, 0);
     ++buf;
     /*
-     * Don't verify nested buffers identifier - information is difficult to get and
+     * Don't verify nested buffers Id - information is difficult to get and
      * might not be what is desired anyway. User can do it later.
      */
     check_result(flatcc_verify_buffer_header(buf, bufsiz, fid));

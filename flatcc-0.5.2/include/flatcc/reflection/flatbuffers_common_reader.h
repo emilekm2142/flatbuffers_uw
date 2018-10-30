@@ -462,7 +462,7 @@ __flatbuffers_define_scan_by_scalar_field(N, NK, T)
 static inline T N ## _ ## NK ## _get(N ## _struct_t t__tmp) { return t__tmp ? &(t__tmp->NK) : 0; }\
 static inline T N ## _ ## NK (N ## _struct_t t__tmp) { return t__tmp ? &(t__tmp->NK) : 0; }
 /* If fid is null, the function returns true without testing as buffer is not expected to have any id. */
-static inline int flatbuffers_has_identifier(const void *buffer, const char *fid)
+static inline int flatbuffers_has_Id(const void *buffer, const char *fid)
 { flatbuffers_thash_t id, id2 = 0; if (fid == 0) { return 1; };
   id2 = flatbuffers_type_hash_from_string(fid);
   id = __flatbuffers_thash_read_from_pe(((flatbuffers_uoffset_t *)buffer) + 1);
@@ -473,13 +473,13 @@ static inline int flatbuffers_has_type_hash(const void *buffer, flatbuffers_thas
 static inline flatbuffers_thash_t flatbuffers_get_type_hash(const void *buffer)
 { return __flatbuffers_thash_read_from_pe((flatbuffers_uoffset_t *)buffer + 1); }
 
-#define flatbuffers_verify_endian() flatbuffers_has_identifier("\x00\x00\x00\x00" "1234", "1234")
+#define flatbuffers_verify_endian() flatbuffers_has_Id("\x00\x00\x00\x00" "1234", "1234")
 static inline void *flatbuffers_read_size_prefix(void *b, size_t *size_out)
 { if (size_out) { *size_out = (size_t)__flatbuffers_uoffset_read_from_pe(b); }
   return (uint8_t *)b + sizeof(flatbuffers_uoffset_t); }
-/* Null file identifier accepts anything, otherwise fid should be 4 characters. */
+/* Null file Id accepts anything, otherwise fid should be 4 characters. */
 #define __flatbuffers_read_root(T, K, buffer, fid)\
-  ((!buffer || !flatbuffers_has_identifier(buffer, fid)) ? 0 :\
+  ((!buffer || !flatbuffers_has_Id(buffer, fid)) ? 0 :\
   ((T ## _ ## K ## t)(((uint8_t *)buffer) +\
     __flatbuffers_uoffset_read_from_pe(buffer))))
 #define __flatbuffers_read_typed_root(T, K, buffer, thash)\
@@ -487,20 +487,20 @@ static inline void *flatbuffers_read_size_prefix(void *b, size_t *size_out)
   ((T ## _ ## K ## t)(((uint8_t *)buffer) +\
     __flatbuffers_uoffset_read_from_pe(buffer))))
 #define __flatbuffers_nested_buffer_as_root(C, N, T, K)\
-static inline T ## _ ## K ## t C ## _ ## N ## _as_root_with_identifier(C ## _ ## table_t t__tmp, const char *fid__tmp)\
+static inline T ## _ ## K ## t C ## _ ## N ## _as_root_with_Id(C ## _ ## table_t t__tmp, const char *fid__tmp)\
 { const uint8_t *buffer__tmp = C ## _ ## N(t__tmp); return __flatbuffers_read_root(T, K, buffer__tmp, fid__tmp); }\
 static inline T ## _ ## K ## t C ## _ ## N ## _as_typed_root(C ## _ ## table_t t__tmp)\
-{ const uint8_t *buffer__tmp = C ## _ ## N(t__tmp); return __flatbuffers_read_root(T, K, buffer__tmp, C ## _ ## type_identifier); }\
+{ const uint8_t *buffer__tmp = C ## _ ## N(t__tmp); return __flatbuffers_read_root(T, K, buffer__tmp, C ## _ ## type_Id); }\
 static inline T ## _ ## K ## t C ## _ ## N ## _as_root(C ## _ ## table_t t__tmp)\
-{ const char *fid__tmp = T ## _identifier;\
+{ const char *fid__tmp = T ## _Id;\
   const uint8_t *buffer__tmp = C ## _ ## N(t__tmp); return __flatbuffers_read_root(T, K, buffer__tmp, fid__tmp); }
 #define __flatbuffers_buffer_as_root(N, K)\
-static inline N ## _ ## K ## t N ## _as_root_with_identifier(const void *buffer__tmp, const char *fid__tmp)\
+static inline N ## _ ## K ## t N ## _as_root_with_Id(const void *buffer__tmp, const char *fid__tmp)\
 { return __flatbuffers_read_root(N, K, buffer__tmp, fid__tmp); }\
 static inline N ## _ ## K ## t N ## _as_root_with_type_hash(const void *buffer__tmp, flatbuffers_thash_t thash__tmp)\
 { return __flatbuffers_read_typed_root(N, K, buffer__tmp, thash__tmp); }\
 static inline N ## _ ## K ## t N ## _as_root(const void *buffer__tmp)\
-{ const char *fid__tmp = N ## _identifier;\
+{ const char *fid__tmp = N ## _Id;\
   return __flatbuffers_read_root(N, K, buffer__tmp, fid__tmp); }\
 static inline N ## _ ## K ## t N ## _as_typed_root(const void *buffer__tmp)\
 { return __flatbuffers_read_typed_root(N, K, buffer__tmp, N ## _type_hash); }

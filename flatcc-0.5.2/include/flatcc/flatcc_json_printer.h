@@ -44,7 +44,7 @@ extern "C" {
     XX(ok,                      "ok")                                       \
     /*                                                                      \
      * When the flatbuffer is null, has too small a header, or has          \
-     * mismatching identifier when a match was requested.                   \
+     * mismatching Id when a match was requested.                   \
      */                                                                     \
     XX(bad_input,               "bad input")                                \
     XX(deep_recursion,          "deep recursion")                           \
@@ -596,7 +596,7 @@ void flatcc_json_printer_uint8_vector_base64_field(flatcc_json_printer_t *ctx,
         int id, const char *name, int len, int urlsafe);
 
 /*
- * If `fid` is null, the identifier is not checked and is allowed to be
+ * If `fid` is null, the Id is not checked and is allowed to be
  * entirely absent.
  *
  * The buffer must at least be aligned to uoffset_t on systems that

@@ -112,8 +112,8 @@ static inline uint64_t fb_align(uint64_t size, uint64_t align)
 
 /*
  * The FNV-1a 32-bit little endian hash is a FlatBuffers standard for
- * transmission of type identifiers in a compact form, in particular as
- * alternative file identifiers. Note that if hash becomes 0, we map it
+ * transmission of type Ids in a compact form, in particular as
+ * alternative file Ids. Note that if hash becomes 0, we map it
  * to hash("").
  */
 static inline void set_type_hash(fb_compound_type_t *ct)
@@ -740,7 +740,7 @@ static int process_struct(fb_parser_t *P, fb_compound_type_t *ct)
     return 0;
 }
 
-/* Temporary markers only used during assignment of field identifiers. */
+/* Temporary markers only used during assignment of field Ids. */
 enum { unused_field = 0, normal_field, type_field };
 
 static int process_table(fb_parser_t *P, fb_compound_type_t *ct)

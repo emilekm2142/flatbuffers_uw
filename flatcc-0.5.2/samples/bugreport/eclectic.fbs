@@ -7,5 +7,5 @@ table FooBar {
     say       : string;
     height    : short;
 }
-file_identifier "NOOB";
+file_Id "NOOB";
 root_type FooBar;

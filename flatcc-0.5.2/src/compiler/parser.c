@@ -498,7 +498,7 @@ static void read_float_value(fb_parser_t *P, fb_token_t *t, fb_value_t *v, int s
  * character could meaningfully be accepted, but we don't.
  *
  * String literals are only used to name attributes, namespaces,
- * file identifiers and file externsions, so we really have no need
+ * file Ids and file externsions, so we really have no need
  * for these extra featuresescape .
  *
  * JSON strings should be handled separately, if or when supported -
@@ -557,7 +557,7 @@ done:
     }
 }
 
-/* Current token must be an identifier. */
+/* Current token must be an Id. */
 static void parse_ref(fb_parser_t *P, fb_ref_t **ref)
 {
     *ref = fb_add_ref(P, P->token);
@@ -565,7 +565,7 @@ static void parse_ref(fb_parser_t *P, fb_ref_t **ref)
     ref = &((*ref)->link);
     while (optional(P, '.')) {
         if (P->token->id != LEX_TOK_ID) {
-            error_tok(P, P->token, "namespace prefix expected identifier");
+            error_tok(P, P->token, "namespace prefix expected Id");
             break;
         }
         *ref = fb_add_ref(P, P->token);
@@ -726,7 +726,7 @@ static fb_metadata_t *parse_metadata(fb_parser_t *P)
         if (!optional(P, ',')) {
             break;
         }
-        if (!(t = match(P, LEX_TOK_ID, "attribute name expected identifier after ','"))) {
+        if (!(t = match(P, LEX_TOK_ID, "attribute name expected Id after ','"))) {
             break;
         }
     }
@@ -738,7 +738,7 @@ static fb_metadata_t *parse_metadata(fb_parser_t *P)
 static void parse_field(fb_parser_t *P, fb_member_t *fld)
 {
     fb_token_t *t;
-    if (!(t = match(P, LEX_TOK_ID, "field expected identifier"))) {
+    if (!(t = match(P, LEX_TOK_ID, "field expected Id"))) {
         goto fail;
     }
     fld->symbol.ident = t;
@@ -765,11 +765,11 @@ fail:
 static void parse_method(fb_parser_t *P, fb_member_t *fld)
 {
     fb_token_t *t;
-    if (!(t = match(P, LEX_TOK_ID, "method expected identifier"))) {
+    if (!(t = match(P, LEX_TOK_ID, "method expected Id"))) {
         goto fail;
     }
     fld->symbol.ident = t;
-    if (!match(P, '(', "method expected '(' after identifier")) {
+    if (!match(P, '(', "method expected '(' after Id")) {
         goto fail;
     }
     parse_type(P, &fld->req_type);
@@ -797,7 +797,7 @@ static void parse_enum_decl(fb_parser_t *P, fb_compound_type_t *ct)
     fb_token_t *t, *t0;
     fb_member_t *member;
 
-    if (!(ct->symbol.ident = match(P, LEX_TOK_ID, "enum declaration expected identifier"))) {
+    if (!(ct->symbol.ident = match(P, LEX_TOK_ID, "enum declaration expected Id"))) {
         goto fail;
     }
     if (optional(P, ':')) {
@@ -822,7 +822,7 @@ static void parse_enum_decl(fb_parser_t *P, fb_compound_type_t *ct)
     }
     for (;;) {
         if (!(t = match(P, LEX_TOK_ID,
-                "member identifier expected"))) {
+                "member Id expected"))) {
             goto fail;
         }
         if (P->failed >= FLATCC_MAX_ERRORS) {
@@ -861,7 +861,7 @@ static void parse_union_decl(fb_parser_t *P, fb_compound_type_t *ct)
     fb_ref_t *ref;
     fb_token_t *t;
 
-    if (!(ct->symbol.ident = match(P, LEX_TOK_ID, "union declaration expected identifier"))) {
+    if (!(ct->symbol.ident = match(P, LEX_TOK_ID, "union declaration expected Id"))) {
         goto fail;
     }
     ct->metadata = parse_metadata(P);
@@ -870,7 +870,7 @@ static void parse_union_decl(fb_parser_t *P, fb_compound_type_t *ct)
     }
     for (;;) {
         if (P->token->id != LEX_TOK_ID) {
-            error_tok(P, P->token, "union expects an identifier");
+            error_tok(P, P->token, "union expects an Id");
             goto fail;
         }
         if (P->failed >= FLATCC_MAX_ERRORS) {
@@ -917,7 +917,7 @@ static void parse_compound_type(fb_parser_t *P, fb_compound_type_t *ct, long tok
 {
     fb_token_t *t = 0;
 
-    if (!(t = match(P, LEX_TOK_ID, "Declaration expected an identifier"))) {
+    if (!(t = match(P, LEX_TOK_ID, "Declaration expected an Id"))) {
         goto fail;
     }
     ct->symbol.ident = t;
@@ -963,7 +963,7 @@ static void parse_namespace(fb_parser_t *P)
         return;
     }
     if (P->token->id != LEX_TOK_ID) {
-        error_tok(P, P->token, "namespace expects an identifier");
+        error_tok(P, P->token, "namespace expects an Id");
         recover(P, ';', 1);
         return;
     }
@@ -1032,22 +1032,22 @@ fail:
     recover(P, ';', 1);
 }
 
-static void parse_file_identifier(fb_parser_t *P, fb_value_t *v)
+static void parse_file_Id(fb_parser_t *P, fb_value_t *v)
 {
     fb_token_t *t;
     if (v->type != vt_missing) {
-        error_tok_as_string(P, P->token, "file identifier already set", v->s.s, v->s.len);
+        error_tok_as_string(P, P->token, "file Id already set", v->s.s, v->s.len);
     }
-    if (!match(P, LEX_TOK_STRING_BEGIN, "file_identifier expected string literal")) {
+    if (!match(P, LEX_TOK_STRING_BEGIN, "file_Id expected string literal")) {
         goto fail;
     }
     t = P->token;
     parse_string_literal(P, v);
     if (v->s.s && v->s.len != 4) {
         v->type = vt_invalid;
-        error_tok(P, t, "file_identifier must be 4 characters");
+        error_tok(P, t, "file_Id must be 4 characters");
     }
-    match(P, ';', "file_identifier expected ';'");
+    match(P, ';', "file_Id expected ';'");
     return;
 fail:
     recover(P, ';', 1);
@@ -1064,9 +1064,9 @@ static void parse_schema_decl(fb_parser_t *P)
         next(P);
         parse_file_extension(P, &P->schema.file_extension);
         break;
-    case tok_kw_file_identifier:
+    case tok_kw_file_Id:
         next(P);
-        parse_file_identifier(P, &P->schema.file_identifier);
+        parse_file_Id(P, &P->schema.file_Id);
         break;
     case tok_kw_root_type:
         next(P);

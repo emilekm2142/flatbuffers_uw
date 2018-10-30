@@ -12,14 +12,17 @@
 #ifndef TEXTDATA_READER_H
 #include "TextData_reader.h"
 #endif
+#ifndef ACTION_READER_H
+#include "Action_reader.h"
+#endif
 #ifndef DEFAULTDATATYPES_READER_H
 #include "DefaultDatatypes_reader.h"
 #endif
 #ifndef TEMPLATEROOT_READER_H
 #include "TemplateRoot_reader.h"
 #endif
-#ifndef IDENTIFIER_READER_H
-#include "Identifier_reader.h"
+#ifndef ID_READER_H
+#include "Id_reader.h"
 #endif
 #include "flatcc/flatcc_flatbuffers.h"
 #ifndef __alignas_is_defined
@@ -112,13 +115,14 @@ static inline AllWatchSerialize_View_table_t AllWatchSerialize_View_vec_at(AllWa
 __flatbuffers_offset_vec_at(AllWatchSerialize_View_table_t, vec, i, 0)
 __flatbuffers_table_as_root(AllWatchSerialize_View)
 
-__flatbuffers_define_table_field(0, AllWatchSerialize_View, id, AllWatchSerialize_Identifier_table_t, 0)
+__flatbuffers_define_table_field(0, AllWatchSerialize_View, id, AllWatchSerialize_Id_table_t, 0)
 __flatbuffers_define_string_field(1, AllWatchSerialize_View, name, 0)
 __flatbuffers_define_scalar_field(2, AllWatchSerialize_View, datatype, AllWatchSerialize_DefaultDatatypes, AllWatchSerialize_DefaultDatatypes_enum_t, INT16_C(0))
 __flatbuffers_define_scalar_field(3, AllWatchSerialize_View, usesTemplate, flatbuffers_bool, flatbuffers_bool_t, UINT8_C(0))
 __flatbuffers_define_table_field(4, AllWatchSerialize_View, template, AllWatchSerialize_TemplateRoot_table_t, 0)
 __flatbuffers_define_union_field(flatbuffers_, 6, AllWatchSerialize_View, data, AllWatchSerialize_ViewData, 0)
-__flatbuffers_define_scalar_field(7, AllWatchSerialize_View, defaultStyle, AllWatchSerialize_DefaultStyle, AllWatchSerialize_DefaultStyle_enum_t, INT16_C(0))
+__flatbuffers_define_vector_field(7, AllWatchSerialize_View, actions, AllWatchSerialize_Action_vec_t, 0)
+__flatbuffers_define_scalar_field(8, AllWatchSerialize_View, defaultStyle, AllWatchSerialize_DefaultStyle, AllWatchSerialize_DefaultStyle_enum_t, INT16_C(0))
 
 #include "flatcc/flatcc_epilogue.h"
 #endif /* VIEW_READER_H */

@@ -1,16 +1,15 @@
  include "Handshake.fbs";
-  include "Identifier.fbs";
+  include "Id.fbs";
   include "View.fbs";
  include "Application.fbs";
-//  include "Action.fbs";
+  include "Action.fbs";
 namespace AllWatchSerialize;
 //todo update, namescpases
- union CommandType {Handshake ,Application, View}//,Action,View}
+ union CommandType {Handshake ,Application, View,Action}
 
 table Command{
-    xd:string;
      command:CommandType;
-     id:Identifier;
+     id:Id;
     
 }
 root_type Command;

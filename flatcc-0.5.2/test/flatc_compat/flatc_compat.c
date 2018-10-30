@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
      * is stored (normally a vtable), but this is generated with `flatc
      * v1.1`.
      */
-    if (flatcc_verify_ok != ns(Monster_verify_as_root_with_identifier(buffer, size, "MONS"))) {
+    if (flatcc_verify_ok != ns(Monster_verify_as_root_with_Id(buffer, size, "MONS"))) {
 #if FLATBUFFERS_PROTOCOL_IS_BE
         fprintf(stderr, "flatc golden reference buffer was correctly rejected by flatcc verificiation\n"
                 "because flatc is little endian and flatcc has been compiled for big endian protocol format\n");
@@ -213,7 +213,7 @@ int main(int argc, char *argv[])
     goto done;
 #else
     if (flatcc_verify_ok != ns(Monster_verify_as_root(buffer, size))) {
-        fprintf(stderr, "could not verify foreign monster file with default identifier\n");
+        fprintf(stderr, "could not verify foreign monster file with default Id\n");
         ret = -1;
         goto done;
     }

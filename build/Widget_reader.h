@@ -9,8 +9,8 @@
 #ifndef TEMPLATEROOT_READER_H
 #include "TemplateRoot_reader.h"
 #endif
-#ifndef IDENTIFIER_READER_H
-#include "Identifier_reader.h"
+#ifndef ID_READER_H
+#include "Id_reader.h"
 #endif
 #include "flatcc/flatcc_flatbuffers.h"
 #ifndef __alignas_is_defined
@@ -46,7 +46,7 @@ __flatbuffers_table_as_root(AllWatchSerialize_Widget)
 
 __flatbuffers_define_scalar_field(0, AllWatchSerialize_Widget, refresh, flatbuffers_int64, int64_t, INT64_C(0))
 __flatbuffers_define_table_field(1, AllWatchSerialize_Widget, template, AllWatchSerialize_TemplateRoot_table_t, 0)
-__flatbuffers_define_table_field(2, AllWatchSerialize_Widget, id, AllWatchSerialize_Identifier_table_t, 0)
+__flatbuffers_define_table_field(2, AllWatchSerialize_Widget, id, AllWatchSerialize_Id_table_t, 0)
 
 #include "flatcc/flatcc_epilogue.h"
 #endif /* WIDGET_READER_H */

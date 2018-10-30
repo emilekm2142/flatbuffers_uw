@@ -298,5 +298,5 @@ table Movie {
 
 root_type MyGame.Example.Monster;
 
-file_identifier "MONS";
+file_Id "MONS";
 file_extension "mon";

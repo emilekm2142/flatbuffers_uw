@@ -106,7 +106,7 @@ Schema ([eclectic.fbs]) :
             say       : string;
             height    : short;
         }
-        file_identifier "NOOB";
+        file_Id "NOOB";
         root_type FooBar;
 
 JSON :
@@ -118,7 +118,7 @@ Buffer :
         header:
 
             +0x0000 00 01 00 00 ; find root table at offset +0x0000100.
-            +0x0004 'N', 'O', 'O', 'B' ; possibly our file identifier
+            +0x0004 'N', 'O', 'O', 'B' ; possibly our file Id
 
             ...
 
@@ -210,7 +210,7 @@ be done using `!!x`.
 ### Format Internal Types
 
     flatbuffers_union_type_t (uint8, NONE = 0, 0 <= type <= 255)
-    flatbuffers_identifier_t (uint8[4])
+    flatbuffers_Id_t (uint8[4])
     flatbuffers_uoffset_t (uin32)
     flatbuffers_soffset_t (int32),
     flatbuffers_voffset_t (uint16)
@@ -282,18 +282,18 @@ must also know about the size field just as they must know about the
 excpected buffer type.
 
 The next 4 bytes (`sizeof(uoffset_t)`) might represent a 4 byte buffer
-identifier, or it might be absent but there is no obvious way to know
-which.  The file identifier is typically ASCII characters from the
-schemas `file_identifier` field padded with 0 bytes but may also contain
-any custom binary identifier in little endian encoding. See
-[Type-Hashes](#type-hashes). The 0 identifier should be avoided because
-the buffer might accidentally contain zero padding when an identifier is
-absent and because 0 can be used by API's to speficy that no identifier
+Id, or it might be absent but there is no obvious way to know
+which.  The file Id is typically ASCII characters from the
+schemas `file_Id` field padded with 0 bytes but may also contain
+any custom binary Id in little endian encoding. See
+[Type-Hashes](#type-hashes). The 0 Id should be avoided because
+the buffer might accidentally contain zero padding when an Id is
+absent and because 0 can be used by API's to speficy that no Id
 should be stored.
 
 When reading a buffer, it should be checked that the length is at least
 8 bytes (2 * `sizeof(uoffset_t)`) Otherwise it is not safe to check the
-file identifier.
+file Id.
 
 The root table starts with a 4 byte vtable offset (`soffset_t`). The
 `soffset_t` has the same size as `uoffset_t` but is signed.
@@ -410,28 +410,28 @@ value fields in table. See unions.
 A type hash is a 32-bit value defined as the fnv1a32 hash of a tables or
 a structs fully qualified name. If the fnv1a32 hash returns 0 it should
 instead hash the empty string. 0 is used to indicate that a buffer
-should not store an identifier.
+should not store an Id.
 
 Every table and struct has a name and optionally also a namespace of one
 or more levels. The fully qualified name is optional namespace followed
 by the type name using '.' as a separator. For example
 "MyGame.Sample.Monster", or "Eclectic.FooBar".
 
-The type hash can be used as the buffer identifier instead of the schema
-provided `file_identifier`. The type hash makes it possible to
+The type hash can be used as the buffer Id instead of the schema
+provided `file_Id`. The type hash makes it possible to
 distinguish between different root types from the same schema, and even
 across schema as long as the namespace is unique.
 
 Type hashes introduce no changes to the binary format but the application
-interface must choose to support user defined identifiers or explicitly
+interface must choose to support user defined Ids or explicitly
 support type hashes. Alternatively an application can peak directly into
 the buffer at offset 4 (when `uoffset_t` is 4 bytes long).
 
-FlatCC generates the following identifier for the "MyGame.Sample.Monster"
+FlatCC generates the following Id for the "MyGame.Sample.Monster"
 table:
 
     #define MyGame_Sample_Monster_type_hash ((flatbuffers_thash_t)0xd5be61b)
-    #define MyGame_Sample_Monster_type_identifier "\x1b\xe6\x5b\x0d"
+    #define MyGame_Sample_Monster_type_Id "\x1b\xe6\x5b\x0d"
 
 But we can also [compute
 one online](https://www.tools4noobs.com/online_tools/hash/) for our example buffer:
@@ -441,18 +441,18 @@ one online](https://www.tools4noobs.com/online_tools/hash/) for our example buff
 Thus we can open a hex editor and locate
 
             +0x0000 00 01 00 00 ; find root table at offset +0x0000100.
-            +0x0004 'N', 'O', 'O', 'B' ; possibly our file identifier
+            +0x0004 'N', 'O', 'O', 'B' ; possibly our file Id
 
 and replace it with
 
             +0x0000 00 01 00 00 ; find root table at offset +0x0000100.
-            +0x0004 58 4f 60 0a ; very likely our file identifier identifier
+            +0x0004 58 4f 60 0a ; very likely our file Id Id
 
 or generate it with `flatcc`:
 
         $ bin/flatcc --stdout doc/eclectic.fbs | grep FooBar_type
         #define Eclectic_FooBar_type_hash ((flatbuffers_thash_t)0xa604f58)
-        #define Eclectic_FooBar_type_identifier "\x58\x4f\x60\x0a"
+        #define Eclectic_FooBar_type_Id "\x58\x4f\x60\x0a"
 
 
 The following snippet implements fnv1a32, and returns the empty string
@@ -484,7 +484,7 @@ modifying a name or a namespace.
 
 For global conflict resolution, a type should be identified by its fully
 qualified name using adequate namespaces. This obviously requires it to
-be stored separate from the buffer identifier due to size constraints.
+be stored separate from the buffer Id due to size constraints.
 
 
 ### Type Hash Variants
@@ -499,7 +499,7 @@ For buffers using structs as roots, the hash remains unchanged because
 the struct is a unique type in schema. In this way a receiver that does
 not handle struct roots can avoid trying to read the root as a table.
 
-For futher variations of the format, a format identifier can be inserted
+For futher variations of the format, a format Id can be inserted
 in front of the namespace when generating the hash. There is no formal
 approach to this, but as an example, lets say we want to use only 1 byte
 per vtable entry and identify these buffers with type hash using the
@@ -633,7 +633,7 @@ this is not an integral part of the format).
 
 ## Schema Evolution
 
-A table has a known set of low-valued field identifiers. Any unused
+A table has a known set of low-valued field Ids. Any unused
 field id can be used in a future version. If a field (as is normal) is
 implicitly assigned an id, new fields can only be added at the end of
 the table. Internally this translates into new versions getting ever
@@ -715,7 +715,7 @@ verifier. It is as much requirements that any builder must fulfill.
 The objective of verification is to make it safe to read from an
 untrusted buffer, or a trusted buffer that accidentally has an
 unexpected type. The verifier does not guarantee that the type is indeed
-the expeced type exact it can read the buffer identifier if present
+the expeced type exact it can read the buffer Id if present
 which is still no guarantee. The verifier cannot make it safe to modify
 buffers in-place because the cost of doing such a check would be
 prohitive in the average case.
@@ -730,7 +730,7 @@ aligned, such as in network buffers).
 A verifier primarily checks that:
 
 - the buffer is at least `2 * sizeof(uoffset_t)` such that the root
-  root table and buffer identifier can be checked safely.
+  root table and buffer Id can be checked safely.
 - any offset being chased is inside the buffer that any data accessed
   from that resuling location is entirely inside the buffer and aligned
   notably the vtables first entry must be valid before the vtable can
@@ -840,11 +840,11 @@ Seconary validation could be automated via schema attributes and may be
 very useful as such, but it is a separate problem and out of scope for a
 core binary format verifier.
 
-A buffer identifier is optional so the verifier should be informed
-whether an identifier must match a given id. It should check both ASCII
+A buffer Id is optional so the verifier should be informed
+whether an Id must match a given id. It should check both ASCII
 text and zero padding not just a string compare. It is non-trivial to
-decide if the second buffer field is an identifier, or some other data,
-but if the field does not match the expected identifier, it certainly
+decide if the second buffer field is an Id, or some other data,
+but if the field does not match the expected Id, it certainly
 isn't what is expected.
 
 Note that it is not entirely trivial to check vector lengths because the
@@ -919,15 +919,15 @@ All fields have exactly the same type and size as the little endian
 format but all scalars including floating point values are stored
 byteswapped within their field size. Offset types are also byteswapped.
 
-The buffer identifier is stored byte swapped if present. For example
-the 4-byte "MONS" identifier becomes "SNOM" in big endian format. It is
+The buffer Id is stored byte swapped if present. For example
+the 4-byte "MONS" Id becomes "SNOM" in big endian format. It is
 therefore reasonably easy to avoid accidentially mixing little- and
 big-endian buffers. However, it is not trivial to handle identifers that
 are not exactly 4-bytes. "HI\0\0" could be "IH\0\0" or "\0\0IH". It is
 recommended to always use 4-byte identifies to avoid this problem. See
 the FlatCC release 0.4.0 big endian release for details.
 
-When using type hash identifiers the identifier is stored as a big
+When using type hash Ids the Id is stored as a big
 endian encoded hash value. The user application will the hash in its
 native form and accessor code will do the conversion as for other
 values.

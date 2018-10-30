@@ -580,9 +580,9 @@ static int gen_json_printer_prototypes(fb_output_t *out)
         fprintf(out->fp,
                 "/*\n"
                 " * Prints the default root table or struct from a buffer which must have\n"
-                " * the schema declared file identifier, if any. It is also possible to\n"
+                " * the schema declared file Id, if any. It is also possible to\n"
                 " * call the type specific `print_json_as_root` function wich accepts an\n"
-                " * optional identifier (or 0) as argument. The printer `ctx` object must\n"
+                " * optional Id (or 0) as argument. The printer `ctx` object must\n"
                 " * be initialized with the appropriate output type, or it can be 0 which\n"
                 " * defaults to stdout. NOTE: `ctx` is not generally allowed to be null, only\n"
                 " * here for a simplified interface.\n"
@@ -694,10 +694,10 @@ static int gen_root_type_printer(fb_output_t *out, fb_compound_type_t *ct)
             "    }\n"
             "    return %s_print_json_as_root(ctx, buf, bufsiz, ",
             snt.text);
-    if (out->S->file_identifier.type == vt_string) {
+    if (out->S->file_Id.type == vt_string) {
         fprintf(out->fp,
                 "\"%.*s\");\n",
-                out->S->file_identifier.s.len, out->S->file_identifier.s.s);
+                out->S->file_Id.s.len, out->S->file_Id.s.s);
     } else {
         fprintf(out->fp,
                 "0);");

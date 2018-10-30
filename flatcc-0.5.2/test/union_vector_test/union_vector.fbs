@@ -23,4 +23,4 @@ table Movie {
 }
 
 root_type Movie;
-file_identifier "MOVI";
+file_Id "MOVI";

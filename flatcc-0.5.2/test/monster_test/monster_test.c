@@ -45,13 +45,13 @@ static const char zero_pad[100];
 int verify_empty_monster(void *buffer)
 {
     /* Proper id given. */
-    ns(Monster_table_t) monster = ns(Monster_as_root_with_identifier)(buffer, ns(Monster_identifier));
+    ns(Monster_table_t) monster = ns(Monster_as_root_with_Id)(buffer, ns(Monster_Id));
     /* Invalid id. */
-    ns(Monster_table_t) monster2 = ns(Monster_as_root_with_identifier(buffer, "1234"));
+    ns(Monster_table_t) monster2 = ns(Monster_as_root_with_Id(buffer, "1234"));
     /* `with_id` can also mean ignore id when given a null argument. */
-    ns(Monster_table_t) monster3 = ns(Monster_as_root_with_identifier(buffer, 0));
-    /* Excessive text in identifier is ignored. */
-    ns(Monster_table_t) monster4 = ns(Monster_as_root_with_identifier(buffer, "MONSX"));
+    ns(Monster_table_t) monster3 = ns(Monster_as_root_with_Id(buffer, 0));
+    /* Excessive text in Id is ignored. */
+    ns(Monster_table_t) monster4 = ns(Monster_as_root_with_Id(buffer, "MONSX"));
     /* Default id should match proper id. */
     ns(Monster_table_t) monster5 = ns(Monster_as_root(buffer));
 
@@ -60,15 +60,15 @@ int verify_empty_monster(void *buffer)
         return -1;
     }
     if (monster2) {
-        printf("Monster should not accept invalid identifier\n");
+        printf("Monster should not accept invalid Id\n");
         return -1;
     }
     if (monster3 != monster) {
-        printf("Monster should ignore identifier when given a null id\n");
+        printf("Monster should ignore Id when given a null id\n");
         return -1;
     }
     if (monster4 != monster) {
-        printf("Monster should accept a string as valid identifier");
+        printf("Monster should accept a string as valid Id");
         return -1;
     }
     if (monster5 != monster) {
@@ -192,7 +192,7 @@ int test_empty_monster(flatcc_builder_t *B)
 
     flatcc_builder_reset(B);
 
-    flatbuffers_buffer_start(B, ns(Monster_identifier));
+    flatbuffers_buffer_start(B, ns(Monster_Id));
     ns(Monster_start(B));
     /* Cannot make monster empty as name is required. */
     ns(Monster_name_create_str(B, "MyMonster"));
@@ -206,7 +206,7 @@ int test_empty_monster(flatcc_builder_t *B)
         goto done;
     }
 
-    if ((ret = ns(Monster_verify_as_root_with_identifier(buffer, size, ns(Monster_identifier))))) {
+    if ((ret = ns(Monster_verify_as_root_with_Id(buffer, size, ns(Monster_Id))))) {
         printf("could not verify empty monster, got %s\n", flatcc_verify_error_string(ret));
         return -1;
     }
@@ -238,7 +238,7 @@ int test_typed_empty_monster(flatcc_builder_t *B)
 
     flatcc_builder_reset(B);
 
-    flatbuffers_buffer_start(B, ns(Monster_type_identifier));
+    flatbuffers_buffer_start(B, ns(Monster_type_Id));
     ns(Monster_start(B));
     /* Cannot make monster empty as name is required. */
     ns(Monster_name_create_str(B, "MyMonster"));
@@ -266,11 +266,11 @@ int test_typed_empty_monster(flatcc_builder_t *B)
     }
 
     if (!verify_empty_monster(buffer)) {
-        printf("typed empty monster should not verify with default identifier\n");
+        printf("typed empty monster should not verify with default Id\n");
         goto done;
     }
 
-    if ((ret = ns(Monster_verify_as_root_with_identifier(buffer, size, ns(Monster_type_identifier))))) {
+    if ((ret = ns(Monster_verify_as_root_with_Id(buffer, size, ns(Monster_type_Id))))) {
         printf("could not verify typed empty monster, got %s\n", flatcc_verify_error_string(ret));
         goto done;
     }
@@ -290,14 +290,14 @@ int test_typed_empty_monster(flatcc_builder_t *B)
         goto done;
     }
 
-    flatbuffers_identifier_from_type_hash(0x330ef481, fid);
-    if ((ret = ns(Monster_verify_as_root_with_identifier(buffer, size, fid)))) {
+    flatbuffers_Id_from_type_hash(0x330ef481, fid);
+    if ((ret = ns(Monster_verify_as_root_with_Id(buffer, size, fid)))) {
         printf("could not verify typed empty monster, got %s\n", flatcc_verify_error_string(ret));
         goto done;
     }
 
     if (!ns(Monster_verify_as_root(buffer, size))) {
-        printf("should not have verified with the original identifier since we use types\n");
+        printf("should not have verified with the original Id since we use types\n");
         goto done;
     }
     ret = 0;
@@ -390,7 +390,7 @@ int test_typed_table_with_emptystruct(flatcc_builder_t *B)
      * we can use it as a cheap presence flag.
      */
     hexdump("typed table with empty struct", buffer, size, stderr);
-    if (flatcc_verify_ok != ns(with_emptystruct_verify_as_root_with_identifier(buffer, size, ns(with_emptystruct_type_identifier)))) {
+    if (flatcc_verify_ok != ns(with_emptystruct_verify_as_root_with_Id(buffer, size, ns(with_emptystruct_type_Id)))) {
         printf("explicit verify_as_root failed\n");
         return -1;
     }
@@ -424,12 +424,12 @@ int test_typed_table_with_emptystruct(flatcc_builder_t *B)
         printf("wrong has type unexpected succeeed\n");
         return -1;
     }
-    if (!flatbuffers_has_identifier(buffer, 0)) {
-        printf("has identifier failed for null id\n");
+    if (!flatbuffers_has_Id(buffer, 0)) {
+        printf("has Id failed for null id\n");
         return -1;
     }
-    if (!flatbuffers_has_identifier(buffer, "\xb6\x37\xdd\xb0")) {
-        printf("has identifier failed for explicit string\n");
+    if (!flatbuffers_has_Id(buffer, "\xb6\x37\xdd\xb0")) {
+        printf("has Id failed for explicit string\n");
         return -1;
     }
     if (ns(with_emptystruct_as_root(buffer))) {
@@ -440,8 +440,8 @@ int test_typed_table_with_emptystruct(flatcc_builder_t *B)
         printf("with wrong type unexptedly succeeded\n");
         return -1;
     }
-    if (!ns(with_emptystruct_as_root_with_identifier(buffer, ns(with_emptystruct_type_identifier)))) {
-        printf("as_root_with_identifier failed to match type_identifier\n");
+    if (!ns(with_emptystruct_as_root_with_Id(buffer, ns(with_emptystruct_type_Id)))) {
+        printf("as_root_with_Id failed to match type_Id\n");
         return -1;
     }
     if (!ns(with_emptystruct_as_typed_root(buffer))) {
@@ -481,24 +481,24 @@ int verify_monster(void *buffer)
     const uint8_t *inv;
     size_t i;
 
-    if (!nsc(has_identifier(buffer, 0))) {
-        printf("wrong monster identifier (when ignoring)\n");
+    if (!nsc(has_Id(buffer, 0))) {
+        printf("wrong monster Id (when ignoring)\n");
         return -1;
     }
-    if (!nsc(has_identifier(buffer, "MONS"))) {
-        printf("wrong monster identifier (when explicit)\n");
+    if (!nsc(has_Id(buffer, "MONS"))) {
+        printf("wrong monster Id (when explicit)\n");
         return -1;
     }
-    if (!nsc(has_identifier(buffer, "MONSTER"))) {
-        printf("extra characters in identifier should be ignored\n");
+    if (!nsc(has_Id(buffer, "MONSTER"))) {
+        printf("extra characters in Id should be ignored\n");
         return -1;
     }
-    if (nsc(has_identifier(buffer, "MON1"))) {
-        printf("accepted wrong monster identifier (when explicit)\n");
+    if (nsc(has_Id(buffer, "MON1"))) {
+        printf("accepted wrong monster Id (when explicit)\n");
         return -1;
     }
-    if (!nsc(has_identifier(buffer, ns(Monster_identifier)))) {
-        printf("wrong monster identifier (via defined identifier)\n");
+    if (!nsc(has_Id(buffer, ns(Monster_Id)))) {
+        printf("wrong monster Id (via defined Id)\n");
         return -1;
     }
 
@@ -2434,16 +2434,16 @@ int test_struct_buffer(flatcc_builder_t *B)
         return -1;
     }
     hexdump("Vec3 struct buffer", buffer, size, stderr);
-    if (!nsc(has_identifier(buffer, "MONS"))) {
-        printf("wrong Vec3 identifier (explicit)\n");
+    if (!nsc(has_Id(buffer, "MONS"))) {
+        printf("wrong Vec3 Id (explicit)\n");
         return -1;
     }
-    if (nsc(has_identifier(buffer, "mons"))) {
-        printf("accepted wrong Vec3 identifier (explicit)\n");
+    if (nsc(has_Id(buffer, "mons"))) {
+        printf("accepted wrong Vec3 Id (explicit)\n");
         return -1;
     }
-    if (!nsc(has_identifier(buffer, ns(Vec3_identifier)))) {
-        printf("wrong Vec3 identifier (via define)\n");
+    if (!nsc(has_Id(buffer, ns(Vec3_Id)))) {
+        printf("wrong Vec3 Id (via define)\n");
         return -1;
     }
     vec3 = ns(Vec3_as_root(buffer));
@@ -2483,20 +2483,20 @@ int test_typed_struct_buffer(flatcc_builder_t *B)
         return -1;
     }
     hexdump("typed Vec3 struct buffer", buffer, size, stderr);
-    if (!nsc(has_identifier(buffer, "\xd2\x3e\xf5\xa8"))) {
-        printf("wrong Vec3 identifier (explicit)\n");
+    if (!nsc(has_Id(buffer, "\xd2\x3e\xf5\xa8"))) {
+        printf("wrong Vec3 Id (explicit)\n");
         return -1;
     }
-    if (nsc(has_identifier(buffer, "mons"))) {
-        printf("accepted wrong Vec3 identifier (explicit)\n");
+    if (nsc(has_Id(buffer, "mons"))) {
+        printf("accepted wrong Vec3 Id (explicit)\n");
         return -1;
     }
-    if (!nsc(has_identifier(buffer, ns(Vec3_type_identifier)))) {
-        printf("wrong Vec3 identifier (via define)\n");
+    if (!nsc(has_Id(buffer, ns(Vec3_type_Id)))) {
+        printf("wrong Vec3 Id (via define)\n");
         return -1;
     }
     if (!ns(Vec3_as_root_with_type_hash(buffer, ns(Vec3_type_hash)))) {
-        printf("wrong Vec3 type identifier (via define)\n");
+        printf("wrong Vec3 type Id (via define)\n");
         return -1;
     }
     if (flatcc_verify_ok != ns(Vec3_verify_as_root_with_type_hash(buffer, size, ns(Vec3_type_hash)))) {
@@ -2597,7 +2597,7 @@ int gen_struct_buffer_benchmark(flatcc_builder_t *B)
     if (!buffer) {
         return -1;
     }
-    vec3 = ns(Vec3_as_root_with_identifier(buffer, 0));
+    vec3 = ns(Vec3_as_root_with_Id(buffer, 0));
     /* Convert buffer to native in place - a nop on native platform. */
     v = (ns(Vec3_t) *)vec3;
     ns(Vec3_from_pe(v));

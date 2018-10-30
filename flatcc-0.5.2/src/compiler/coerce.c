@@ -3,7 +3,7 @@
 /*
  * Be aware that some value variants represents actual values (e.g.
  * vt_int), and others represent a type (e.g. vt_scalar) which holds a
- * type identifier token. Here we implicitly expect a vt_scalar type as
+ * type Id token. Here we implicitly expect a vt_scalar type as
  * first argument, but only receive the token. The second argument is a
  * value literal.  Our job is to decide if the value fits within the
  * given type. Our internal representation already ensures that value

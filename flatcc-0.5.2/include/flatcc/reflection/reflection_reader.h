@@ -11,8 +11,8 @@
 #include <stdalign.h>
 #endif
 #include "flatcc/flatcc_prologue.h"
-#undef flatbuffers_identifier
-#define flatbuffers_identifier "BFBS"
+#undef flatbuffers_Id
+#define flatbuffers_Id "BFBS"
 #undef flatbuffers_extension
 #define flatbuffers_extension ".bfbs"
 
@@ -38,41 +38,41 @@ typedef flatbuffers_uoffset_t *reflection_Object_mutable_vec_t;
 typedef const struct reflection_Schema_table *reflection_Schema_table_t;
 typedef const flatbuffers_uoffset_t *reflection_Schema_vec_t;
 typedef flatbuffers_uoffset_t *reflection_Schema_mutable_vec_t;
-#ifndef reflection_Type_identifier
-#define reflection_Type_identifier flatbuffers_identifier
+#ifndef reflection_Type_Id
+#define reflection_Type_Id flatbuffers_Id
 #endif
 #define reflection_Type_type_hash ((flatbuffers_thash_t)0x44c8fe5e)
-#define reflection_Type_type_identifier "\x5e\xfe\xc8\x44"
-#ifndef reflection_KeyValue_identifier
-#define reflection_KeyValue_identifier flatbuffers_identifier
+#define reflection_Type_type_Id "\x5e\xfe\xc8\x44"
+#ifndef reflection_KeyValue_Id
+#define reflection_KeyValue_Id flatbuffers_Id
 #endif
 #define reflection_KeyValue_type_hash ((flatbuffers_thash_t)0x8c761eaa)
-#define reflection_KeyValue_type_identifier "\xaa\x1e\x76\x8c"
-#ifndef reflection_EnumVal_identifier
-#define reflection_EnumVal_identifier flatbuffers_identifier
+#define reflection_KeyValue_type_Id "\xaa\x1e\x76\x8c"
+#ifndef reflection_EnumVal_Id
+#define reflection_EnumVal_Id flatbuffers_Id
 #endif
 #define reflection_EnumVal_type_hash ((flatbuffers_thash_t)0x9531c946)
-#define reflection_EnumVal_type_identifier "\x46\xc9\x31\x95"
-#ifndef reflection_Enum_identifier
-#define reflection_Enum_identifier flatbuffers_identifier
+#define reflection_EnumVal_type_Id "\x46\xc9\x31\x95"
+#ifndef reflection_Enum_Id
+#define reflection_Enum_Id flatbuffers_Id
 #endif
 #define reflection_Enum_type_hash ((flatbuffers_thash_t)0xacffa90f)
-#define reflection_Enum_type_identifier "\x0f\xa9\xff\xac"
-#ifndef reflection_Field_identifier
-#define reflection_Field_identifier flatbuffers_identifier
+#define reflection_Enum_type_Id "\x0f\xa9\xff\xac"
+#ifndef reflection_Field_Id
+#define reflection_Field_Id flatbuffers_Id
 #endif
 #define reflection_Field_type_hash ((flatbuffers_thash_t)0x9f7e408a)
-#define reflection_Field_type_identifier "\x8a\x40\x7e\x9f"
-#ifndef reflection_Object_identifier
-#define reflection_Object_identifier flatbuffers_identifier
+#define reflection_Field_type_Id "\x8a\x40\x7e\x9f"
+#ifndef reflection_Object_Id
+#define reflection_Object_Id flatbuffers_Id
 #endif
 #define reflection_Object_type_hash ((flatbuffers_thash_t)0xb09729bd)
-#define reflection_Object_type_identifier "\xbd\x29\x97\xb0"
-#ifndef reflection_Schema_identifier
-#define reflection_Schema_identifier flatbuffers_identifier
+#define reflection_Object_type_Id "\xbd\x29\x97\xb0"
+#ifndef reflection_Schema_Id
+#define reflection_Schema_Id flatbuffers_Id
 #endif
 #define reflection_Schema_type_hash ((flatbuffers_thash_t)0xfaf93779)
-#define reflection_Schema_type_identifier "\x79\x37\xf9\xfa"
+#define reflection_Schema_type_Id "\x79\x37\xf9\xfa"
 
 typedef int8_t reflection_BaseType_enum_t;
 __flatbuffers_define_integer_type(reflection_BaseType, reflection_BaseType_enum_t, 8)

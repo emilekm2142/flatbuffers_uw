@@ -28,15 +28,15 @@ static int reflection_Type_verify_table(flatcc_table_verifier_descriptor_t *td)
 
 static inline int reflection_Type_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Type_identifier, &reflection_Type_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Type_Id, &reflection_Type_verify_table);
 }
 
 static inline int reflection_Type_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Type_type_identifier, &reflection_Type_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Type_type_Id, &reflection_Type_verify_table);
 }
 
-static inline int reflection_Type_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int reflection_Type_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &reflection_Type_verify_table);
 }
@@ -56,15 +56,15 @@ static int reflection_KeyValue_verify_table(flatcc_table_verifier_descriptor_t *
 
 static inline int reflection_KeyValue_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_KeyValue_identifier, &reflection_KeyValue_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_KeyValue_Id, &reflection_KeyValue_verify_table);
 }
 
 static inline int reflection_KeyValue_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_KeyValue_type_identifier, &reflection_KeyValue_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_KeyValue_type_Id, &reflection_KeyValue_verify_table);
 }
 
-static inline int reflection_KeyValue_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int reflection_KeyValue_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &reflection_KeyValue_verify_table);
 }
@@ -86,15 +86,15 @@ static int reflection_EnumVal_verify_table(flatcc_table_verifier_descriptor_t *t
 
 static inline int reflection_EnumVal_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_EnumVal_identifier, &reflection_EnumVal_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_EnumVal_Id, &reflection_EnumVal_verify_table);
 }
 
 static inline int reflection_EnumVal_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_EnumVal_type_identifier, &reflection_EnumVal_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_EnumVal_type_Id, &reflection_EnumVal_verify_table);
 }
 
-static inline int reflection_EnumVal_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int reflection_EnumVal_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &reflection_EnumVal_verify_table);
 }
@@ -117,15 +117,15 @@ static int reflection_Enum_verify_table(flatcc_table_verifier_descriptor_t *td)
 
 static inline int reflection_Enum_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Enum_identifier, &reflection_Enum_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Enum_Id, &reflection_Enum_verify_table);
 }
 
 static inline int reflection_Enum_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Enum_type_identifier, &reflection_Enum_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Enum_type_Id, &reflection_Enum_verify_table);
 }
 
-static inline int reflection_Enum_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int reflection_Enum_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &reflection_Enum_verify_table);
 }
@@ -153,15 +153,15 @@ static int reflection_Field_verify_table(flatcc_table_verifier_descriptor_t *td)
 
 static inline int reflection_Field_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Field_identifier, &reflection_Field_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Field_Id, &reflection_Field_verify_table);
 }
 
 static inline int reflection_Field_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Field_type_identifier, &reflection_Field_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Field_type_Id, &reflection_Field_verify_table);
 }
 
-static inline int reflection_Field_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int reflection_Field_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &reflection_Field_verify_table);
 }
@@ -185,15 +185,15 @@ static int reflection_Object_verify_table(flatcc_table_verifier_descriptor_t *td
 
 static inline int reflection_Object_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Object_identifier, &reflection_Object_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Object_Id, &reflection_Object_verify_table);
 }
 
 static inline int reflection_Object_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Object_type_identifier, &reflection_Object_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Object_type_Id, &reflection_Object_verify_table);
 }
 
-static inline int reflection_Object_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int reflection_Object_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &reflection_Object_verify_table);
 }
@@ -216,15 +216,15 @@ static int reflection_Schema_verify_table(flatcc_table_verifier_descriptor_t *td
 
 static inline int reflection_Schema_verify_as_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Schema_identifier, &reflection_Schema_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Schema_Id, &reflection_Schema_verify_table);
 }
 
 static inline int reflection_Schema_verify_as_typed_root(const void *buf, size_t bufsiz)
 {
-    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Schema_type_identifier, &reflection_Schema_verify_table);
+    return flatcc_verify_table_as_root(buf, bufsiz, reflection_Schema_type_Id, &reflection_Schema_verify_table);
 }
 
-static inline int reflection_Schema_verify_as_root_with_identifier(const void *buf, size_t bufsiz, const char *fid)
+static inline int reflection_Schema_verify_as_root_with_Id(const void *buf, size_t bufsiz, const char *fid)
 {
     return flatcc_verify_table_as_root(buf, bufsiz, fid, &reflection_Schema_verify_table);
 }

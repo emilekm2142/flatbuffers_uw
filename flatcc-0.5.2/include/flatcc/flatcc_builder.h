@@ -134,7 +134,7 @@ typedef struct flatcc_builder_union_vec_ref {
  */
 typedef flatbuffers_soffset_t flatcc_builder_vt_ref_t;
 
-typedef flatbuffers_uoffset_t flatcc_builder_identifier_t;
+typedef flatbuffers_uoffset_t flatcc_builder_Id_t;
 
 /**
  * Hints to custom allocators so they can provide initial alloc sizes
@@ -263,7 +263,7 @@ typedef int flatcc_builder_emit_fun(void *emit_context,
 
 /*
  * Returns a pointer to static padding used in emitter calls. May
- * sometimes also be used for empty defaults such as identifier.
+ * sometimes also be used for empty defaults such as Id.
  */
 extern const uint8_t flatcc_builder_padding_base[];
 
@@ -301,7 +301,7 @@ typedef int flatcc_builder_alloc_fun(void *alloc_context,
 
 typedef struct __flatcc_builder_buffer_frame __flatcc_builder_buffer_frame_t;
 struct __flatcc_builder_buffer_frame {
-    flatcc_builder_identifier_t identifier;
+    flatcc_builder_Id_t Id;
     flatcc_builder_ref_t mark;
     flatbuffers_uoffset_t vs_end;
     flatbuffers_uoffset_t nest_id;
@@ -427,7 +427,7 @@ struct flatcc_builder {
 
     /* Settings that may happen with no frame allocated. */
 
-    flatcc_builder_identifier_t identifier;
+    flatcc_builder_Id_t Id;
 
     /* Settings that survive reset (emitter, alloc, and contexts also survive): */
 
@@ -496,7 +496,7 @@ void *flatcc_builder_get_emit_context(flatcc_builder_t *B);
  * reduced to their defaults (signalled by reallocating each non-empty
  * buffer to a single byte). General settings are cleared optionally,
  * such as cache flushing. Buffer specific settings such as buffer
- * identifier are always cleared.
+ * Id are always cleared.
  *
  * Returns -1 if allocator complains during buffer reduction, 0 on
  * success.
@@ -774,7 +774,7 @@ enum flatcc_builder_buffer_flags {
  * place.
  */
 flatcc_builder_ref_t flatcc_builder_create_buffer(flatcc_builder_t *B,
-        const char identifier[FLATBUFFERS_IDENTIFIER_SIZE],
+        const char Id[FLATBUFFERS_Id_SIZE],
         uint16_t block_align,
         flatcc_builder_ref_t ref, uint16_t align, int flags);
 
@@ -842,8 +842,8 @@ flatcc_builder_ref_t flatcc_builder_end_struct(flatcc_builder_t *B);
  * `block_align` is allowed to be 0 meaning it will inherit from parent if
  * present, and otherwise it defaults to 1.
  *
- * The identifier may be null, and it may optionally be set later with
- * `set_identifier` before the `end_buffer` call.
+ * The Id may be null, and it may optionally be set later with
+ * `set_Id` before the `end_buffer` call.
  *
  * General note:
  *
@@ -866,7 +866,7 @@ flatcc_builder_ref_t flatcc_builder_end_struct(flatcc_builder_t *B);
  * see also `create_buffer`.
  */
 int flatcc_builder_start_buffer(flatcc_builder_t *B,
-        const char identifier[FLATBUFFERS_IDENTIFIER_SIZE],
+        const char Id[FLATBUFFERS_Id_SIZE],
         uint16_t block_align, int flags);
 
 /**
@@ -926,12 +926,12 @@ flatcc_builder_ref_t flatcc_builder_embed_buffer(flatcc_builder_t *B,
         const void *data, size_t size, uint16_t align, int flags);
 
 /**
- * Applies to the innermost open buffer. The identifier may be null or
- * contain all zero. Overrides any identifier given to the start buffer
+ * Applies to the innermost open buffer. The Id may be null or
+ * contain all zero. Overrides any Id given to the start buffer
  * call.
  */
-void flatcc_builder_set_identifier(flatcc_builder_t *B,
-        const char identifier[FLATBUFFERS_IDENTIFIER_SIZE]);
+void flatcc_builder_set_Id(flatcc_builder_t *B,
+        const char Id[FLATBUFFERS_Id_SIZE]);
 
 enum flatcc_builder_type {
     flatcc_builder_empty = 0,
@@ -1361,7 +1361,7 @@ void *flatcc_builder_table_add_copy(flatcc_builder_t *B, int id, const void *dat
 
 /**
  * Add a string, vector, or sub-table depending on the type if the
- * field identifier. The offset ref obtained when the field object was
+ * field Id. The offset ref obtained when the field object was
  * closed should be stored as is in the given pointer. The pointer
  * is only valid short term, so create the object before calling
  * add to table, but the owner table can be started earlier. Never mix

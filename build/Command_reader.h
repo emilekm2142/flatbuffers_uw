@@ -6,14 +6,17 @@
 #ifndef FLATBUFFERS_COMMON_READER_H
 #include "flatbuffers_common_reader.h"
 #endif
+#ifndef ACTION_READER_H
+#include "Action_reader.h"
+#endif
 #ifndef APPLICATION_READER_H
 #include "Application_reader.h"
 #endif
 #ifndef VIEW_READER_H
 #include "View_reader.h"
 #endif
-#ifndef IDENTIFIER_READER_H
-#include "Identifier_reader.h"
+#ifndef ID_READER_H
+#include "Id_reader.h"
 #endif
 #ifndef HANDSHAKE_READER_H
 #include "Handshake_reader.h"
@@ -48,6 +51,7 @@ __flatbuffers_define_union(flatbuffers_, AllWatchSerialize_CommandType)
 #define AllWatchSerialize_CommandType_Handshake ((AllWatchSerialize_CommandType_union_type_t)UINT8_C(1))
 #define AllWatchSerialize_CommandType_Application ((AllWatchSerialize_CommandType_union_type_t)UINT8_C(2))
 #define AllWatchSerialize_CommandType_View ((AllWatchSerialize_CommandType_union_type_t)UINT8_C(3))
+#define AllWatchSerialize_CommandType_Action ((AllWatchSerialize_CommandType_union_type_t)UINT8_C(4))
 
 static inline const char *AllWatchSerialize_CommandType_type_name(AllWatchSerialize_CommandType_union_type_t type)
 {
@@ -56,6 +60,7 @@ static inline const char *AllWatchSerialize_CommandType_type_name(AllWatchSerial
     case AllWatchSerialize_CommandType_Handshake: return "Handshake";
     case AllWatchSerialize_CommandType_Application: return "Application";
     case AllWatchSerialize_CommandType_View: return "View";
+    case AllWatchSerialize_CommandType_Action: return "Action";
     default: return "";
     }
 }
@@ -67,6 +72,7 @@ static inline int AllWatchSerialize_CommandType_is_known_type(AllWatchSerialize_
     case AllWatchSerialize_CommandType_Handshake: return 1;
     case AllWatchSerialize_CommandType_Application: return 1;
     case AllWatchSerialize_CommandType_View: return 1;
+    case AllWatchSerialize_CommandType_Action: return 1;
     default: return 0;
     }
 }
@@ -82,7 +88,7 @@ __flatbuffers_table_as_root(AllWatchSerialize_Command)
 
 __flatbuffers_define_string_field(0, AllWatchSerialize_Command, xd, 0)
 __flatbuffers_define_union_field(flatbuffers_, 2, AllWatchSerialize_Command, command, AllWatchSerialize_CommandType, 0)
-__flatbuffers_define_table_field(3, AllWatchSerialize_Command, id, AllWatchSerialize_Identifier_table_t, 0)
+__flatbuffers_define_table_field(3, AllWatchSerialize_Command, id, AllWatchSerialize_Id_table_t, 0)
 
 #include "flatcc/flatcc_epilogue.h"
 #endif /* COMMAND_READER_H */

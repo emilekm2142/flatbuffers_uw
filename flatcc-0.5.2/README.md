@@ -41,9 +41,9 @@ or printing in less than 2 us for a 10 field mixed type message.
     * [Verifying a Buffer](#verifying-a-buffer)
     * [Potential Name Conflicts](#potential-name-conflicts)
     * [Debugging a Buffer](#debugging-a-buffer)
-* [File and Type Identifiers](#file-and-type-identifiers)
-    * [File Identifiers](#file-identifiers)
-    * [Type Identifiers](#type-identifiers)
+* [File and Type Ids](#file-and-type-Ids)
+    * [File Ids](#file-Ids)
+    * [Type Ids](#type-Ids)
 * [JSON Parsing and Printing](#json-parsing-and-printing)
     * [Base64 Encoding](#base64-encoding)
     * [Generic Parsing and Printing.](#generic-parsing-and-printing)
@@ -179,7 +179,7 @@ table FooBar {
     say       : string;
     height    : short;
 }
-file_identifier "NOOB";
+file_Id "NOOB";
 root_type FooBar;
 ```
 
@@ -575,7 +575,7 @@ A small extract of the output, as of flatcc-v0.5.2
 
 	static inline size_t reflection_Object_vec_len(reflection_Object_vec_t vec);
 	static inline reflection_Object_table_t reflection_Object_vec_at(reflection_Object_vec_t vec, size_t i);
-	static inline reflection_Object_table_t reflection_Object_as_root_with_identifier(const void* buffer, const char* fid);
+	static inline reflection_Object_table_t reflection_Object_as_root_with_Id(const void* buffer, const char* fid);
 	static inline reflection_Object_table_t reflection_Object_as_root_with_type_hash(const void* buffer, flatbuffers_thash_t thash);
 	static inline reflection_Object_table_t reflection_Object_as_root(const void* buffer);
 	static inline reflection_Object_table_t reflection_Object_as_typed_root(const void* buffer);
@@ -600,7 +600,7 @@ resulting in the file `MyGame_Sample_Monster_.doc`:
 
 	static inline size_t MyGame_Sample_Monster_vec_len(MyGame_Sample_Monster_vec_t vec);
 	static inline MyGame_Sample_Monster_table_t MyGame_Sample_Monster_vec_at(MyGame_Sample_Monster_vec_t vec, size_t i);
-	static inline MyGame_Sample_Monster_table_t MyGame_Sample_Monster_as_root_with_identifier(const void* buffer, const char* fid);
+	static inline MyGame_Sample_Monster_table_t MyGame_Sample_Monster_as_root_with_Id(const void* buffer, const char* fid);
 	static inline MyGame_Sample_Monster_table_t MyGame_Sample_Monster_as_root_with_type_hash(const void* buffer, flatbuffers_thash_t thash);
 	static inline MyGame_Sample_Monster_table_t MyGame_Sample_Monster_as_root(const void* buffer);
 	static inline MyGame_Sample_Monster_table_t MyGame_Sample_Monster_as_typed_root(const void* buffer);
@@ -966,11 +966,11 @@ In the builder example above, we can apply a verifier to the output:
 The [readfile.h] utility may also be helpful in reading an existing
 buffer for verification.
 
-Flatbuffers can optionally leave out the identifier, here "MONS". Use a
-null pointer as identifier argument to ignore any existing identifiers
-and allow for missing identifiers.
+Flatbuffers can optionally leave out the Id, here "MONS". Use a
+null pointer as Id argument to ignore any existing Ids
+and allow for missing Ids.
 
-Nested flatbbuffers are always verified with a null identifier, but it
+Nested flatbbuffers are always verified with a null Id, but it
 may be checked later when accessing the buffer.
 
 The verifier does NOT verify that two datastructures are not
@@ -1093,44 +1093,44 @@ contents. It is used in [test_json.c] and also in [monster_test.c].
 See also [FlatBuffers Binary Format].
 
 
-## File and Type Identifiers
+## File and Type Ids
 
 There are two ways to identify the content of a FlatBuffer. The first is
-to use file identifiers which are defined in the schema. The second is
-to use `type identifiers` which are calculated hashes based on each
+to use file Ids which are defined in the schema. The second is
+to use `type Ids` which are calculated hashes based on each
 tables name prefixed with its namespace, if any. In either case the
-identifier is stored at offset 4 in binary FlatBuffers, when present.
-Type identifiers are not to be confused with union types.
+Id is stored at offset 4 in binary FlatBuffers, when present.
+Type Ids are not to be confused with union types.
 
-### File Identifiers
+### File Ids
 
-The FlatBuffers schema language has the optional `file_identifier`
+The FlatBuffers schema language has the optional `file_Id`
 declaration which accepts a 4 characer ASCII string. It is intended to be
 human readable. When absent, the buffer potentially becomes 4 bytes
 shorter (depending on padding).
 
-The `file_identifier` is intended to match the `root_type` schema
+The `file_Id` is intended to match the `root_type` schema
 declaration, but this does not take into account that it is convenient
 to create FlatBuffers for other types as well. `flatcc` makes no special
 destinction for the `root_type` while Googles `flatc` JSON parser uses
 it to determine the JSON root object type.
 
-As a consequence, the file identifier is ambigous. Included schema may
-have separate `file_identifier` declarations. To at least make sure each
-type is associated with its own schemas `file_identifier`, a symbol is
-defined for each type. If the schema has such identifier, it will be
-defined as the null identifier.
+As a consequence, the file Id is ambigous. Included schema may
+have separate `file_Id` declarations. To at least make sure each
+type is associated with its own schemas `file_Id`, a symbol is
+defined for each type. If the schema has such Id, it will be
+defined as the null Id.
 
-The generated code defines the identifiers for a given table:
+The generated code defines the Ids for a given table:
 
-    #ifndef MyGame_Example_Monster_identifier
-    #define MyGame_Example_Monster_identifier flatbuffers_identifier
+    #ifndef MyGame_Example_Monster_Id
+    #define MyGame_Example_Monster_Id flatbuffers_Id
     #endif
 
-The `flatbuffers_identifier` is the schema specific `file_identifier`
+The `flatbuffers_Id` is the schema specific `file_Id`
 and is undefined and redefined for each generated `_reader.h` file.
 
-The user can now override the identifier for a given type, for example:
+The user can now override the Id for a given type, for example:
 
     #define MyGame_Example_Vec3_identifer "VEC3"
     #include "monster_test_builder.h"
@@ -1138,7 +1138,7 @@ The user can now override the identifier for a given type, for example:
     ...
     MyGame_Example_Vec3_create_as_root(B, ...);
 
-The `create_as_root` method uses the identifier for the type in question,
+The `create_as_root` method uses the Id for the type in question,
 and so does other `_as_root` methods.
 
 The `file_extension` is handled in a similar manner:
@@ -1147,15 +1147,15 @@ The `file_extension` is handled in a similar manner:
     #define MyGame_Example_Monster_extension flatbuffers_extension
     #endif
 
-### Type Identifiers
+### Type Ids
 
-To better deal with the ambigouties of file identifiers, type
-identifiers have been introduced as an alternative 4 byte buffer
-identifier. The hash is standardized on FNV-1a for interoperability.
+To better deal with the ambigouties of file Ids, type
+Ids have been introduced as an alternative 4 byte buffer
+Id. The hash is standardized on FNV-1a for interoperability.
 
-The type identifier use a type hash which maps a fully qualified type
+The type Id use a type hash which maps a fully qualified type
 name into a 4 byte hash. The type hash is a 32-bit native value and the
-type identifier is a 4 character little endian encoded string of the
+type Id is a 4 character little endian encoded string of the
 same value.
 
 In this example the type hash is derived from the string
@@ -1163,7 +1163,7 @@ In this example the type hash is derived from the string
 generators that supports type hashes.
 
 The value 0 is used to indicate that one does not care about the
-identifier in the buffer.
+Id in the buffer.
 
     ...
     MyGame_Example_Monster_create_as_typed_root(B, ...);
@@ -1186,35 +1186,35 @@ identifier in the buffer.
 More API calls are available to naturally extend the existing API. See
 [monster_test.c] for more.
 
-The type identifiers are defined like:
+The type Ids are defined like:
 
     #define MyGame_Example_Monster_type_hash ((flatbuffers_thash_t)0x330ef481)
-    #define MyGame_Example_Monster_type_identifier "\x81\xf4\x0e\x33"
+    #define MyGame_Example_Monster_type_Id "\x81\xf4\x0e\x33"
 
-The `type_identifier` can be used anywhere the original 4 character
-file identifier would be used, but a buffer must choose which system, if any,
+The `type_Id` can be used anywhere the original 4 character
+file Id would be used, but a buffer must choose which system, if any,
 to use. This will not affect the `file_extension`.
 
-NOTE: The generated `_type_identifier` strings should not normally be
-used when an identifier string is expected in the generated API because
+NOTE: The generated `_type_Id` strings should not normally be
+used when an Id string is expected in the generated API because
 it may contain null bytes which will be zero padded after the first null
 before comparison. Use the API calls that take a type hash instead. The
-`type_identifier` can be used in low level [flatcc_builder.h] calls
-because it handles identifiers as a fixed byte array and handles type
+`type_Id` can be used in low level [flatcc_builder.h] calls
+because it handles Ids as a fixed byte array and handles type
 hashes and strings the same.
 
 NOTE: it is possible to compile the flatcc runtime to encode buffers in
 big endian format rather than the standard little endian format
 regardless of the host platforms endianness. If this is done, the
-identifier field in the buffer is always byte swapped regardless of the
-identifier method chosen. The API calls make this transparent, so "MONS"
+Id field in the buffer is always byte swapped regardless of the
+Id method chosen. The API calls make this transparent, so "MONS"
 will be stored as "SNOM" but should still be verified as "MONS" in API
 calls. This safeguards against mixing little- and big-endian buffers.
 Likewise, type hashes are always tested in native (host) endian format.
 
 
 The
-[`flatcc/flatcc_identifier.h`](https://github.com/dvidelabs/flatcc/blob/master/include/flatcc/flatcc_identifier.h)
+[`flatcc/flatcc_Id.h`](https://github.com/dvidelabs/flatcc/blob/master/include/flatcc/flatcc_Id.h)
 file contains an implementation of the FNV-1a hash used. The hash was
 chosen for simplicity, availability, and collision resistance. For
 better distribution, and for internal use only, a dispersion function is
@@ -1436,15 +1436,15 @@ different table types without changes to the driver or to the schema.
 For example, the following layout can be used to configure a generic parser or printer.
 
 	struct json_scope {
-		const char *identifier;
+		const char *Id;
 		flatcc_json_parser_table_f *parser;
 		flatcc_json_printer_table_f *printer;
 		flatcc_table_verifier_f *verifier;
 	};
 
 	static const struct json_scope Monster = {
-		/* The is the schema global file identifier. */
-		ns(Monster_identifier),
+		/* The is the schema global file Id. */
+		ns(Monster_Id),
 		ns(Monster_parse_json_table),
 		ns(Monster_print_json_table),
 		ns(Monster_verify_table)
@@ -1455,7 +1455,7 @@ The `Monster` scope can now be used by a driver or replaced with a new scope as 
 	/* Abbreviated ... */
 	struct json_scope = Monster;
     flatcc_json_parser_table_as_root(B, &parser_ctx, json, strlen(json), parse_flags,
-            scope->identifier, scope->parser);
+            scope->Id, scope->parser);
 	/* Printing and verifying works roughly the same. */
 
 The generated table `MyGame_Example_Monster_parse_json_as_root` is a thin
@@ -1761,11 +1761,11 @@ buffers drop to 40% while writing buffers generally drops to 80-90%
 performance. For platforms without compiler intrinsics for byteswapping,
 this can be much worse.
 
-Flatbuffers encoded in big endian will have the optional file identifier
+Flatbuffers encoded in big endian will have the optional file Id
 byteswapped. The interface should make this transparent, but details
 are still being worked out. For example, a buffer should always verify
-the monster buffer has the identifier "MONS", but internally the buffer
-will store the identifier as "SNOM" on big endian encoded buffers.
+the monster buffer has the Id "MONS", but internally the buffer
+will store the Id as "SNOM" on big endian encoded buffers.
 
 Because buffers can be encode in two ways, `flatcc` uses the term
 `native` endianness and `protocol` endianess. `_pe` is a suffix used in

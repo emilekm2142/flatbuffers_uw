@@ -336,13 +336,13 @@ enum {
  * advance the buffer. JSON explititly disallows BOM, but recommends
  * consuming it if present. If some other Unicode BOM is found, convert
  * the buffer first. The lexer assumes ALL non-ascii characters are
- * valid trailing identifiers which mostly works well. Strings with
- * broken utf-8 are passed on as is. utf-8 identifiers must be enabled
+ * valid trailing Ids which mostly works well. Strings with
+ * broken utf-8 are passed on as is. utf-8 Ids must be enabled
  * with #define LEX_ENABLE_UTF8_ID
  *
- * If required, postprocess identifiers and strings for valid utf-8.  It
+ * If required, postprocess Ids and strings for valid utf-8.  It
  * is assumed that all keywords are at most 9 characters long and always
- * ASCII. Otherwise post process them in a hash table on identifier
+ * ASCII. Otherwise post process them in a hash table on Id
  * event. This enables a fast compiled trie lookup of keywords.
  *
  * Newline and control characters are always emitted, also inside
@@ -398,7 +398,7 @@ enum {
  *
  * KEYWORDS
  *
- * Keywords are treated as identifiers by default. By including a
+ * Keywords are treated as Ids by default. By including a
  * keyword table the `lex_emit_id` macro will check if the id is a
  * keyword and translate the token if it is. Using the provided keyword
  * table macros is just one way to do it. This is better explained by
@@ -425,7 +425,7 @@ enum {
  * cover all issues, and, as it turns out is not necessary with the
  * following restrictions on syntax:
  *
- * All variable length tokens such as numerics and identifiers are
+ * All variable length tokens such as numerics and Ids are
  * limited in length. Strings and comments are not, but are broken into
  * zero, one, or several body tokens per line. ANSI-C limits line length
  * to 509 characters (allowing for continuation and two byte linebreaks

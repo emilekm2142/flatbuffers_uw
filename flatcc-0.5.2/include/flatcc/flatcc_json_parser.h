@@ -856,7 +856,7 @@ const char *flatcc_json_parser_union_type_vector(flatcc_json_parser_t *ctx,
  * `builder` must a newly initialized or reset builder object.
  * `buf`, `bufsiz` may be larger than the parsed json if trailing
  * space or zeroes are expected, but they must represent a valid memory buffer.
- * `fid` must be null, or a valid file identifier.
+ * `fid` must be null, or a valid file Id.
  * `flags` default to 0. See also `flatcc_json_parser_flags`.
  */
 int flatcc_json_parser_table_as_root(flatcc_builder_t *B, flatcc_json_parser_t *ctx,

@@ -86,5 +86,5 @@ table Schema {
 
 root_type Schema;
 
-file_identifier "BFBS";
+file_Id "BFBS";
 file_extension "bfbs";

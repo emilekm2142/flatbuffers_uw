@@ -106,7 +106,7 @@ int main()
         "struct c2 { y : c3; }\n"
         "//struct c3 { z : c1; }\n"
         "struct c3 { z : the.s1; }\n"
-        "file_identifier \"fbuz\";\n"
+        "file_Id \"fbuz\";\n"
         "file_extension \"cgen_test\";\n"
         "root_type little.whale.c2;\n"
         "//root_type c2;\n"

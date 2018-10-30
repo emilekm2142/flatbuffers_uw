@@ -65,7 +65,7 @@ const uint8_t flatcc_builder_padding_base[512] = { 0 };
 
 #define store_uoffset __flatbuffers_uoffset_cast_to_pe
 #define store_voffset  __flatbuffers_voffset_cast_to_pe
-#define store_identifier __flatbuffers_uoffset_cast_to_pe
+#define store_Id __flatbuffers_uoffset_cast_to_pe
 #define store_utype __flatbuffers_utype_cast_to_pe
 
 #define field_size sizeof(uoffset_t)
@@ -76,7 +76,7 @@ const uint8_t flatcc_builder_padding_base[512] = { 0 };
 #define max_utype_count FLATBUFFERS_COUNT_MAX(utype_size)
 
 #define max_string_len FLATBUFFERS_COUNT_MAX(1)
-#define identifier_size FLATBUFFERS_IDENTIFIER_SIZE
+#define Id_size FLATBUFFERS_Id_SIZE
 
 
 #define iovec_t flatcc_iovec_t
@@ -182,7 +182,7 @@ int flatcc_builder_default_alloc(void *alloc_context, iovec_t *b, size_t request
 #define table_limit (FLATBUFFERS_VOFFSET_MAX - field_size + 1)
 #define data_limit (FLATBUFFERS_UOFFSET_MAX - field_size + 1)
 
-#define set_identifier(id) memcpy(&B->identifier, (id) ? (void *)(id) : (void *)_pad, identifier_size)
+#define set_Id(id) memcpy(&B->Id, (id) ? (void *)(id) : (void *)_pad, Id_size)
 
 /* Must also return true when no buffer has been started. */
 #define is_top_buffer(B) (B->nest_id == 0)
@@ -734,14 +734,14 @@ flatcc_builder_ref_t flatcc_builder_embed_buffer(flatcc_builder_t *B,
 }
 
 flatcc_builder_ref_t flatcc_builder_create_buffer(flatcc_builder_t *B,
-        const char identifier[identifier_size], uint16_t block_align,
+        const char Id[Id_size], uint16_t block_align,
         flatcc_builder_ref_t object_ref, uint16_t align, int flags)
 {
     flatcc_builder_ref_t buffer_ref;
     uoffset_t header_pad, id_size = 0;
     uoffset_t object_offset, buffer_size, buffer_base;
     iov_state_t iov;
-    flatcc_builder_identifier_t id_out = 0;
+    flatcc_builder_Id_t id_out = 0;
     int is_nested = (flags & flatcc_builder_is_nested) != 0;
     int with_size = (flags & flatcc_builder_with_size) != 0;
 
@@ -749,20 +749,20 @@ flatcc_builder_ref_t flatcc_builder_create_buffer(flatcc_builder_t *B,
         return 0;
     }
     set_min_align(B, align);
-    if (identifier) {
-        assert(sizeof(flatcc_builder_identifier_t) == identifier_size);
-        assert(sizeof(flatcc_builder_identifier_t) == field_size);
-        memcpy(&id_out, identifier, identifier_size);
+    if (Id) {
+        assert(sizeof(flatcc_builder_Id_t) == Id_size);
+        assert(sizeof(flatcc_builder_Id_t) == field_size);
+        memcpy(&id_out, Id, Id_size);
         id_out = __flatbuffers_thash_cast_from_le(id_out);
-        id_out = store_identifier(id_out);
+        id_out = store_Id(id_out);
     }
-    id_size = id_out ? identifier_size : 0;
+    id_size = id_out ? Id_size : 0;
     header_pad = front_pad(B, field_size + id_size + (with_size ? field_size : 0), align);
     init_iov();
     /* ubyte vectors size field wrapping nested buffer. */
     push_iov_cond(&buffer_size, field_size, is_nested || with_size);
     push_iov(&object_offset, field_size);
-    /* Identifiers are not always present in buffer. */
+    /* Ids are not always present in buffer. */
     push_iov(&id_out, id_size);
     push_iov(_pad, header_pad);
     buffer_base = (uoffset_t)B->emit_start - (uoffset_t)iov.len + ((is_nested || with_size) ? field_size : 0);
@@ -799,7 +799,7 @@ flatcc_builder_ref_t flatcc_builder_create_struct(flatcc_builder_t *B, const voi
 }
 
 int flatcc_builder_start_buffer(flatcc_builder_t *B,
-        const char identifier[identifier_size], uint16_t block_align, int flags)
+        const char Id[Id_size], uint16_t block_align, int flags)
 {
     /*
      * This saves the parent `min_align` in the align field since we
@@ -827,8 +827,8 @@ int flatcc_builder_start_buffer(flatcc_builder_t *B,
     B->buffer_mark = B->emit_start;
     /* Must be 0 before and after entering top-level buffer, and unique otherwise. */
     B->nest_id = B->nest_count++;
-    frame(buffer.identifier) = B->identifier;
-    set_identifier(identifier);
+    frame(buffer.Id) = B->Id;
+    set_Id(Id);
     frame(type) = flatcc_builder_buffer;
     return 0;
 }
@@ -842,13 +842,13 @@ flatcc_builder_ref_t flatcc_builder_end_buffer(flatcc_builder_t *B, flatcc_build
     flags |= is_top_buffer(B) ? 0 : flatcc_builder_is_nested;
     check(frame(type) == flatcc_builder_buffer, "expected buffer frame");
     set_min_align(B, B->block_align);
-    if (0 == (buffer_ref = flatcc_builder_create_buffer(B, (void *)&B->identifier,
+    if (0 == (buffer_ref = flatcc_builder_create_buffer(B, (void *)&B->Id,
             B->block_align, root, B->min_align, flags))) {
         return 0;
     }
     B->buffer_mark = frame(buffer.mark);
     B->nest_id = frame(buffer.nest_id);
-    B->identifier = frame(buffer.identifier);
+    B->Id = frame(buffer.Id);
     B->buffer_flags = frame(buffer.flags);
     exit_frame(B);
     return buffer_ref;
@@ -1897,9 +1897,9 @@ void flatcc_builder_set_vtable_cache_limit(flatcc_builder_t *B, size_t size)
     B->vb_flush_limit = size;
 }
 
-void flatcc_builder_set_identifier(flatcc_builder_t *B, const char identifier[identifier_size])
+void flatcc_builder_set_Id(flatcc_builder_t *B, const char Id[Id_size])
 {
-    set_identifier(identifier);
+    set_Id(Id);
 }
 
 enum flatcc_builder_type flatcc_builder_get_type(flatcc_builder_t *B)

@@ -6,6 +6,12 @@
 #ifndef FLATBUFFERS_COMMON_READER_H
 #include "flatbuffers_common_reader.h"
 #endif
+#ifndef DATABINDING_READER_H
+#include "DataBinding_reader.h"
+#endif
+#ifndef EXTRAS_READER_H
+#include "Extras_reader.h"
+#endif
 #ifndef TEMPLATE_READER_H
 #include "Template_reader.h"
 #endif
@@ -43,6 +49,7 @@ __flatbuffers_table_as_root(AllWatchSerialize_TemplateRoot)
 
 __flatbuffers_define_string_field(0, AllWatchSerialize_TemplateRoot, name, 0)
 __flatbuffers_define_table_field(1, AllWatchSerialize_TemplateRoot, layout, AllWatchSerialize_Template_table_t, 0)
+__flatbuffers_define_vector_field(2, AllWatchSerialize_TemplateRoot, dataBindings, AllWatchSerialize_DataBinding_vec_t, 0)
 
 #include "flatcc/flatcc_epilogue.h"
 #endif /* TEMPLATEROOT_READER_H */

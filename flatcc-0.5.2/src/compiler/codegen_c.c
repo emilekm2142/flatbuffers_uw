@@ -189,7 +189,7 @@ void fb_scoped_symbol_name(fb_scope_t *scope, fb_symbol_t *sym, fb_scoped_name_t
     sn->len = t->len;
     sn->total_len = sn->scope_len + sn->len;
     if (sn->total_len > FLATCC_NAME_BUFSIZ - 1) {
-        fprintf(stderr, "warning: truncating identifier: %.*s\n", sn->len, t->text);
+        fprintf(stderr, "warning: truncating Id: %.*s\n", sn->len, t->text);
         sn->len = FLATCC_NAME_BUFSIZ - sn->scope_len - 1;
         sn->total_len = sn->scope_len + sn->len;
     }

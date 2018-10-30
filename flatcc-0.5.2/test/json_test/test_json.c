@@ -15,31 +15,31 @@
 #define nsf(x) FLATBUFFERS_WRAP_NAMESPACE(Fantasy, x)
 
 struct test_scope {
-    const char *identifier;
+    const char *Id;
     flatcc_json_parser_table_f *parser;
     flatcc_json_printer_table_f *printer;
     flatcc_table_verifier_f *verifier;
 };
 
 static const struct test_scope Monster = {
-    /* The is the schema global file identifier. */
-    ns(Monster_identifier),
+    /* The is the schema global file Id. */
+    ns(Monster_Id),
     ns(Monster_parse_json_table),
     ns(Monster_print_json_table),
     ns(Monster_verify_table)
 };
 
 static const struct test_scope Alt = {
-    /* This is the type hash identifier. */
-    ns(Alt_type_identifier),
+    /* This is the type hash Id. */
+    ns(Alt_type_Id),
     ns(Alt_parse_json_table),
     ns(Alt_print_json_table),
     ns(Alt_verify_table)
 };
 
 static const struct test_scope Movie = {
-    /* This is the type hash identifier. */
-    nsf(Movie_type_identifier),
+    /* This is the type hash Id. */
+    nsf(Movie_type_Id),
     nsf(Movie_parse_json_table),
     nsf(Movie_print_json_table),
     nsf(Movie_verify_table)
@@ -64,7 +64,7 @@ int test_json(const struct test_scope *scope, char *json,
     flatcc_json_printer_init_dynamic_buffer(&printer_ctx, 0);
     flatcc_json_printer_set_flags(&printer_ctx, print_flags);
     err = flatcc_json_parser_table_as_root(B, &parser_ctx, json, strlen(json), parse_flags,
-            scope->identifier, scope->parser);
+            scope->Id, scope->parser);
     if (err != expect_err) {
         if (expect_err) {
             if (err) {
@@ -93,13 +93,13 @@ int test_json(const struct test_scope *scope, char *json,
         goto done;
     }
     flatbuffer = flatcc_builder_finalize_aligned_buffer(B, &flatbuffer_size);
-    if ((ret = flatcc_verify_table_as_root(flatbuffer, flatbuffer_size, scope->identifier, scope->verifier))) {
+    if ((ret = flatcc_verify_table_as_root(flatbuffer, flatbuffer_size, scope->Id, scope->verifier))) {
         fprintf(stderr, "%s:%d: buffer verification failed: %s\n",
                 __FILE__, line, flatcc_verify_error_string(ret));
         goto failed;
     }
 
-    flatcc_json_printer_table_as_root(&printer_ctx, flatbuffer, flatbuffer_size, scope->identifier, scope->printer);
+    flatcc_json_printer_table_as_root(&printer_ctx, flatbuffer, flatbuffer_size, scope->Id, scope->printer);
     buf = flatcc_json_printer_get_buffer(&printer_ctx, &buf_size);
     if (!buf || strcmp(expect, buf)) {
         fprintf(stderr, "%d: json test: printed buffer not as expected, got:\n", line);
@@ -740,7 +740,7 @@ int main()
 #if FLATBUFFERS_PROTOCOL_IS_LE
     TEST(   "{ \"name\": \"Monster\", \"testnestedflatbuffer\":"
             "[" /* start of nested flatbuffer, implicit size: 40 */
-            "4,0,0,0," /* header: object offset = 4, no identifier */
+            "4,0,0,0," /* header: object offset = 4, no Id */
             "248,255,255,255," /* vtable offset */
             "16,0,0,0," /* offset to name */
             "12,0,8,0,0,0,0,0,0,0,4,0," /* vtable */
@@ -751,7 +751,7 @@ int main()
 #else
     TEST(   "{ \"name\": \"Monster\", \"testnestedflatbuffer\":"
             "[" /* start of nested flatbuffer, implicit size: 40 */
-            "0,0,0,4," /* header: object offset = 4, no identifier */
+            "0,0,0,4," /* header: object offset = 4, no Id */
             "255,255,255,248," /* vtable offset */
             "0,0,0,16," /* offset to name */
             "0,12,0,8,0,0,0,0,0,0,0,4," /* vtable */

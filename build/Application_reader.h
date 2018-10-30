@@ -12,8 +12,8 @@
 #ifndef REQUIREMENTS_READER_H
 #include "Requirements_reader.h"
 #endif
-#ifndef IDENTIFIER_READER_H
-#include "Identifier_reader.h"
+#ifndef ID_READER_H
+#include "Id_reader.h"
 #endif
 #include "flatcc/flatcc_flatbuffers.h"
 #ifndef __alignas_is_defined
@@ -48,7 +48,7 @@ __flatbuffers_offset_vec_at(AllWatchSerialize_Application_table_t, vec, i, 0)
 __flatbuffers_table_as_root(AllWatchSerialize_Application)
 
 __flatbuffers_define_scalar_field(0, AllWatchSerialize_Application, reinstall, flatbuffers_bool, flatbuffers_bool_t, UINT8_C(0))
-__flatbuffers_define_table_field(1, AllWatchSerialize_Application, identifier, AllWatchSerialize_Identifier_table_t, 0)
+__flatbuffers_define_table_field(1, AllWatchSerialize_Application, Id, AllWatchSerialize_Id_table_t, 0)
 __flatbuffers_define_vector_field(2, AllWatchSerialize_Application, icon, flatbuffers_int8_vec_t, 0)
 __flatbuffers_define_vector_field(3, AllWatchSerialize_Application, requirements, AllWatchSerialize_Requirements_vec_t, 0)
 __flatbuffers_define_vector_field(4, AllWatchSerialize_Application, voicePhrases, flatbuffers_string_vec_t, 0)

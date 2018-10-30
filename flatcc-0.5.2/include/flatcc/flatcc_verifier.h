@@ -12,11 +12,11 @@ extern "C" {
  *
  * Note:
  *
- * 1) nested buffers will NOT have their identifier verified.
+ * 1) nested buffers will NOT have their Id verified.
  * The user may do so subsequently. The reason is in part because
  * the information is not readily avaible without generated reader code,
  * in part because the buffer might use a different, but valid,
- * identifier and the user has no chance of specifiying this in the
+ * Id and the user has no chance of specifiying this in the
  * verifier code. The root verifier also doesn't assume a specific id
  * but accepts a user supplied input which may be null.
  *
@@ -56,7 +56,7 @@ extern "C" {
 #define FLATCC_VERIFY_ERROR_MAP(XX)\
     XX(ok, "ok")\
     XX(buffer_header_too_small, "buffer header too small")\
-    XX(identifier_mismatch, "identifier mismatch")\
+    XX(Id_mismatch, "Id mismatch")\
     XX(max_nesting_level_reached, "max nesting level reached")\
     XX(required_field_missing, "required field missing")\
     XX(runtime_buffer_header_not_aligned, "runtime: buffer header not aligned")\
@@ -158,7 +158,7 @@ typedef int flatcc_union_verifier_f(flatcc_union_verifier_descriptor_t *ud);
  * The `as_root` functions are normally the only functions called
  * explicitly in this interface.
  *
- * If `fid` is null, the identifier is not checked and is allowed to be entirely absent.
+ * If `fid` is null, the Id is not checked and is allowed to be entirely absent.
  *
  * The buffer must at least be aligned to uoffset_t on systems that
  * require aligned memory addresses. The buffer pointers alignment is

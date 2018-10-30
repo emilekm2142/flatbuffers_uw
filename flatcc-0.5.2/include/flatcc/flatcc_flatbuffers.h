@@ -36,7 +36,7 @@ extern "C" {
 #include "flatcc/portable/pendian.h"
 #include "flatcc/flatcc_types.h"
 #include "flatcc/flatcc_endian.h"
-#include "flatcc/flatcc_identifier.h"
+#include "flatcc/flatcc_Id.h"
 
 #ifndef FLATBUFFERS_WRAP_NAMESPACE
 #define FLATBUFFERS_WRAP_NAMESPACE(ns, x) ns ## _ ## x

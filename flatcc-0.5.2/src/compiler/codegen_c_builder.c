@@ -847,16 +847,16 @@ static int gen_builder_pretext(fb_output_t *out)
      * Even if defined in the reader header, we must redefine it here
      * because another file might sneak in and update.
      */
-    if (out->S->file_identifier.type == vt_string) {
+    if (out->S->file_Id.type == vt_string) {
         fprintf(out->fp,
-            "#undef %sidentifier\n"
-            "#define %sidentifier \"%.*s\"\n",
+            "#undef %sId\n"
+            "#define %sId \"%.*s\"\n",
             nsc,
-            nsc, out->S->file_identifier.s.len, out->S->file_identifier.s.s);
+            nsc, out->S->file_Id.s.len, out->S->file_Id.s.s);
     } else {
         fprintf(out->fp,
-            "#ifndef %sidentifier\n"
-            "#define %sidentifier 0\n"
+            "#ifndef %sId\n"
+            "#define %sId 0\n"
             "#endif\n",
             nsc, nsc);
     }
@@ -1166,7 +1166,7 @@ static void gen_builder_struct(fb_output_t *out, fb_compound_type_t *ct)
     fprintf(out->fp, "{ ");
     gen_builder_struct_field_assign(out, ct, 0, arg_count, convert_from_pe, 1);
     fprintf(out->fp, "return p; }\n");
-    fprintf(out->fp, "__%sbuild_struct(%s, %s, %llu, %u, %s_identifier, %s_type_identifier)\n",
+    fprintf(out->fp, "__%sbuild_struct(%s, %s, %llu, %u, %s_Id, %s_type_Id)\n",
             nsc, nsc, snt.text, llu(ct->size), ct->align, snt.text, snt.text);
 }
 
@@ -1432,7 +1432,7 @@ static int gen_builder_table_prolog(fb_output_t *out, fb_compound_type_t *ct)
     fb_clear(snt);
     fb_compound_name(ct, &snt);
 
-    fprintf(out->fp, "__%sbuild_table_prolog(%s, %s, %s_identifier, %s_type_identifier)\n",
+    fprintf(out->fp, "__%sbuild_table_prolog(%s, %s, %s_Id, %s_type_Id)\n",
             nsc, nsc, snt.text, snt.text, snt.text);
     return 0;
 }
@@ -1534,12 +1534,12 @@ static int gen_builder_table_fields(fb_output_t *out, fb_compound_type_t *ct)
                 switch (member->nest->symbol.kind) {
                 case fb_is_table:
                     fb_compound_name((fb_compound_type_t *)(&member->nest->symbol), &snref);
-                    fprintf(out->fp, "__%sbuild_nested_table_root(%s, %s_%.*s, %s, %s_identifier, %s_type_identifier)\n",
+                    fprintf(out->fp, "__%sbuild_nested_table_root(%s, %s_%.*s, %s, %s_Id, %s_type_Id)\n",
                         nsc, nsc, snt.text, n, s, snref.text, snref.text, snref.text);
                     break;
                 case fb_is_struct:
                     fb_compound_name((fb_compound_type_t *)(&member->nest->symbol), &snref);
-                    fprintf(out->fp, "__%sbuild_nested_struct_root(%s, %s_%.*s, %s, %u, %s_identifier, %s_type_identifier)\n",
+                    fprintf(out->fp, "__%sbuild_nested_struct_root(%s, %s_%.*s, %s, %u, %s_Id, %s_type_Id)\n",
                         nsc, nsc, snt.text, n, s, snref.text,
                         (unsigned)((fb_compound_type_t *)(member->nest))->align, snref.text, snref.text);
                     break;

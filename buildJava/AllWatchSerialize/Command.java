@@ -16,8 +16,8 @@ public final class Command extends Table {
 
   public byte commandType() { int o = __offset(4); return o != 0 ? bb.get(o + bb_pos) : 0; }
   public Table command(Table obj) { int o = __offset(6); return o != 0 ? __union(obj, o) : null; }
-  public Identifier id() { return id(new Identifier()); }
-  public Identifier id(Identifier obj) { int o = __offset(8); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
+  public Id id() { return id(new Id()); }
+  public Id id(Id obj) { int o = __offset(8); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
 
   public static int createCommand(FlatBufferBuilder builder,
       byte command_type,

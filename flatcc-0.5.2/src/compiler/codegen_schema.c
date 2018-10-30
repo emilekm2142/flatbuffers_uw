@@ -317,9 +317,9 @@ static int export_schema(flatcc_builder_t *B, fb_options_t *opts, fb_schema_t *S
     } else {
         reflection_Schema_start_as_root(B);
     }
-    if (S->file_identifier.type == vt_string) {
+    if (S->file_Id.type == vt_string) {
         reflection_Schema_file_ident_create(B,
-                S->file_identifier.s.s, S->file_identifier.s.len);
+                S->file_Id.s.s, S->file_Id.s.len);
     }
     if (S->file_extension.type == vt_string) {
         reflection_Schema_file_ext_create(B,

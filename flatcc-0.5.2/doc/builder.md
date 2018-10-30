@@ -314,7 +314,7 @@ A buffer can most simply be created with the `create_as_root` call for
 a table or a struct as seen ealier. The `as_root` part is just a thin
 wrapper around buffer start and stop calls and using these allows for
 more flexibility. the `as_root` also automatically uses the defined file
-identifier if any.
+Id if any.
 
 The build process begins with starting a buffer. The buffer may contain
 a struct or table, so one of these should be constructed subsequently.
@@ -324,28 +324,28 @@ formats, but it will not be valid flatbuffers then.
 
     flatcc_builder_ref_t root;
     flatcc_builder_init(B);
-    /* 0 indicates no file identifier. */
+    /* 0 indicates no file Id. */
     flatcc_builder_buffer_start(B, 0);
     root = /* ... construct a table or a struct */
     flatcc_builder_buffer_end(B, root);
 
-`buffer_start` takes a file identifier as second argument. If null or a
-string with null characters, the identifier is not stored in the buffer.
+`buffer_start` takes a file Id as second argument. If null or a
+string with null characters, the Id is not stored in the buffer.
 
 Regardless of whether a struct or table is declared as root in the schema or
 not, there are methods to automatically start both the buffer and struct or buffer
 and table such as `Monster_start/end_as_root`. This is also valid for
-nested buffers. If the schema has a file identifier, it is used as
-identifier for the created object. The alternative
-`create_as_root_with_identifier` allows for explicitly setting an id or
+nested buffers. If the schema has a file Id, it is used as
+Id for the created object. The alternative
+`create_as_root_with_Id` allows for explicitly setting an id or
 explicitly dropping an id by providing a null argument. The
 corresponding reader function `Monster_as_root(buffer)` also has a
-`Monster_as_root_with_identifier(buffer, id)`. Here the id is ignored if the id
+`Monster_as_root_with_Id(buffer, id)`. Here the id is ignored if the id
 is null, and otherwise the operation returns null if the id does not match.
 For the most part ids are handled transparently by these defaults.
 
 The buffer can be started with block alignment and/or a custom
-identifier using the `flatcc_builder_buffer_start_aligned`:
+Id using the `flatcc_builder_buffer_start_aligned`:
 
     flatcc_builder_buffer_start_aligned(B, "myid", 16);
     ...
@@ -359,9 +359,9 @@ the final buffer should align with the blocks used during construction.
 This can lead to significant zero padding just after the block header,
 depending on block size.
 
-The schema specified identifier is given as:
+The schema specified Id is given as:
 
-    flatbuffers_identifier
+    flatbuffers_Id
 
 and defaults to null. The schema specified extension is given as:
 
@@ -372,10 +372,10 @@ namespace is chosen. Each specific schema type also has a named file
 exntension reflection the extension active when the type was defined,
 for example:
 
-    MyGame_Example_Monster_identifier
+    MyGame_Example_Monster_Id
 
 This define is used when `create_as_root` automatically sets a file
-identifier.
+Id.
 
 When the buffer is ended, nothing special happens but only at this point
 does it really makes sense to access the resulting buffer. The default
