@@ -1,0 +1,7 @@
+
+namespace AllWatchSerialize;
+table Profile{
+    name:string;
+    image:[ubyte];
+    
+}

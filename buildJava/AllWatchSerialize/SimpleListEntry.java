@@ -22,7 +22,7 @@ public final class SimpleListEntry extends Table {
   public int sideActionsLength() { int o = __offset(8); return o != 0 ? __vector_len(o) : 0; }
   public String lines(int j) { int o = __offset(10); return o != 0 ? __string(__vector(o) + j * 4) : null; }
   public int linesLength() { int o = __offset(10); return o != 0 ? __vector_len(o) : 0; }
-  public byte icon(int j) { int o = __offset(12); return o != 0 ? bb.get(__vector(o) + j * 1) : 0; }
+  public int icon(int j) { int o = __offset(12); return o != 0 ? bb.get(__vector(o) + j * 1) & 0xFF : 0; }
   public int iconLength() { int o = __offset(12); return o != 0 ? __vector_len(o) : 0; }
   public ByteBuffer iconAsByteBuffer() { return __vector_as_bytebuffer(12, 1); }
   public ByteBuffer iconInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 12, 1); }

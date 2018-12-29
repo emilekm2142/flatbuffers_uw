@@ -5,7 +5,7 @@ table ProgressBar{
 
 }
 table ImageBackground{
-    image:[byte];
+    image:[ubyte];
 }
 union Components {ProgressBar, ImageBackground}
 table Component{

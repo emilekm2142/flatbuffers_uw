@@ -1,0 +1,6 @@
+include "View.fbs";
+namespace AllWatchSerialize;
+
+table Update{
+     view:View;
+}

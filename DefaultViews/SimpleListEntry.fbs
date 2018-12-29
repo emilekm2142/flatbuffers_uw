@@ -6,5 +6,5 @@ table SimpleListEntry{
     mainAction:Action;
     sideActions:[Action];
     lines:[string];
-    icon:[byte];
+    icon:[ubyte];
 }

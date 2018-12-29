@@ -45,8 +45,8 @@ __flatbuffers_offset_vec_at(AllWatchSerialize_CardAttributes_table_t, vec, i, 0)
 __flatbuffers_table_as_root(AllWatchSerialize_CardAttributes)
 
 __flatbuffers_define_string_field(0, AllWatchSerialize_CardAttributes, title, 0)
-__flatbuffers_define_vector_field(1, AllWatchSerialize_CardAttributes, image, flatbuffers_int8_vec_t, 0)
-__flatbuffers_define_vector_field(2, AllWatchSerialize_CardAttributes, avatar, flatbuffers_int8_vec_t, 0)
+__flatbuffers_define_vector_field(1, AllWatchSerialize_CardAttributes, image, flatbuffers_uint8_vec_t, 0)
+__flatbuffers_define_vector_field(2, AllWatchSerialize_CardAttributes, avatar, flatbuffers_uint8_vec_t, 0)
 __flatbuffers_define_vector_field(3, AllWatchSerialize_CardAttributes, actions, AllWatchSerialize_Action_vec_t, 0)
 
 #include "flatcc/flatcc_epilogue.h"

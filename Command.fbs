@@ -3,10 +3,12 @@
   include "View.fbs";
  include "Application.fbs";
   include "Action.fbs";
+  include "Open.fbs";
+  include "Back.fbs";
+  include "Update.fbs";
 namespace AllWatchSerialize;
 //todo update, namescpases
- union CommandType {Handshake ,Application, View,Action}
-
+ union CommandType {Handshake ,Application, View,Action, Open, Back, Update}
 table Command{
      command:CommandType;
      id:Id;

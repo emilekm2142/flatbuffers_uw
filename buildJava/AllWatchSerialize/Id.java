@@ -35,32 +35,7 @@ public final class Id extends Table {
   public static void addFriendlyName(FlatBufferBuilder builder, int friendlyNameOffset) { builder.addOffset(1, friendlyNameOffset, 0); }
   public static int endId(FlatBufferBuilder builder) {
     int o = builder.endObject();
-    builder.required(o, 4);  // packageName
     return o;
-  }
-
-  @Override
-  protected int keysCompare(Integer o1, Integer o2, ByteBuffer _bb) { return compareStrings(__offset(4, o1, _bb), __offset(4, o2, _bb), _bb); }
-
-  public static Id __lookup_by_key(Id obj, int vectorLocation, String key, ByteBuffer bb) {
-    byte[] byteKey = key.getBytes(Table.UTF8_CHARSET.get());
-    int span = bb.getInt(vectorLocation - 4);
-    int start = 0;
-    while (span != 0) {
-      int middle = span / 2;
-      int tableOffset = __indirect(vectorLocation + 4 * (start + middle), bb);
-      int comp = compareStrings(__offset(4, bb.capacity() - tableOffset, bb), byteKey, bb);
-      if (comp > 0) {
-        span = middle;
-      } else if (comp < 0) {
-        middle++;
-        start += middle;
-        span -= middle;
-      } else {
-        return (obj == null ? new Id() : obj).__assign(tableOffset, bb);
-      }
-    }
-    return null;
   }
 }
 

@@ -74,7 +74,7 @@ __flatbuffers_define_scalar_field(0, AllWatchSerialize_SimpleListEntry, layout, 
 __flatbuffers_define_table_field(1, AllWatchSerialize_SimpleListEntry, mainAction, AllWatchSerialize_Action_table_t, 0)
 __flatbuffers_define_vector_field(2, AllWatchSerialize_SimpleListEntry, sideActions, AllWatchSerialize_Action_vec_t, 0)
 __flatbuffers_define_vector_field(3, AllWatchSerialize_SimpleListEntry, lines, flatbuffers_string_vec_t, 0)
-__flatbuffers_define_vector_field(4, AllWatchSerialize_SimpleListEntry, icon, flatbuffers_int8_vec_t, 0)
+__flatbuffers_define_vector_field(4, AllWatchSerialize_SimpleListEntry, icon, flatbuffers_uint8_vec_t, 0)
 
 #include "flatcc/flatcc_epilogue.h"
 #endif /* SIMPLELISTENTRY_READER_H */

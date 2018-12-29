@@ -7,8 +7,9 @@ public final class ViewData {
   public static final byte NONE = 0;
   public static final byte TextData = 1;
   public static final byte ListData = 2;
+  public static final byte MessagingData = 3;
 
-  public static final String[] names = { "NONE", "TextData", "ListData", };
+  public static final String[] names = { "NONE", "TextData", "ListData", "MessagingData", };
 
   public static String name(int e) { return names[e]; }
 }

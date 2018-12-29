@@ -39,7 +39,7 @@ __flatbuffers_offset_vec_at(AllWatchSerialize_Background_table_t, vec, i, 0)
 __flatbuffers_table_as_root(AllWatchSerialize_Background)
 
 __flatbuffers_define_scalar_field(0, AllWatchSerialize_Background, backgroundColor, flatbuffers_int32, int32_t, INT32_C(0))
-__flatbuffers_define_vector_field(1, AllWatchSerialize_Background, backgroundImage, flatbuffers_int8_vec_t, 0)
+__flatbuffers_define_vector_field(1, AllWatchSerialize_Background, backgroundImage, flatbuffers_uint8_vec_t, 0)
 
 #include "flatcc/flatcc_epilogue.h"
 #endif /* BACKGROUND_READER_H */

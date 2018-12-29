@@ -1,0 +1,8 @@
+include "DefaultViews/Message.fbs";
+include "DefaultViews/Profile.fbs";
+namespace AllWatchSerialize;
+table MessagingData{
+    messages:[Message];
+    profiles:[Profile];
+
+}

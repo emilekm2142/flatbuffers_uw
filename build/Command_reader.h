@@ -6,6 +6,15 @@
 #ifndef FLATBUFFERS_COMMON_READER_H
 #include "flatbuffers_common_reader.h"
 #endif
+#ifndef UPDATE_READER_H
+#include "Update_reader.h"
+#endif
+#ifndef BACK_READER_H
+#include "Back_reader.h"
+#endif
+#ifndef OPEN_READER_H
+#include "Open_reader.h"
+#endif
 #ifndef ACTION_READER_H
 #include "Action_reader.h"
 #endif
@@ -52,6 +61,9 @@ __flatbuffers_define_union(flatbuffers_, AllWatchSerialize_CommandType)
 #define AllWatchSerialize_CommandType_Application ((AllWatchSerialize_CommandType_union_type_t)UINT8_C(2))
 #define AllWatchSerialize_CommandType_View ((AllWatchSerialize_CommandType_union_type_t)UINT8_C(3))
 #define AllWatchSerialize_CommandType_Action ((AllWatchSerialize_CommandType_union_type_t)UINT8_C(4))
+#define AllWatchSerialize_CommandType_Open ((AllWatchSerialize_CommandType_union_type_t)UINT8_C(5))
+#define AllWatchSerialize_CommandType_Back ((AllWatchSerialize_CommandType_union_type_t)UINT8_C(6))
+#define AllWatchSerialize_CommandType_Update ((AllWatchSerialize_CommandType_union_type_t)UINT8_C(7))
 
 static inline const char *AllWatchSerialize_CommandType_type_name(AllWatchSerialize_CommandType_union_type_t type)
 {
@@ -61,6 +73,9 @@ static inline const char *AllWatchSerialize_CommandType_type_name(AllWatchSerial
     case AllWatchSerialize_CommandType_Application: return "Application";
     case AllWatchSerialize_CommandType_View: return "View";
     case AllWatchSerialize_CommandType_Action: return "Action";
+    case AllWatchSerialize_CommandType_Open: return "Open";
+    case AllWatchSerialize_CommandType_Back: return "Back";
+    case AllWatchSerialize_CommandType_Update: return "Update";
     default: return "";
     }
 }
@@ -73,6 +88,9 @@ static inline int AllWatchSerialize_CommandType_is_known_type(AllWatchSerialize_
     case AllWatchSerialize_CommandType_Application: return 1;
     case AllWatchSerialize_CommandType_View: return 1;
     case AllWatchSerialize_CommandType_Action: return 1;
+    case AllWatchSerialize_CommandType_Open: return 1;
+    case AllWatchSerialize_CommandType_Back: return 1;
+    case AllWatchSerialize_CommandType_Update: return 1;
     default: return 0;
     }
 }
@@ -86,9 +104,8 @@ static inline AllWatchSerialize_Command_table_t AllWatchSerialize_Command_vec_at
 __flatbuffers_offset_vec_at(AllWatchSerialize_Command_table_t, vec, i, 0)
 __flatbuffers_table_as_root(AllWatchSerialize_Command)
 
-__flatbuffers_define_string_field(0, AllWatchSerialize_Command, xd, 0)
-__flatbuffers_define_union_field(flatbuffers_, 2, AllWatchSerialize_Command, command, AllWatchSerialize_CommandType, 0)
-__flatbuffers_define_table_field(3, AllWatchSerialize_Command, id, AllWatchSerialize_Id_table_t, 0)
+__flatbuffers_define_union_field(flatbuffers_, 1, AllWatchSerialize_Command, command, AllWatchSerialize_CommandType, 0)
+__flatbuffers_define_table_field(2, AllWatchSerialize_Command, id, AllWatchSerialize_Id_table_t, 0)
 
 #include "flatcc/flatcc_epilogue.h"
 #endif /* COMMAND_READER_H */

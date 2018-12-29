@@ -1,0 +1,1 @@
+flatc --python -o buildPython Command.fbs --reflect-types --reflect-names --gen-all

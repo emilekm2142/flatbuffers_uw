@@ -6,6 +6,9 @@
 #ifndef FLATBUFFERS_COMMON_READER_H
 #include "flatbuffers_common_reader.h"
 #endif
+#ifndef MESSAGINGDATA_READER_H
+#include "MessagingData_reader.h"
+#endif
 #ifndef LISTDATA_READER_H
 #include "ListData_reader.h"
 #endif
@@ -85,6 +88,7 @@ __flatbuffers_define_union(flatbuffers_, AllWatchSerialize_ViewData)
 #define AllWatchSerialize_ViewData_NONE ((AllWatchSerialize_ViewData_union_type_t)UINT8_C(0))
 #define AllWatchSerialize_ViewData_TextData ((AllWatchSerialize_ViewData_union_type_t)UINT8_C(1))
 #define AllWatchSerialize_ViewData_ListData ((AllWatchSerialize_ViewData_union_type_t)UINT8_C(2))
+#define AllWatchSerialize_ViewData_MessagingData ((AllWatchSerialize_ViewData_union_type_t)UINT8_C(3))
 
 static inline const char *AllWatchSerialize_ViewData_type_name(AllWatchSerialize_ViewData_union_type_t type)
 {
@@ -92,6 +96,7 @@ static inline const char *AllWatchSerialize_ViewData_type_name(AllWatchSerialize
     case AllWatchSerialize_ViewData_NONE: return "NONE";
     case AllWatchSerialize_ViewData_TextData: return "TextData";
     case AllWatchSerialize_ViewData_ListData: return "ListData";
+    case AllWatchSerialize_ViewData_MessagingData: return "MessagingData";
     default: return "";
     }
 }
@@ -102,6 +107,7 @@ static inline int AllWatchSerialize_ViewData_is_known_type(AllWatchSerialize_Vie
     case AllWatchSerialize_ViewData_NONE: return 1;
     case AllWatchSerialize_ViewData_TextData: return 1;
     case AllWatchSerialize_ViewData_ListData: return 1;
+    case AllWatchSerialize_ViewData_MessagingData: return 1;
     default: return 0;
     }
 }

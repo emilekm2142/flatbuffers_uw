@@ -17,11 +17,11 @@ public final class CardAttributes extends Table {
   public String title() { int o = __offset(4); return o != 0 ? __string(o + bb_pos) : null; }
   public ByteBuffer titleAsByteBuffer() { return __vector_as_bytebuffer(4, 1); }
   public ByteBuffer titleInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 4, 1); }
-  public byte image(int j) { int o = __offset(6); return o != 0 ? bb.get(__vector(o) + j * 1) : 0; }
+  public int image(int j) { int o = __offset(6); return o != 0 ? bb.get(__vector(o) + j * 1) & 0xFF : 0; }
   public int imageLength() { int o = __offset(6); return o != 0 ? __vector_len(o) : 0; }
   public ByteBuffer imageAsByteBuffer() { return __vector_as_bytebuffer(6, 1); }
   public ByteBuffer imageInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 6, 1); }
-  public byte avatar(int j) { int o = __offset(8); return o != 0 ? bb.get(__vector(o) + j * 1) : 0; }
+  public int avatar(int j) { int o = __offset(8); return o != 0 ? bb.get(__vector(o) + j * 1) & 0xFF : 0; }
   public int avatarLength() { int o = __offset(8); return o != 0 ? __vector_len(o) : 0; }
   public ByteBuffer avatarAsByteBuffer() { return __vector_as_bytebuffer(8, 1); }
   public ByteBuffer avatarInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 8, 1); }

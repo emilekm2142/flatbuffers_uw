@@ -64,7 +64,7 @@ static inline AllWatchSerialize_ImageBackground_table_t AllWatchSerialize_ImageB
 __flatbuffers_offset_vec_at(AllWatchSerialize_ImageBackground_table_t, vec, i, 0)
 __flatbuffers_table_as_root(AllWatchSerialize_ImageBackground)
 
-__flatbuffers_define_vector_field(0, AllWatchSerialize_ImageBackground, image, flatbuffers_int8_vec_t, 0)
+__flatbuffers_define_vector_field(0, AllWatchSerialize_ImageBackground, image, flatbuffers_uint8_vec_t, 0)
 typedef uint8_t AllWatchSerialize_Components_union_type_t;
 __flatbuffers_define_integer_type(AllWatchSerialize_Components, AllWatchSerialize_Components_union_type_t, 8)
 __flatbuffers_define_union(flatbuffers_, AllWatchSerialize_Components)

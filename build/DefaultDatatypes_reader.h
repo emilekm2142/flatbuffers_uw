@@ -26,7 +26,8 @@ __flatbuffers_define_integer_type(AllWatchSerialize_DefaultDatatypes, AllWatchSe
 #define AllWatchSerialize_DefaultDatatypes_Media ((AllWatchSerialize_DefaultDatatypes_enum_t)INT16_C(1))
 #define AllWatchSerialize_DefaultDatatypes_List ((AllWatchSerialize_DefaultDatatypes_enum_t)INT16_C(2))
 #define AllWatchSerialize_DefaultDatatypes_Map ((AllWatchSerialize_DefaultDatatypes_enum_t)INT16_C(3))
-#define AllWatchSerialize_DefaultDatatypes_Custom ((AllWatchSerialize_DefaultDatatypes_enum_t)INT16_C(4))
+#define AllWatchSerialize_DefaultDatatypes_Messaging ((AllWatchSerialize_DefaultDatatypes_enum_t)INT16_C(4))
+#define AllWatchSerialize_DefaultDatatypes_Custom ((AllWatchSerialize_DefaultDatatypes_enum_t)INT16_C(5))
 
 static inline const char *AllWatchSerialize_DefaultDatatypes_name(AllWatchSerialize_DefaultDatatypes_enum_t value)
 {
@@ -35,6 +36,7 @@ static inline const char *AllWatchSerialize_DefaultDatatypes_name(AllWatchSerial
     case AllWatchSerialize_DefaultDatatypes_Media: return "Media";
     case AllWatchSerialize_DefaultDatatypes_List: return "List";
     case AllWatchSerialize_DefaultDatatypes_Map: return "Map";
+    case AllWatchSerialize_DefaultDatatypes_Messaging: return "Messaging";
     case AllWatchSerialize_DefaultDatatypes_Custom: return "Custom";
     default: return "";
     }
@@ -47,6 +49,7 @@ static inline int AllWatchSerialize_DefaultDatatypes_is_known_value(AllWatchSeri
     case AllWatchSerialize_DefaultDatatypes_Media: return 1;
     case AllWatchSerialize_DefaultDatatypes_List: return 1;
     case AllWatchSerialize_DefaultDatatypes_Map: return 1;
+    case AllWatchSerialize_DefaultDatatypes_Messaging: return 1;
     case AllWatchSerialize_DefaultDatatypes_Custom: return 1;
     default: return 0;
     }

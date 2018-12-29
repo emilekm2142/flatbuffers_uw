@@ -15,7 +15,7 @@ public final class Background extends Table {
   public Background __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public int backgroundColor() { int o = __offset(4); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
-  public byte backgroundImage(int j) { int o = __offset(6); return o != 0 ? bb.get(__vector(o) + j * 1) : 0; }
+  public int backgroundImage(int j) { int o = __offset(6); return o != 0 ? bb.get(__vector(o) + j * 1) & 0xFF : 0; }
   public int backgroundImageLength() { int o = __offset(6); return o != 0 ? __vector_len(o) : 0; }
   public ByteBuffer backgroundImageAsByteBuffer() { return __vector_as_bytebuffer(6, 1); }
   public ByteBuffer backgroundImageInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 6, 1); }

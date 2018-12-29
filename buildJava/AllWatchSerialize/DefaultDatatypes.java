@@ -8,9 +8,10 @@ public final class DefaultDatatypes {
   public static final short Media = 1;
   public static final short List = 2;
   public static final short Map = 3;
-  public static final short Custom = 4;
+  public static final short Messaging = 4;
+  public static final short Custom = 5;
 
-  public static final String[] names = { "Text", "Media", "List", "Map", "Custom", };
+  public static final String[] names = { "Text", "Media", "List", "Map", "Messaging", "Custom", };
 
   public static String name(int e) { return names[e]; }
 }

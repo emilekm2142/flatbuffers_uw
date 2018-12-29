@@ -4,8 +4,9 @@ include "templates/DefaultDatatypes.fbs";
 include "Action.fbs";
 include "DefaultViews/TextData.fbs";
 include "DefaultViews/ListData.fbs";
+include "DefaultViews/MessagingData.fbs";
 namespace AllWatchSerialize;
-union ViewData{TextData, ListData}
+union ViewData{TextData, ListData, MessagingData}
 enum DefaultStyle:short{
     Notification,
             TextWall,

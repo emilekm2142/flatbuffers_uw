@@ -1,0 +1,6 @@
+include "Id.fbs";
+namespace AllWatchSerialize;
+
+table Open{
+     id:Id;
+}

@@ -5,7 +5,7 @@ namespace AllWatchSerialize;
 table Application{
     reinstall:bool;
     Id:Id;
-    icon:[byte];
+    icon:[ubyte];
     requirements:[Requirements];
     voicePhrases:[string];
     widget:Widget;

@@ -49,7 +49,7 @@ __flatbuffers_table_as_root(AllWatchSerialize_Application)
 
 __flatbuffers_define_scalar_field(0, AllWatchSerialize_Application, reinstall, flatbuffers_bool, flatbuffers_bool_t, UINT8_C(0))
 __flatbuffers_define_table_field(1, AllWatchSerialize_Application, Id, AllWatchSerialize_Id_table_t, 0)
-__flatbuffers_define_vector_field(2, AllWatchSerialize_Application, icon, flatbuffers_int8_vec_t, 0)
+__flatbuffers_define_vector_field(2, AllWatchSerialize_Application, icon, flatbuffers_uint8_vec_t, 0)
 __flatbuffers_define_vector_field(3, AllWatchSerialize_Application, requirements, AllWatchSerialize_Requirements_vec_t, 0)
 __flatbuffers_define_vector_field(4, AllWatchSerialize_Application, voicePhrases, flatbuffers_string_vec_t, 0)
 __flatbuffers_define_table_field(5, AllWatchSerialize_Application, widget, AllWatchSerialize_Widget_table_t, 0)

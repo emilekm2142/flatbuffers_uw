@@ -1,0 +1,7 @@
+namespace AllWatchSerialize;
+table Message{
+    senderName:string;
+    id:int;
+    content:string;
+    image:[ubyte];
+}

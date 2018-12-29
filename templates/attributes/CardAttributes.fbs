@@ -3,8 +3,8 @@ include "Action.fbs";
 namespace AllWatchSerialize;
 table CardAttributes{
     title:string;
-    image:[byte];
-    avatar:[byte];
+    image:[ubyte];
+    avatar:[ubyte];
     actions:[Action];
 
 }
